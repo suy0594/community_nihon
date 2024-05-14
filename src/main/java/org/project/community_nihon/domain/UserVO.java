@@ -26,4 +26,20 @@ public class UserVO extends BaseEntity{
     private String password;
     private String phone;
 
+    public void changeScreen_Name(String screen_name) {
+        this.screen_name = screen_name;
+    }
+
+    public void changeEmail(String email) {
+        this.email = email;
+    }
+
+    public void changePassword(String password) {
+        this.password = password;
+    }
+
+    public void changePhone(String phone) {
+        this.phone = phone;
+    }
+
 }

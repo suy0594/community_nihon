@@ -6,6 +6,7 @@ import org.project.community_nihon.domain.Account;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.Optional;
 import java.util.stream.IntStream;
 
 @SpringBootTest
@@ -23,5 +24,20 @@ public class AccountRepositoryTest {
             Account result = accountRepository.save(account);
         });
     }
+
+    @Test
+    public void selectAccountTest() {
+
+        int i = (int) (Math.random() * 20) + 1;
+
+        Optional<Account> result = accountRepository.findById(Long.valueOf(i));
+
+        Account account = result.orElseThrow();
+
+        log.info(account);
+
+
+    }
+
 
 }

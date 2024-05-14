@@ -1,5 +1,6 @@
 package org.project.community_nihon.repository;
 
+import jakarta.transaction.Transactional;
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -39,5 +40,37 @@ public class UserRepositoryTest {
         });
 
     }
+
+    @Test
+    @Transactional
+    public void userSelectTest() {
+
+        int i = (int)(Math.random() * 20) + 1;
+
+        Optional<UserVO> result = userRepository.findById(Long.valueOf(i));
+
+        UserVO userVO = result.orElseThrow();
+
+        log.info(userVO);
+
+
+    }
+
+    @Test
+    public void userUpdateTest() {
+
+        Optional<UserVO> result = userRepository.findById(Long.valueOf(1));
+
+        UserVO userVO = result.orElseThrow();
+
+        userVO.changeEmail("aaa1@naver.com");
+        userVO.changePassword("111pw1");
+        userVO.changePhone("010-0000-000phone1");
+
+        userRepository.save(userVO);
+
+
+    }
+
 
 }
