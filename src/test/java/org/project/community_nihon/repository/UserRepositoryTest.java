@@ -1,15 +1,13 @@
 package org.project.community_nihon.repository;
 
-import jakarta.transaction.Transactional;
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.project.community_nihon.domain.Account;
+import org.project.community_nihon.domain.UserRole;
 import org.project.community_nihon.domain.UserVO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Optional;
 import java.util.stream.IntStream;
@@ -19,58 +17,49 @@ import java.util.stream.IntStream;
 public class UserRepositoryTest {
 
     @Autowired
+    private AccountRepository accountRepository;
+
+    @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     @Test
-    public void userInsertTest() {
+    public void insertTest() {
 
-        IntStream.rangeClosed(2, 20).forEach(i -> {
-
-            Account account = Account.builder().id(Long.valueOf(i)).build();
+        IntStream.rangeClosed(1,20).forEach(i -> {
+            Account account = Account.builder().build();
+            accountRepository.save(account);
 
             UserVO userVO = UserVO.builder()
-                    .origin(account)
-                    .email("aaa" + i + "@naver.com")
-                    .password("111pw" + i)
-                    .phone("010-0000-000phone" + i)
-                    .screen_name("profile" + i)
+                    .id("user" + i)
+                    .password(passwordEncoder.encode("1111"))
+                    .email("email" + i + "@aaa.bbb")
                     .build();
 
-            UserVO result = userRepository.save(userVO);
+            userVO.addRole(UserRole.USER);
+
+            if (i >= 10) {
+                userVO.addRole(UserRole.ADMIN);
+            }
+            userRepository.save(userVO);
         });
 
     }
 
     @Test
-    @Transactional
-    public void userSelectTest() {
+    public void selectTest() {
 
-        int i = (int)(Math.random() * 20) + 1;
-
-        Optional<UserVO> result = userRepository.findById(Long.valueOf(i));
+        Optional<UserVO> result = userRepository.getWithRoles("user20");
 
         UserVO userVO = result.orElseThrow();
 
         log.info(userVO);
+        log.info(userVO.getRoleSet());
 
-
-    }
-
-    @Test
-    public void userUpdateTest() {
-
-        Optional<UserVO> result = userRepository.findById(Long.valueOf(1));
-
-        UserVO userVO = result.orElseThrow();
-
-        userVO.changeEmail("aaa1@naver.com");
-        userVO.changePassword("111pw1");
-        userVO.changePhone("010-0000-000phone1");
-
-        userRepository.save(userVO);
-
+        userVO.getRoleSet().forEach(UserRole -> log.info(UserRole.name()));
 
     }
-
 
 }
