@@ -8,6 +8,12 @@
 	padding: 0;
 	box-sizing: border-box;
   }
+
+  .leftside{
+	height: 100%;
+	width: 250px;
+	background: #2d445d;
+  }
   
   .Sidebar {
 	height: 100%;

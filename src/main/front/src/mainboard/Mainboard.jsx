@@ -1,5 +1,6 @@
 import React from 'react';
 import Leftsidemenu from './leftside/Leftsidemenu';
+import Post from './center/Post';
 import './Mainboard.css';
 
 const Mainboard = ({ userId, onLogout }) => {
@@ -10,7 +11,7 @@ const Mainboard = ({ userId, onLogout }) => {
       </div>
 
       <div className='centerside'>
-        
+        <Post />
       </div>
 
       <div className='rightside'>
