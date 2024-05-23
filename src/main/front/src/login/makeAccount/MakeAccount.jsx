@@ -1,22 +1,62 @@
-import React from 'react';
-import MakeAccountForm from './MakeAccountForm';
+import React, { useState } from 'react';
+import axios from 'axios';
 
-const MakeAccount = ({ makeAcc }) => {
-  const loginContainer = {
-    position: 'absolute',        /* 位置指定 */
-    padding: '100px',               /* 余白指定 */
-    top:  '0',                   /* 位置指定 */
-    bottom:  '0',                  /* 位置指定 */
-    left:  '0',                /* 位置指定 */
-    right:  '0',                  /* 位置指定 */
-    margin:  'auto',               /* 中央寄せ */
-    width:  'auto',               /* 幅指定 */
-                /* 高さ指定 */
+const MakeAccount = () => {
+  const [formData, setFormData] = useState({
+    id: '',
+    password: '',
+    email: '',
+    phone: '',
+    screenName: ''
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value
+    });
   };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post('http://localhost:8080/user/join', formData);
+      console.log('Success:', response.data);
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
+
   return (
-    <div style={loginContainer}>
-      <MakeAccountForm  /> 
-    </div>
+    <form onSubmit={handleSubmit}>
+      <label>
+        ID:
+        <input type="text" name="id" value={formData.id} onChange={handleChange} />
+      </label>
+      <br />
+      <label>
+        Password:
+        <input type="password" name="password" value={formData.password} onChange={handleChange} />
+      </label>
+      <br />
+      <label>
+        Email:
+        <input type="email" name="email" value={formData.email} onChange={handleChange} />
+      </label>
+      <br />
+      <label>
+        Phone:
+        <input type="text" name="phone" value={formData.phone} onChange={handleChange} />
+      </label>
+      <br />
+      <label>
+        Screen Name:
+        <input type="text" name="screenName" value={formData.screenName} onChange={handleChange} />
+      </label>
+      <br />
+      <button type="submit">Register</button>
+    </form>
   );
 };
 

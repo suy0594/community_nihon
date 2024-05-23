@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import MakeAccount from './makeAccount/MakeAccount';
 import { PanoramaHorizontalSelectOutlined } from '@mui/icons-material';
@@ -42,6 +43,7 @@ const LoginForm = ({ onLogin }, {showMakeAcc}) => {
       color: '#27acd9',
     };
 
+  const navigate = useNavigate();
   const [id, setId] = useState(''); // IDの状態を管理するState
   const [password, setPassword] = useState(''); // パスワードの状態を管理するState
   const [error, setError] = useState(''); // エラーメッセージの状態を管理するState
@@ -58,7 +60,7 @@ const LoginForm = ({ onLogin }, {showMakeAcc}) => {
   };
   const [btnStyle, setStyle] = useState(buttonstyle);
   const handleMakeAcc = () =>{
-    showMakeAcc(true);
+    navigate('/make-account')
   };
   const onBtnhover = () => {
     setStyle({buttonstyle, hoverOnstyle});
