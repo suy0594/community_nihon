@@ -1,5 +1,6 @@
 /*
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import MakeAccount from './makeAccount/MakeAccount';
 import { PanoramaHorizontalSelectOutlined } from '@mui/icons-material';
@@ -43,7 +44,8 @@ const LoginForm = ({ onLogin }, {showMakeAcc}) => {
       color: '#27acd9',
     };
 
-  const [username, setId] = useState(''); // IDの状態を管理するState
+  const navigate = useNavigate();
+  const [id, setId] = useState(''); // IDの状態を管理するState
   const [password, setPassword] = useState(''); // パスワードの状態を管理するState
   const [error, setError] = useState(''); // エラーメッセージの状態を管理するState
 
@@ -59,7 +61,7 @@ const LoginForm = ({ onLogin }, {showMakeAcc}) => {
   };
   const [btnStyle, setStyle] = useState(buttonstyle);
   const handleMakeAcc = () =>{
-    showMakeAcc(true);
+    navigate('/make-account')
   };
   const onBtnhover = () => {
     setStyle({buttonstyle, hoverOnstyle});
@@ -97,62 +99,5 @@ const LoginForm = ({ onLogin }, {showMakeAcc}) => {
     </div>
   );
 };
-
-export default LoginForm;
-
-*/
-import React, { useState } from 'react';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
-
-function LoginForm() {
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
-    const [loginStatus, setLoginStatus] = useState('');
-    const navigate = useNavigate();
-
-    const handleLogin = (e) => {
-        e.preventDefault();
-
-        axios.post('/user/login', { username, password })
-            .then((response) => {
-                if (response.data === 'Login successful') {
-                    navigate('/home');
-                } else {
-                    setLoginStatus('Login failed. Please try again.');
-                }
-            })
-            .catch((error) => {
-                setLoginStatus('Login failed. Please try again.');
-                console.error('There was an error logging in!', error);
-            });
-    };
-
-    return (
-        <div>
-            <h2>Login</h2>
-            <form onSubmit={handleLogin}>
-                <div>
-                    <label>Username:</label>
-                    <input
-                        type="text"
-                        value={username}
-                        onChange={(e) => setUsername(e.target.value)}
-                    />
-                </div>
-                <div>
-                    <label>Password:</label>
-                    <input
-                        type="password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                    />
-                </div>
-                <button type="submit">Login</button>
-            </form>
-            <p>{loginStatus}</p>
-        </div>
-    );
-}
 
 export default LoginForm;

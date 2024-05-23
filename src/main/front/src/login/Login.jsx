@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import LoginForm from './LoginForm';
-import MakeAccountForm from './makeAccount/MakeAccountForm';
+import MakeAccount from './makeAccount/MakeAccount';
 
 const Login = ({ onLogin }) => {
   const loginContainer = {
@@ -21,7 +21,7 @@ const Login = ({ onLogin }) => {
   return (
     <>
     <div style={loginContainer}>
-      {isShowMakeAcc ? <MakeAccountForm /> : 
+      {isShowMakeAcc ? <MakeAccount /> : 
       <LoginForm onLogin={onLogin} showMakeAcc={handleShowMakeAcc} /> }
     </div>
     </>

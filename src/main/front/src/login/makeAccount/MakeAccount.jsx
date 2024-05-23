@@ -29,34 +29,34 @@ const MakeAccount = () => {
   };
 
   return (
-      <form onSubmit={handleSubmit}>
-        <label>
-          ID:
-          <input type="text" name="id" value={formData.id} onChange={handleChange} />
-        </label>
-        <br />
-        <label>
-          Password:
-          <input type="password" name="password" value={formData.password} onChange={handleChange} />
-        </label>
-        <br />
-        <label>
-          Email:
-          <input type="email" name="email" value={formData.email} onChange={handleChange} />
-        </label>
-        <br />
-        <label>
-          Phone:
-          <input type="text" name="phone" value={formData.phone} onChange={handleChange} />
-        </label>
-        <br />
-        <label>
-          Screen Name:
-          <input type="text" name="screen_name" value={formData.screen_name} onChange={handleChange} />
-        </label>
-        <br />
-        <button type="submit">Register</button>
-      </form>
+    <form onSubmit={handleSubmit}>
+      <label>
+        ID:
+        <input type="text" name="id" value={formData.id} onChange={handleChange} />
+      </label>
+      <br />
+      <label>
+        Password:
+        <input type="password" name="password" value={formData.password} onChange={handleChange} />
+      </label>
+      <br />
+      <label>
+        Email:
+        <input type="email" name="email" value={formData.email} onChange={handleChange} />
+      </label>
+      <br />
+      <label>
+        Phone:
+        <input type="text" name="phone" value={formData.phone} onChange={handleChange} />
+      </label>
+      <br />
+      <label>
+        Screen Name:
+        <input type="text" name="screen_name" value={formData.screen_name} onChange={handleChange} />
+      </label>
+      <br />
+      <button type="submit">Register</button>
+    </form>
   );
 };
 
