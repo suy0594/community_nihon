@@ -1,3 +1,4 @@
+/*
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
@@ -52,8 +53,8 @@ const LoginForm = ({ onLogin }, {showMakeAcc}) => {
   const handleLogin = (e) => {
     e.preventDefault(); // フォームのデフォルトの動作をキャンセル
     // ログイン処理を行う
-    if (id === 'user' && password === 'aa') {
-      onLogin(id); // ログインが成功した場合に、親コンポーネントにIDを渡す
+    if (username === 'user' && password === 'aa') {
+      onLogin(username); // ログインが成功した場合に、親コンポーネントにIDを渡す
     } else {
       setError('Invalid ID or password'); // ログインが失敗した場合にエラーメッセージを設定
     }
@@ -90,7 +91,7 @@ const LoginForm = ({ onLogin }, {showMakeAcc}) => {
 
         <div style={btnContainer}>
           <button style={buttonstyle} onMouseEnter={onBtnhover} onMouseLeave={offBtnhover} type="submit">Login</button>
-          {error && <p style={{ color: 'red' }}>{error}</p>} {/* エラーメッセージがあれば表示 */}
+          {error && <p style={{ color: 'red' }}>{error}</p>}
        </div>
       </form>
       <button style={buttonstyle} onMouseEnter={onBtnhover} onMouseLeave={offBtnhover} onClick={handleMakeAcc}>Create Account</button>

@@ -1,10 +1,9 @@
-package org.project.community_nihon.repository;
+package org.project.community_nihon.repository.user;
 
-import org.project.community_nihon.domain.UserVO;
+import org.project.community_nihon.domain.user.UserVO;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 

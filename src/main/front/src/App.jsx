@@ -40,3 +40,20 @@ const App = () => {
 };
 
 export default App;
+*/
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Join from './Login'; // Join 컴포넌트를 import 합니다.
+
+function App() {
+    return (
+        <Router>
+            <Routes>
+                <Route path="/user/login" element={<Join />} />
+                {/* 다른 라우트들을 이곳에 추가할 수 있습니다. */}
+            </Routes>
+        </Router>
+    );
+}
+
+export default App;

@@ -7,7 +7,7 @@ const MakeAccount = () => {
     password: '',
     email: '',
     phone: '',
-    screenName: ''
+    screen_name: ''
   });
 
   const handleChange = (e) => {
@@ -52,7 +52,7 @@ const MakeAccount = () => {
       <br />
       <label>
         Screen Name:
-        <input type="text" name="screenName" value={formData.screenName} onChange={handleChange} />
+        <input type="text" name="screen_name" value={formData.screen_name} onChange={handleChange} />
       </label>
       <br />
       <button type="submit">Register</button>

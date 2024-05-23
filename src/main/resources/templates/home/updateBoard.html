@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Update Board</title>
+</head>
+<body>
+<h1>Update Board</h1>
+<form action="#" th:action="@{/templates/home/{id}(id=${board.id})}" method="post">
+    <input type="hidden" name="_method" value="put" />
+    <label for="content">Content:</label><br>
+    <textarea id="content" name="content" rows="4" cols="50" th:text="${board.content}"></textarea><br>
+    <input type="submit" value="Update">
+</form>
+</body>
+</html>
