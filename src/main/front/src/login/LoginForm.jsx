@@ -1,3 +1,4 @@
+/*
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import MakeAccount from './makeAccount/MakeAccount';
@@ -42,7 +43,7 @@ const LoginForm = ({ onLogin }, {showMakeAcc}) => {
       color: '#27acd9',
     };
 
-  const [id, setId] = useState(''); // IDの状態を管理するState
+  const [username, setId] = useState(''); // IDの状態を管理するState
   const [password, setPassword] = useState(''); // パスワードの状態を管理するState
   const [error, setError] = useState(''); // エラーメッセージの状態を管理するState
 
@@ -50,8 +51,8 @@ const LoginForm = ({ onLogin }, {showMakeAcc}) => {
   const handleLogin = (e) => {
     e.preventDefault(); // フォームのデフォルトの動作をキャンセル
     // ログイン処理を行う
-    if (id === 'user' && password === 'aa') {
-      onLogin(id); // ログインが成功した場合に、親コンポーネントにIDを渡す
+    if (username === 'user' && password === 'aa') {
+      onLogin(username); // ログインが成功した場合に、親コンポーネントにIDを渡す
     } else {
       setError('Invalid ID or password'); // ログインが失敗した場合にエラーメッセージを設定
     }
@@ -88,7 +89,7 @@ const LoginForm = ({ onLogin }, {showMakeAcc}) => {
 
         <div style={btnContainer}>
           <button style={buttonstyle} onMouseEnter={onBtnhover} onMouseLeave={offBtnhover} type="submit">Login</button>
-          {error && <p style={{ color: 'red' }}>{error}</p>} {/* エラーメッセージがあれば表示 */}
+          {error && <p style={{ color: 'red' }}>{error}</p>}
        </div>
       </form>
       <button style={buttonstyle} onMouseEnter={onBtnhover} onMouseLeave={offBtnhover} onClick={handleMakeAcc}>Create Account</button>
@@ -96,5 +97,62 @@ const LoginForm = ({ onLogin }, {showMakeAcc}) => {
     </div>
   );
 };
+
+export default LoginForm;
+
+*/
+import React, { useState } from 'react';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+
+function LoginForm() {
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+    const [loginStatus, setLoginStatus] = useState('');
+    const navigate = useNavigate();
+
+    const handleLogin = (e) => {
+        e.preventDefault();
+
+        axios.post('/user/login', { username, password })
+            .then((response) => {
+                if (response.data === 'Login successful') {
+                    navigate('/home');
+                } else {
+                    setLoginStatus('Login failed. Please try again.');
+                }
+            })
+            .catch((error) => {
+                setLoginStatus('Login failed. Please try again.');
+                console.error('There was an error logging in!', error);
+            });
+    };
+
+    return (
+        <div>
+            <h2>Login</h2>
+            <form onSubmit={handleLogin}>
+                <div>
+                    <label>Username:</label>
+                    <input
+                        type="text"
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
+                    />
+                </div>
+                <div>
+                    <label>Password:</label>
+                    <input
+                        type="password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                    />
+                </div>
+                <button type="submit">Login</button>
+            </form>
+            <p>{loginStatus}</p>
+        </div>
+    );
+}
 
 export default LoginForm;

@@ -2,16 +2,13 @@ package org.project.community_nihon.security;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.project.community_nihon.domain.UserVO;
-import org.project.community_nihon.repository.UserRepository;
+import org.project.community_nihon.domain.user.UserVO;
+import org.project.community_nihon.repository.user.UserRepository;
 import org.project.community_nihon.security.dto.UserSecurityDTO;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;

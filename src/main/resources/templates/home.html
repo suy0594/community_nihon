@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Board List</title>
+</head>
+<body>
+<h1>Board List</h1>
+<ul>
+    <!-- 'board' 리스트를 반복하여 각 요소를 출력 -->
+    <li th:each="item : ${board}">
+        <!-- 각 요소의 속성을 출력 -->
+        <span th:text="${item.content}"></span> <!-- 예시로 title 출력 -->
+        <hr>
+        <!-- 원하는 다른 속성들도 필요에 따라 출력 가능 -->
+    </li>
+</ul>
+</body>
+</html>

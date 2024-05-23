@@ -1,4 +1,4 @@
-package org.project.community_nihon.domain;
+package org.project.community_nihon.domain.account;
 
 import jakarta.persistence.*;
 import lombok.*;
