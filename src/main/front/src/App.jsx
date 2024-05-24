@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import {
   BrowserRouter as Router,
   Routes,
-  Route
+  Route,
+  Navigate
 } from 'react-router-dom';
 import LoginForm from './login/LoginForm';
 import MakeAccount from './login/makeAccount/MakeAccount';
@@ -10,31 +11,35 @@ import Login from './login/Login';
 import Mainboard from './mainboard/Mainboard';
 
 const App = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false); // ログイン状態を管理するState => false
-  const [userId, setUserId] = useState(''); // ログインしたユーザーのIDを管理するState => ID = ' '
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userId, setUserId] = useState('');
 
   const handleLogin = (id) => {
-    setIsLoggedIn(true); // ログイン状態をtrueに設定
-    setUserId(id); // ログインしたユーザーのIDを設定
+    setIsLoggedIn(true);
+    setUserId(id);
   };
 
   const handleLogout = () => {
-    setIsLoggedIn(false); // ログアウト状態をtrueに設定
-    setUserId(''); // ユーザーIDをクリア
+    setIsLoggedIn(false);
+    setUserId('');
+    <Navigate to='/' />
   };
 
   return (
     <Router>
-      {isLoggedIn ? ( // ログインしているかどうかで表示するコンポーネントを切り替える
-        <Mainboard userId={userId} onLogout={handleLogout} /> // Mainboardを表示
-      ) : (
-        <>
-          <Routes>
-            <Route path="/" element={<Login onLogin={handleLogin} />} />
-            <Route path="/make-account" element={<MakeAccount />} />
-          </Routes>
-        </>
-      )}
+      <Routes>
+        <Route
+          path="/"
+          element={isLoggedIn ? <Navigate to="/main/home" /> : <Login onLogin={handleLogin} />}
+        />
+        <Route path="/makeAccount" element={<MakeAccount />} />
+        {isLoggedIn && (
+          <Route
+            path="/main/*"
+            element={<Mainboard userId={userId} onLogout={handleLogout} />}
+          />
+        )}
+      </Routes>
     </Router>
   );
 };

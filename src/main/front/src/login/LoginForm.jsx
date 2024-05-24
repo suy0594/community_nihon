@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import MakeAccount from './makeAccount/MakeAccount';
 import { PanoramaHorizontalSelectOutlined } from '@mui/icons-material';
 
-const LoginForm = ({ onLogin }, {showMakeAcc}) => {
+const LoginForm = ({ onLogin }) => {
 
     const divstyle = {
         width: '300px',
@@ -60,7 +60,7 @@ const LoginForm = ({ onLogin }, {showMakeAcc}) => {
   };
   const [btnStyle, setStyle] = useState(buttonstyle);
   const handleMakeAcc = () =>{
-    navigate('/make-account')
+    navigate('/makeAccount')
   };
   const onBtnhover = () => {
     setStyle({buttonstyle, hoverOnstyle});

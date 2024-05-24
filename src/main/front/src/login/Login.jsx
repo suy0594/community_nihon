@@ -22,7 +22,7 @@ const Login = ({ onLogin }) => {
     <>
     <div style={loginContainer}>
       {isShowMakeAcc ? <MakeAccount /> : 
-      <LoginForm onLogin={onLogin} showMakeAcc={handleShowMakeAcc} /> }
+      <LoginForm onLogin={onLogin} /> }
     </div>
     </>
   );
