@@ -1,7 +1,8 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Leftsidemenu from './leftside/Leftsidemenu';
-import Post from './center/Post';
+
+import Posts from './center/PostContents/PostsContainer';
 import Notification from './rightside/Notification';
 import MyAccount from './center/MyAccount/MyAccount';
 import Search from './center/Search/Search';
@@ -18,10 +19,10 @@ const Mainboard = ({ userId, onLogout }) => {
 
       <div className='centerside'>
         <Routes>
-          <Route path="home" element={<Post />} />
+          <Route path="home" element={<Posts />} />
           <Route path="my" element={<MyAccount />} />
           <Route path="search" element={<Search />} />
-          <Route path="setting" element={<Setting />} />
+          <Route path="setting" element={<Setting Logout={onLogout} />} />
         </Routes>
       </div>
 
@@ -29,7 +30,7 @@ const Mainboard = ({ userId, onLogout }) => {
         <Notification />
       </div>
     </div>
-    <button onClick={onLogout}>Logout</button>
+    
     </>
   );
 };
