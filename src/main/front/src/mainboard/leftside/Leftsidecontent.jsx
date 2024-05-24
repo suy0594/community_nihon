@@ -8,21 +8,21 @@ export const Leftsidecontent = [
     {
         title : "HOME",
         icon : <HomeIcon />,
-        link : "/home",
+        link : "/main/home",
     },
     {
         title : "MY ACCOUNT",
         icon : <AccountCircleIcon />,
-        link : "/my",
+        link : "/main/my",
     },
     {
         title : "SEARCH",
         icon : <SearchIcon />,
-        link : "/search",
+        link : "/main/search",
     },
     {
         title : "SETTING",
         icon : <SettingsIcon />,
-        link : "/setting",
+        link : "/main/setting",
     }
 ];

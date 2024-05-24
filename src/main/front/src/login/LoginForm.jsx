@@ -1,11 +1,10 @@
-/*
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import MakeAccount from './makeAccount/MakeAccount';
-import { PanoramaHorizontalSelectOutlined } from '@mui/icons-material';
+import Alert from '@mui/material/Alert';
 
-const LoginForm = ({ onLogin }, {showMakeAcc}) => {
+const LoginForm = ({ onLogin }) => {
 
     const divstyle = {
         width: '300px',
@@ -53,15 +52,16 @@ const LoginForm = ({ onLogin }, {showMakeAcc}) => {
   const handleLogin = (e) => {
     e.preventDefault(); // フォームのデフォルトの動作をキャンセル
     // ログイン処理を行う
-    if (username === 'user' && password === 'aa') {
-      onLogin(username); // ログインが成功した場合に、親コンポーネントにIDを渡す
+    if (id === 'user' && password === 'aa') {
+      <Alert severity="success">Success for Login.</Alert>
+      onLogin(id); // ログインが成功した場合に、親コンポーネントにIDを渡す
     } else {
       setError('Invalid ID or password'); // ログインが失敗した場合にエラーメッセージを設定
     }
   };
   const [btnStyle, setStyle] = useState(buttonstyle);
   const handleMakeAcc = () =>{
-    navigate('/make-account')
+    navigate('/makeAccount')
   };
   const onBtnhover = () => {
     setStyle({buttonstyle, hoverOnstyle});
@@ -91,7 +91,7 @@ const LoginForm = ({ onLogin }, {showMakeAcc}) => {
 
         <div style={btnContainer}>
           <button style={buttonstyle} onMouseEnter={onBtnhover} onMouseLeave={offBtnhover} type="submit">Login</button>
-          {error && <p style={{ color: 'red' }}>{error}</p>}
+          {error && <Alert severity="error">Invalid ID or password</Alert>} 
        </div>
       </form>
       <button style={buttonstyle} onMouseEnter={onBtnhover} onMouseLeave={offBtnhover} onClick={handleMakeAcc}>Create Account</button>
