@@ -2,9 +2,11 @@ package org.project.community_nihon.repository;
 
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.Test;
-import org.project.community_nihon.domain.Account;
-import org.project.community_nihon.domain.UserRole;
-import org.project.community_nihon.domain.UserVO;
+import org.project.community_nihon.domain.account.Account;
+import org.project.community_nihon.domain.user.UserRole;
+import org.project.community_nihon.domain.user.UserVO;
+import org.project.community_nihon.repository.account.AccountRepository;
+import org.project.community_nihon.repository.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;

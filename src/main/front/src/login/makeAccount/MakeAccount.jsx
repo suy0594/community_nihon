@@ -48,7 +48,7 @@ const hoverOnstyle = {
     password: '',
     email: '',
     phone: '',
-    screenName: ''
+    screen_name: ''
   });
   const navigate = useNavigate();
   const [btnStyle, setStyle] = useState(buttonstyle);

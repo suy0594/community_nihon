@@ -1,10 +1,10 @@
-package org.project.community_nihon.domain;
+package org.project.community_nihon.domain.user;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.project.community_nihon.domain.account.Account;
+import org.project.community_nihon.domain.BaseEntity_Created_Time;
 
-import java.math.BigInteger;
-import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -14,7 +14,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class UserVO extends BaseEntity{
+public class UserVO extends BaseEntity_Created_Time {
 
     @Id
     private String id;
@@ -30,6 +30,7 @@ public class UserVO extends BaseEntity{
     private boolean social;
 
     @ElementCollection(fetch = FetchType.LAZY)
+    @CollectionTable(name = "uservo_role_set", joinColumns = @JoinColumn(name = "user_id"))
     @Builder.Default
     private Set<UserRole> roleSet = new HashSet<>();
 
