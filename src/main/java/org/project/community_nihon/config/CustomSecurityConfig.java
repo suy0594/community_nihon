@@ -36,17 +36,17 @@ public class CustomSecurityConfig {
 
         http.csrf().disable();
         http.authorizeHttpRequests(requests -> requests
-                .requestMatchers("/user/login", "/user/join").permitAll()
+                .requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/api/login", "/api/join").permitAll()
                 .anyRequest().authenticated()
         );
         http.formLogin(form -> form
-                .loginPage("/user/login")
-                .defaultSuccessUrl("/home", true)
+                .loginPage("/api/login")
+                .defaultSuccessUrl("/api/home", true)
                 .permitAll()
         );
         http.logout(logout -> logout
-                .logoutUrl("/user/logout")
-                .logoutSuccessUrl("/user/login")
+                .logoutUrl("/api/logout")
+                .logoutSuccessUrl("/api/login")
                 .invalidateHttpSession(true)
                 .deleteCookies("JSESSIONID")
                 .permitAll()

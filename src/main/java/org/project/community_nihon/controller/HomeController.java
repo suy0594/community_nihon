@@ -15,29 +15,17 @@ import java.util.List;
 @RequiredArgsConstructor
 @RestController
 @Log4j2
-@RequestMapping("/home")
+@RequestMapping("/api")
 public class HomeController {
+
     private final BoardService boardService;
 
 
-    @GetMapping
-    public String board(Model model) {
+    @GetMapping("/home")
+    public List<BoardDTO> board() {
         List<BoardDTO> board = boardService.getAllBoards();
-        model.addAttribute("board", board);
-        return "home"; // 뷰 이름 반환
-    }
 
-    @GetMapping("/create")
-    public void createGet() {
-        log.info("create....");
-    }
-
-    @PostMapping(value = "/create", consumes = "application/x-www-form-urlencoded")
-    public String create(@RequestParam String content) {
-        BoardDTO boardDTO = new BoardDTO();
-        boardDTO.setContent(content);
-        boardService.createBoard(boardDTO);
-        return "redirect:/home";
+        return board;
     }
 
 /*
