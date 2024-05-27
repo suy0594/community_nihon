@@ -69,7 +69,7 @@ const hoverOnstyle = {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:8080/user/join', formData);
+      const response = await axios.post('http://localhost:8080/api/join', formData);
       console.log('Success:', response.data);
       navigate('/');
     } catch (error) {
