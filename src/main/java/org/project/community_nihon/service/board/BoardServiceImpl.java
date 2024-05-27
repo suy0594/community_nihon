@@ -41,7 +41,7 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
-    public Long createBoard(BoardDTO boardDTO, String community) {
+    public Long createBoard(BoardDTO boardDTO, Long community) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Optional<UserVO> userVO = userRepository.findById(authentication.getName());
 
@@ -60,7 +60,6 @@ public class BoardServiceImpl implements BoardService {
         Optional<Board> board = boardRepository.findById(boardDTO.getId());
         if(board.isPresent()) {
             board.get().updateContent(boardDTO.getContent());
-            board.get().updateAccount(boardDTO.getOrigin());
             boardRepository.save(board.get());
         } else {
             throw new IllegalArgumentException("No board with the given id found");

@@ -21,17 +21,9 @@ public class Certification {
     private Community community;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    private Account origin;
+    private Account master;
 
-    private Boolean certified;
-    private Boolean master;
-
-
-    public void setCertified(Boolean certified) {
-        this.certified = certified;
-    }
-
-    public void setMaster(Boolean master) {
+    public void setMaster(Account master) {
         this.master = master;
     }
 }

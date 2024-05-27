@@ -16,7 +16,7 @@ public class BoardController {
     private final BoardService boardService;
 
     @PostMapping
-    public ResponseEntity<Long> createBoard(@RequestBody BoardDTO boardDTO, @RequestParam String community) {
+    public ResponseEntity<Long> createBoard(@RequestBody BoardDTO boardDTO, @RequestParam Long community) {
         Long createdBoardId = boardService.createBoard(boardDTO, community);
         return ResponseEntity.ok(createdBoardId);
     }

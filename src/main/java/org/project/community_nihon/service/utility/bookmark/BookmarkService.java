@@ -8,12 +8,12 @@ import java.util.Optional;
 
 public interface BookmarkService{
 
-    public BookmarkDTO createBookmark(BookmarkDTO bookmarkDTO);
+    BookmarkDTO createBookmark(BookmarkDTO bookmarkDTO);
 
-    public List<BookmarkDTO> getAllBookmarks();
+    List<Bookmark> getAllBookmarks();
 
-    public Optional<BookmarkDTO> getBookmarkById(Long id);
+    List<Bookmark> getBookmarkById(Long id);
 
-    public void deleteBookmark(Long id);
+    void deleteBookmark(Long id);
 
 }

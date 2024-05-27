@@ -2,10 +2,18 @@ package org.project.community_nihon.service.community;
 
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.project.community_nihon.domain.account.Account;
 import org.project.community_nihon.domain.community.Community;
+import org.project.community_nihon.domain.user.UserVO;
+import org.project.community_nihon.domain.utility.Certification;
 import org.project.community_nihon.dto.community.CommunityDTO;
 import org.project.community_nihon.repository.community.CommunityRepository;
+import org.project.community_nihon.repository.user.UserRepository;
+import org.project.community_nihon.repository.utility.CertificationRepository;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -16,48 +24,35 @@ import java.util.stream.Collectors;
 public class CommunityServiceImpl implements CommunityService {
 
     private final CommunityRepository communityRepository;
-    private final ModelMapper modelMapper;
+    private final CertificationRepository certificationRepository;
+    private final UserRepository userRepository;
 
     @Override
-    public CommunityDTO getCommunity(String id) {
-        Community communityEntity = communityRepository.findById(id).orElseThrow(() -> new RuntimeException("Community not found"));
-        return modelMapper.map(communityEntity, CommunityDTO.class);
-    }
+    @Transactional
+    public Community createCommunity(CommunityDTO communityDTO) {
 
-    @Override
-    public List<CommunityDTO> getAllCommunities() {
-        return communityRepository.findAll().stream()
-                .map(community -> modelMapper.map(community, CommunityDTO.class))
-                .collect(Collectors.toList());
-    }
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Optional<UserVO> userVO = userRepository.findById(authentication.getName());
 
-    @Override
-    public String createCommunity(CommunityDTO communityDTO) {
-        Community community = modelMapper.map(communityDTO, Community.class);
+        // 커뮤니티 엔티티 생성
+        Community community = Community.builder()
+                .title(communityDTO.getTitle())
+                .is_group(true)
+                .origin_member(userVO.get().getOrigin())
+                .build();
+
+        // 커뮤니티 엔티티 저장
         Community result = communityRepository.save(community);
-        return result.getCommunity();
-    }
 
-    @Override
-    public void modifyCommunity(String id) {
-        Optional<Community> community = communityRepository.findById(id);
-        if(community.isPresent()) {
-            community.get().setTitle(community.get().getTitle());
-            community.get().setOrigin_master(community.get().getOrigin_master());
-            community.get().setOrigin_member(community.get().getOrigin_member());
-            communityRepository.save(community.get());
-        } else {
-            throw new IllegalArgumentException("No community with the given id found");
-        }
-    }
+        // 인증 엔티티 생성
+        Certification certification = Certification.builder()
+                .community(result)
+                .master(userVO.get().getOrigin())
+                .build();
 
-    @Override
-    public void deleteCommunity(String id) {
-        Optional<Community> communityEntity = communityRepository.findById(id);
-        if(communityEntity.isPresent()) {
-            communityRepository.deleteById(id);
-        } else {
-            throw new IllegalArgumentException("No community with the given id found");
-        }
+        // 인증 엔티티 저장
+        certificationRepository.save(certification);
+
+        return result;
     }
 }

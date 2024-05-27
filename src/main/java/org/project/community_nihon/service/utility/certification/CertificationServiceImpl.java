@@ -2,9 +2,14 @@ package org.project.community_nihon.service.utility.certification;
 
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.project.community_nihon.domain.account.Account;
+import org.project.community_nihon.domain.user.UserVO;
 import org.project.community_nihon.domain.utility.Certification;
 import org.project.community_nihon.dto.utility.CertificationDTO;
+import org.project.community_nihon.repository.user.UserRepository;
 import org.project.community_nihon.repository.utility.CertificationRepository;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,40 +22,64 @@ import java.util.stream.Collectors;
 public class CertificationServiceImpl implements CertificationService{
 
     private final CertificationRepository certificationRepository;
+    private final UserRepository userRepository;
     private final ModelMapper modelMapper;
 
+
+    /*
+    // 나중에 고치기
     @Transactional
     public CertificationDTO createCertification(CertificationDTO certificationDTO) {
-        Certification certification = modelMapper.map(certificationDTO, Certification.class);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Optional<UserVO> userVO = userRepository.findById(authentication.getName());
+
+        Certification certification = Certification.builder()
+                .community(certificationDTO.getCommunity())
+                .master(userVO.get().getOrigin())
+                .build();
+
         Certification savedCertification = certificationRepository.save(certification);
         return modelMapper.map(savedCertification, CertificationDTO.class);
     }
+    */
 
-    @Transactional(readOnly = true)
-    public List<CertificationDTO> getAllCertifications() {
-        List<Certification> certifications = certificationRepository.findAll();
-        return certifications.stream()
-                .map(certification -> modelMapper.map(certification, CertificationDTO.class))
-                .collect(Collectors.toList());
-    }
-
-    @Transactional(readOnly = true)
-    public Optional<CertificationDTO> getCertificationById(Long id) {
-        Optional<Certification> certification = certificationRepository.findById(id);
-        return certification.map(value -> modelMapper.map(value, CertificationDTO.class));
-    }
-
+    // community의 id를 받으면 관리자 List를 리턴
     @Transactional
-    public CertificationDTO updateCertification(Long id, CertificationDTO certificationDTO) {
-        Certification certification = certificationRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid certification Id:" + id));
-        certification.setCertified(certificationDTO.getCertified());
-        certification.setMaster(certificationDTO.getMaster());
+    public List<Certification> getAllCertifications(Long id) {
+        List<Certification> certifications = certificationRepository.findByCommunityId(id);
+        return certifications;
+    }
+
+    // Account id를 기준으로 id가 관리자인 community 리스트 리턴
+    @Transactional
+    public List<Certification> getCertificationById(String id) {
+
+        Account account = userRepository.findAccountByUserId(id);
+
+        List<Certification> certification = certificationRepository.findByMasterId(account.getId());
+        return certification;
+    }
+
+    // Account id 받아와서 certification 등록
+    @Transactional
+    public CertificationDTO updateCertification(String id, CertificationDTO certificationDTO) {
+
+        Account account = userRepository.findAccountByUserId(id);
+        certificationDTO.setMaster(account);
+
+        Certification certification = modelMapper.map(certificationDTO, Certification.class);
         Certification updatedCertification = certificationRepository.save(certification);
         return modelMapper.map(updatedCertification, CertificationDTO.class);
     }
 
+
     @Transactional
-    public void deleteCertification(Long id) {
-        certificationRepository.deleteById(id);
+    public void deleteCertification(String id, CertificationDTO certificationDTO) {
+
+        Account account = userRepository.findAccountByUserId(id);
+        certificationDTO.setMaster(account);
+
+        certificationRepository.deleteByCommunityAndMaster(certificationDTO.getCommunity(),
+                                                            certificationDTO.getMaster());
     }
 }

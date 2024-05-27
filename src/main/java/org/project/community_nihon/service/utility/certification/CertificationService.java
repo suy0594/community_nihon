@@ -1,5 +1,6 @@
 package org.project.community_nihon.service.utility.certification;
 
+import org.project.community_nihon.domain.utility.Certification;
 import org.project.community_nihon.dto.utility.CertificationDTO;
 
 import java.util.List;
@@ -7,15 +8,15 @@ import java.util.Optional;
 
 public interface CertificationService {
 
-    public CertificationDTO createCertification(CertificationDTO certificationDTO);
+    //public CertificationDTO createCertification(CertificationDTO certificationDTO);
 
-    public List<CertificationDTO> getAllCertifications();
+    public List<Certification> getAllCertifications(Long id);
 
-    public Optional<CertificationDTO> getCertificationById(Long id);
+    List<Certification> getCertificationById(String id);
 
-    public CertificationDTO updateCertification(Long id, CertificationDTO certificationDTO);
+    CertificationDTO updateCertification(String id, CertificationDTO certificationDTO);
 
-    public void deleteCertification(Long id);
+    void deleteCertification(String id, CertificationDTO certificationDTO);
 
 
 }

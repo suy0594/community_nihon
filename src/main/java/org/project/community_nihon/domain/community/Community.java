@@ -14,10 +14,8 @@ import org.project.community_nihon.domain.account.Account;
 public class Community extends BaseEntity_Created_Time {
 
     @Id
-    private String community;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Account origin_master;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long community;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Account origin_member;
@@ -29,16 +27,9 @@ public class Community extends BaseEntity_Created_Time {
     public void setTitle(String title) {
         this.title = title;
     }
-    public void setOrigin_master(Account origin_master) {
-        this.origin_master = origin_master;
-    }
 
     public void setOrigin_member(Account origin_member) {
         this.origin_member = origin_member;
-    }
-
-    public Account getOrigin_master() {
-        return origin_master;
     }
 
     public Account getOrigin_member() {
@@ -49,7 +40,7 @@ public class Community extends BaseEntity_Created_Time {
         return title;
     }
 
-    public String getCommunity() {
+    public Long getCommunity() {
         return this.community;
     }
 }

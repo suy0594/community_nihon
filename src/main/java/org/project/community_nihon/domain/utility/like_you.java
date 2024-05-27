@@ -24,4 +24,7 @@ public class like_you extends BaseEntity_Created_Time {
     @ManyToOne(fetch = FetchType.LAZY)
     private Board board;
 
+    public void setOrigin(Account origin) {
+        this.origin = origin;
+    }
 }

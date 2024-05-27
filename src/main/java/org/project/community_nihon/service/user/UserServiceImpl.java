@@ -7,12 +7,14 @@ import org.project.community_nihon.domain.account.Account;
 import org.project.community_nihon.domain.community.Community;
 import org.project.community_nihon.domain.user.UserRole;
 import org.project.community_nihon.domain.user.UserVO;
+import org.project.community_nihon.domain.utility.Certification;
 import org.project.community_nihon.dto.community.CommunityDTO;
 import org.project.community_nihon.dto.user.UserVODTO;
 import org.project.community_nihon.dto.utility.FollowDTO;
 import org.project.community_nihon.repository.account.AccountRepository;
 import org.project.community_nihon.repository.community.CommunityRepository;
 import org.project.community_nihon.repository.user.UserRepository;
+import org.project.community_nihon.repository.utility.CertificationRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -30,6 +32,8 @@ public class UserServiceImpl implements UserService{
     private final PasswordEncoder passwordEncoder;
 
     private final CommunityRepository communityRepository;
+
+    private final CertificationRepository certificationRepository;
 
     @Override
     public void join(UserVODTO userVODTO) throws IdExistException {
@@ -58,13 +62,19 @@ public class UserServiceImpl implements UserService{
         userRepository.save(userVO);
 
         Community community = Community.builder()
-                        .community(userVO.getId())
-                                .title(userVO.getId())
-                                        .origin_master(userVO.getOrigin())
-                                                .origin_member(userVO.getOrigin())
-                                                        .build();
+                .title(userVO.getId())
+                .origin_member(userVO.getOrigin())
+                .is_group(false)
+                .build();
 
         communityRepository.save(community);
+
+        Certification certification = Certification.builder()
+                .master(userVO.getOrigin())
+                .community(community)
+                .build();
+
+        certificationRepository.save(certification);
 
     }
 }

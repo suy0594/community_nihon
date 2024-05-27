@@ -9,7 +9,7 @@ public class BookmarkDTO {
 
     private Long id;
 
-    private Account account;
+    private Account origin;
 
     private Board board;
 

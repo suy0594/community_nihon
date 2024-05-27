@@ -18,6 +18,10 @@ public class Bookmark extends BaseEntity_Created_Time {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    public void setOrigin(Account origin) {
+        this.origin = origin;
+    }
+
     @ManyToOne(fetch = FetchType.LAZY)
     private Account origin;
 

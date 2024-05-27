@@ -11,9 +11,6 @@ public class CertificationDTO {
 
     private Community community;
 
-    private Account origin;
-
-    private Boolean certified;
-    private Boolean master;
+    private Account master;
 
 }
