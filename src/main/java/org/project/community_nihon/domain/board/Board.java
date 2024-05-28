@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.project.community_nihon.domain.account.Account;
 import org.project.community_nihon.domain.BaseEntity_Created_Time;
+import org.project.community_nihon.domain.community.Community;
 
 
 @Entity
@@ -21,6 +22,9 @@ public class Board extends BaseEntity_Created_Time {
     @ManyToOne(fetch = FetchType.LAZY)
     private Account origin;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Community community;
+
     private String content;
 
     public void updateContent(String content) {
@@ -30,4 +34,7 @@ public class Board extends BaseEntity_Created_Time {
         this.origin = origin;
     }
 
+    public void setCommunity(Community community) {
+        this.community = community;
+    }
 }

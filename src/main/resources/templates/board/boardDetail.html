@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Board Detail</title>
+</head>
+<body>
+<h1>Board Detail</h1>
+<p th:text="${board.content}"></p>
+<div th:if="${board.origin.id == #authentication.principal.username}">
+    <a th:href="@{/templates/board/{id}/edit(id=${board.id})}">Edit</a>
+    <a th:href="@{/templates/board/{id}/delete(id=${board.id})}">Delete</a>
+</div>
+</body>
+</html>

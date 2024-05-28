@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Delete Board</title>
+</head>
+<body>
+<h1>Delete Board</h1>
+<form action="#" th:action="@{/templates/board/{id}(id=${board.id})}" method="post">
+    <input type="hidden" name="_method" value="delete" />
+    <p>Are you sure you want to delete this board?</p>
+    <input type="submit" value="Delete">
+</form>
+</body>
+</html>

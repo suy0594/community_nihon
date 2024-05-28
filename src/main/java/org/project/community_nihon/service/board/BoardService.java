@@ -5,9 +5,9 @@ import org.project.community_nihon.dto.board.BoardDTO;
 import java.util.List;
 
 public interface BoardService {
-    void createBoard(BoardDTO boardDTO);
-    BoardDTO getBoard(String id);
+    Long createBoard(BoardDTO boardDTO, Long community);
+    BoardDTO getBoard(Long id);
     List<BoardDTO> getAllBoards();
-    BoardDTO updateBoard(String id, BoardDTO boardDTO);
-    void deleteBoard(String id);
+    void modifyBoard(BoardDTO boardDTO);
+    void deleteBoard(Long id);
 }
