@@ -1,6 +1,7 @@
 package org.project.community_nihon.controller.utility;
 
 import lombok.RequiredArgsConstructor;
+import org.project.community_nihon.domain.utility.like_you;
 import org.project.community_nihon.dto.utility.like_youDTO;
 import org.project.community_nihon.service.utility.like_you.like_youService;
 import org.springframework.http.ResponseEntity;
@@ -28,8 +29,8 @@ public class like_youController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<like_youDTO> getLikeYouById(@PathVariable Long id) {
-        like_youDTO likeYou = likeYouService.getLikeYouById(id).orElseThrow(() -> new RuntimeException("LikeYou not found"));
+    public ResponseEntity<List<like_you>> getLikeYouById(@PathVariable Long id) {
+        List<like_you> likeYou = likeYouService.getLikeYouByBoardId(id);
         return ResponseEntity.ok(likeYou);
     }
 

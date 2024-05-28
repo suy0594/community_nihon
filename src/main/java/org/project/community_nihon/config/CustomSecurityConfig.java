@@ -6,16 +6,22 @@ import org.project.community_nihon.security.CustomUserDetailsService;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import javax.sql.DataSource;
+import java.util.Arrays;
 
 @Log4j2
 @Configuration
@@ -32,16 +38,27 @@ public class CustomSecurityConfig {
     }
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOrigins(Arrays.asList("*")); // 모든 출처 허용
+        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS")); // 허용할 HTTP 메소드
+        configuration.setAllowCredentials(true);
+        configuration.setAllowedHeaders(Arrays.asList("*")); // 모든 헤더 허용
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
+    }
 
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        http.cors(Customizer.withDefaults());
         http.csrf().disable();
-        http.authorizeHttpRequests(requests -> requests
-                .requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/api/login", "/api/join").permitAll()
+        http.authorizeRequests(requests -> requests
+                .requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/api/login/**", "/api/join/**").permitAll()
                 .anyRequest().authenticated()
         );
         http.formLogin(form -> form
                 .loginPage("/api/login")
-                .defaultSuccessUrl("/api/home", true)
                 .permitAll()
         );
         http.logout(logout -> logout
@@ -56,20 +73,23 @@ public class CustomSecurityConfig {
                 .key("12345678")
                 .tokenRepository(persistentTokenRepository())
                 .userDetailsService(userDetailsService)
-                .tokenValiditySeconds(60*60*24*30);
+                .tokenValiditySeconds(60 * 60 * 24 * 30);
+
+        http.sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED);
+
+        // 특정 경로에 대해 HTTPS로 강제 리디렉션
+        http.requiresChannel()
+                .requestMatchers("/api/login", "/api/join")
+                .requiresSecure();
 
         return http.build();
-
     }
 
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
-
         log.info("--------web configure----------");
-
-        return (web) -> web.ignoring().requestMatchers(PathRequest.
-                                        toStaticResources().atCommonLocations());
-
+        return (web) -> web.ignoring().requestMatchers(PathRequest.toStaticResources().atCommonLocations());
     }
 
     @Bean
@@ -78,5 +98,4 @@ public class CustomSecurityConfig {
         repo.setDataSource(dataSource);
         return repo;
     }
-
 }

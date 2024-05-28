@@ -1,0 +1,23 @@
+spring:
+  application:
+    name: community_nihon
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/webdb
+    username: webuser
+    password: webuser
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
+    show-sql: true
+
+logging:
+  level:
+    org:
+      springframework: info
+      project: debug
+      springframework.security: trace
+

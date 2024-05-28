@@ -1,5 +1,6 @@
 package org.project.community_nihon.service.utility.like_you;
 
+import org.project.community_nihon.domain.utility.like_you;
 import org.project.community_nihon.dto.utility.like_youDTO;
 
 import java.util.List;
@@ -11,7 +12,7 @@ public interface like_youService {
 
     public List<like_youDTO> getAllLikeYous();
 
-    public Optional<like_youDTO> getLikeYouById(Long id);
+    List<like_you> getLikeYouByBoardId(Long id);
 
     public void deleteLikeYou(Long id);
 

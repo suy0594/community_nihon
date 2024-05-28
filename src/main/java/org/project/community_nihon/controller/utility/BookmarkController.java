@@ -2,6 +2,7 @@ package org.project.community_nihon.controller.utility;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.project.community_nihon.domain.utility.Bookmark;
 import org.project.community_nihon.dto.utility.BookmarkDTO;
 import org.project.community_nihon.service.utility.bookmark.BookmarkService;
 import org.springframework.http.ResponseEntity;
@@ -24,14 +25,14 @@ public class BookmarkController {
     }
 
     @GetMapping
-    public ResponseEntity<List<BookmarkDTO>> getAllBookmarks() {
-        List<BookmarkDTO> bookmarks = bookmarkService.getAllBookmarks();
+    public ResponseEntity<List<Bookmark>> getAllBookmarks() {
+        List<Bookmark> bookmarks = bookmarkService.getAllBookmarks();
         return ResponseEntity.ok(bookmarks);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<BookmarkDTO> getBookmarkById(@PathVariable Long id) {
-        BookmarkDTO bookmark = bookmarkService.getBookmarkById(id).orElseThrow(() -> new RuntimeException("Bookmark not found"));
+    public ResponseEntity<List<Bookmark>> getBookmarkById(@PathVariable Long id) {
+        List<Bookmark> bookmark = bookmarkService.getBookmarkById(id);
         return ResponseEntity.ok(bookmark);
     }
 
