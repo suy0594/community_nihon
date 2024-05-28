@@ -16,7 +16,6 @@ const Notification = () => {
                 <Notifi />
                 <Notifi />
                 <Notifi />
-                
             </List>
             </div>  
         </div>

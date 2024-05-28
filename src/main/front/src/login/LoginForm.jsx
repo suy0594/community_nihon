@@ -44,7 +44,7 @@ const LoginForm = ({ onLogin }) => {
   };
 
   const navigate = useNavigate();
-  const [id, setId] = useState('');
+  const [username, setId] = useState('');
   const [password, setPassword] = useState(''); 
   const [error, setError] = useState(''); 
 
@@ -54,7 +54,7 @@ const LoginForm = ({ onLogin }) => {
       const response = await axios.post('http://localhost:8080/api/login?', { username, password });
       if (response.data.success) {
         <Alert severity="success">Success for Login.</Alert>
-        onLogin(id); 
+        onLogin(username); 
         navigate('/'); 
       } else {
         setError('Invalid ID or password'); 
@@ -84,7 +84,7 @@ const LoginForm = ({ onLogin }) => {
         <div style={inputContainer}>
           <div>
             <label>ID : </label>
-            <input type="text" value={id} onChange={(e) => setId(e.target.value)} />
+            <input type="text" value={username} onChange={(e) => setId(e.target.value)} />
           </div>
           <div>
             <label>PW : </label>
