@@ -2,6 +2,8 @@ import React from 'react';
 import './Profile.css';
 import Post from '../PostContents/Post';
 
+
+
 const Profile = () => {
   return (
     <div className="profile-container">
