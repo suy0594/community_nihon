@@ -3,12 +3,12 @@ import axios from 'axios';
 import Profile from '../Profile/Profile';
 
 const MyAccount = () => {
-  
+
 
   return (
-    <>
-    <Profile />
-    </>
+      <>
+        <Profile />
+      </>
   );
 };
 

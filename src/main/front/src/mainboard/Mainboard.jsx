@@ -17,11 +17,11 @@ import './Mainboard.css';
 const Mainboard = ({ userId, onLogout }) => {
 
   return (
-    <>
-    <div style={{ display: 'flex' }}>
-      <div className="leftside">
-        <Leftsidemenu userId={userId} />
-      </div>
+      <>
+        <div style={{ display: 'flex' }}>
+          <div className="leftside">
+            <Leftsidemenu userId={userId} />
+          </div>
 
       <div className='centerside'>
         <Routes>

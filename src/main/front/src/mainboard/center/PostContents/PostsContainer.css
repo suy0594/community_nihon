@@ -1,54 +1,54 @@
 .profile-container {
-    max-width: 100%;
-    margin: 0 auto;
-    padding: 20px;
-  }
-  
-  .profile-header {
-    display: flex;
-    align-items: center;
-  }
-  
-  .profile-picture {
-    width: 300px;
-    height: 300px;
-    border-radius: 50%;
-    margin-right: 20px;
-  }
-  
-  .profile-info {
-    flex-grow: 1;
-  }
-  
-  .profile-name {
-    margin: 0;
-  }
-  
-  .profile-handle {
-    color: #555;
-    margin-top: 5px;
-  }
-  
-  .profile-bio {
-    margin-top: 10px;
-  }
-  
-  .profile-stats {
-    margin-top: 10px;
-  }
-  
-  .profile-stats p {
-    display: inline;
-    margin-right: 10px;
-  }
-  
-  .tweet-list {
-    margin-top: 20px;
-  }
-  
-  .tweet {
-    border: 1px solid #ccc;
-    padding: 10px;
-    margin-bottom: 10px;
-  }
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.profile-header {
+  display: flex;
+  align-items: center;
+}
+
+.profile-picture {
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  margin-right: 20px;
+}
+
+.profile-info {
+  flex-grow: 1;
+}
+
+.profile-name {
+  margin: 0;
+}
+
+.profile-handle {
+  color: #555;
+  margin-top: 5px;
+}
+
+.profile-bio {
+  margin-top: 10px;
+}
+
+.profile-stats {
+  margin-top: 10px;
+}
+
+.profile-stats p {
+  display: inline;
+  margin-right: 10px;
+}
+
+.tweet-list {
+  margin-top: 20px;
+}
+
+.tweet {
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-bottom: 10px;
+}
   

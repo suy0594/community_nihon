@@ -21,12 +21,17 @@ public class HomeController {
     private final BoardService boardService;
 
 
+    // 홈 화면 (내가 팔로우 중인거)  return할 때, 게시글 id 포함하기
     @GetMapping("/home")
-    public List<BoardDTO> board() {
+    public ResponseEntity<List<BoardDTO>> board() {
         List<BoardDTO> board = boardService.getAllBoards();
 
-        return board;
+        return ResponseEntity.ok(board);
     }
+
+    // userId의 게시글들, return할 때, 게시글 id 포함하기
+
+
 
 /*
     @GetMapping("/{id}")
