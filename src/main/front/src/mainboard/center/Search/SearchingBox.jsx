@@ -1,4 +1,6 @@
 import * as React from 'react';
+import { useState } from 'react';
+import axios from 'axios';
 import Paper from '@mui/material/Paper';
 import InputBase from '@mui/material/InputBase';
 import Divider from '@mui/material/Divider';
@@ -7,25 +9,41 @@ import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 
 export default function CustomizedInputBase() {
+  const [id, setId] = useState('');
+
+  const handleSearch = async () => {
+    try {
+      const response = await axios.post('/api/search', { id });
+      console.log(response.data);
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
   return (
-      <Paper
-          component="form"
-          sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: 400 }}
-      >
-        <IconButton sx={{ p: '10px' }} aria-label="menu">
-          <MenuIcon />
-        </IconButton>
-        <InputBase
-            sx={{ ml: 1, flex: 1 }}
-            placeholder="Search..."
-            inputProps={{ 'aria-label': 'searchWord' }}
-        />
-        <IconButton type="button" sx={{ p: '10px' }} aria-label="search">
-          <SearchIcon />
-        </IconButton>
-        <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
-        <IconButton color="primary" sx={{ p: '10px' }} aria-label="directions">
-        </IconButton>
-      </Paper>
+    <Paper
+      component="form"
+      sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: 400 }}
+      onSubmit={(e) => {
+        e.preventDefault(); 
+        handleSearch();
+      }}
+    >
+      <IconButton sx={{ p: '10px' }} aria-label="menu">
+        <MenuIcon />
+      </IconButton>
+      <InputBase
+        sx={{ ml: 1, flex: 1 }}
+        placeholder="Search..."
+        inputProps={{ 'aria-label': 'searchWord' }}
+        value={id}
+        onChange={(e) => setId(e.target.value)}
+      />
+      <IconButton type="button" sx={{ p: '10px' }} aria-label="search">
+        <SearchIcon />
+      </IconButton>
+      <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
+      <IconButton color="primary" sx={{ p: '10px' }} aria-label="directions">
+      </IconButton>
+    </Paper>
   );
 }

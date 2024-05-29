@@ -2,6 +2,8 @@ import React from 'react';
 import axios from 'axios';
 import './post.css';
 
+//need => id, title, text, + post time, userId
+
 const Post = ({id, title, text}) => {
     const handleLikeButton = async() => {
         try {

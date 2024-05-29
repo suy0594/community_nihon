@@ -65,15 +65,27 @@ const LoginForm = ({ onLogin }) => {
     }
   };
 
-  const [btnStyle, setStyle] = useState(buttonstyle);
+  const [loginBtnStyle, setLoginBtnStyle] = useState(buttonstyle);
+  const [createAccBtnStyle, setCreateAccBtnStyle] = useState(buttonstyle);
+
   const handleMakeAcc = () => {
     navigate('/makeAccount');
   };
-  const onBtnhover = () => {
-    setStyle({ ...buttonstyle, ...hoverOnstyle });
+
+  const onLoginBtnHover = () => {
+    setLoginBtnStyle({ ...buttonstyle, ...hoverOnstyle });
   };
-  const offBtnhover = () => {
-    setStyle(buttonstyle);
+
+  const offLoginBtnHover = () => {
+    setLoginBtnStyle(buttonstyle);
+  };
+
+  const onCreateAccBtnHover = () => {
+    setCreateAccBtnStyle({ ...buttonstyle, ...hoverOnstyle });
+  };
+
+  const offCreateAccBtnHover = () => {
+    setCreateAccBtnStyle(buttonstyle);
   };
 
   return (
@@ -92,27 +104,28 @@ const LoginForm = ({ onLogin }) => {
             </div>
           </div>
 
-          <div style={btnContainer}>
-            <button
-                style={btnStyle}
-                onMouseEnter={onBtnhover}
-                onMouseLeave={offBtnhover}
-                type="submit"
-            >
-              Login
-            </button>
-            {error && <Alert severity="error">{error}</Alert>}
-          </div>
-        </form>
-        <button
-            style={btnStyle}
-            onMouseEnter={onBtnhover}
-            onMouseLeave={offBtnhover}
-            onClick={handleMakeAcc}
-        >
-          Create Account
-        </button>
-      </div>
+        <div style={btnContainer}>
+          <button
+            style={loginBtnStyle}
+            onMouseEnter={onLoginBtnHover}
+            onMouseLeave={offLoginBtnHover}
+            type="submit"
+          >
+            Login
+          </button>
+          {error && <Alert severity="error">{error}</Alert>}
+        </div>
+      </form>
+
+      <button
+        style={createAccBtnStyle}
+        onMouseEnter={onCreateAccBtnHover}
+        onMouseLeave={offCreateAccBtnHover}
+        onClick={handleMakeAcc}
+      >
+        Create Account
+      </button>
+    </div>
   );
 };
 
