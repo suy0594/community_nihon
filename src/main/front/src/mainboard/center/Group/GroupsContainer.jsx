@@ -8,6 +8,9 @@ const GroupsContainer = () => {
     return (
         <>
         <PreGroup />
+        <PreGroup />
+        <PreGroup />
+        <PreGroup />
         </>
     );
 };

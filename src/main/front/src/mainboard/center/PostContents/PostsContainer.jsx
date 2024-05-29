@@ -17,20 +17,18 @@ const PostsContainer = ({userID}) => {
       });
   }, []); 
   return (
-    <div className="profile-container">
-      
+    
       <div className="tweet-list">
         <div className="tweet">
         {boards.length > 0 ? (
         boards.map(board => (
-          <Post key={board.id} id={board.id} title={board.title} text={board.content} />
+          <Post key={board.id} id={board.userId} title={board.title} text={board.content} time={board.created_time} />
         ))
       ) : (
         <p>Loading...</p> 
       )}
         </div>
       </div>
-    </div>
   );
 };
 

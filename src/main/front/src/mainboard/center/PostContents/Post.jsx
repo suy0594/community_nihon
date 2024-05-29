@@ -4,7 +4,7 @@ import './post.css';
 
 //need => id, title, text, + post time, userId
 
-const Post = ({id, title, text}) => {
+const Post = ({id, title, text, time}) => {
     const handleLikeButton = async() => {
         try {
             const response = await axios.post('/api/like_yous', {
@@ -42,8 +42,8 @@ const Post = ({id, title, text}) => {
             <div className="tweet-header">
                 <img src="/testaccountinfo/knu_emeblem.jpg" className='pict' alt='account picture'></img>
                 <div className="user-info">
-                    <span className="username">{title}</span>
-                    <span className="handle">@{id}</span>
+                    <span className="username">@{id}</span>
+                    <span className="handle">{title}</span>
                 </div>
             </div>
             <hr></hr>
@@ -53,7 +53,7 @@ const Post = ({id, title, text}) => {
                 </p>
             </div>
             <div className="tweet-footer">
-                <span className="timestamp">2024:05:24:20:00</span>
+                <span className="timestamp">{time}</span>
                 <div className="actions">
                     <button className="like-button" onClick={handleLikeButton}>Like</button>
                     <button className="reply-button" onClick={handleReplyButton}>Reply</button>
