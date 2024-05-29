@@ -7,7 +7,7 @@
     border-radius: 8px; /* 角を丸くする */
     padding: 4px; /* 内側の余白 */
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 影をつける */
-    background-color: #f9f9f9; /* 背景色 */
+    background: #2d445d; /* 背景色 */
   }
   
   .picture {

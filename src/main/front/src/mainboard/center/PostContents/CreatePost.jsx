@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import './CreatePost.css';
 
 const CreatePost = ({userId}) => {
   const [title, setTitle] = useState('');
@@ -29,34 +30,20 @@ const CreatePost = ({userId}) => {
     }
   };
 
-
-//comment to add github 
-
-
-
   return (
-    <div>
-      <h2>掲示板作成</h2>
+    <div className='CreatePost'>
+      <h2 className='Title'>掲示板作成</h2>
       {error && <div style={{ color: 'red' }}>{error}</div>}
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className='createPostForm'>
         <div>
-          <label>題名:</label>
-          <input
-            type="text"
-            name="title"
-            value={title}
-            onChange={handleChange}
-          />
-        </div>
-        <div>
-          <label>内容:</label>
           <textarea
             name="content"
             value={content}
             onChange={handleChange}
+            className='CPTextarea'
           />
         </div>
-        <button type="submit">作成</button>
+        <button type="submit" className='CPButton'>作成</button>
       </form>
     </div>
   );
