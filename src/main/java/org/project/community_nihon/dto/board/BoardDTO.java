@@ -12,11 +12,11 @@ public class BoardDTO {
 
     private Long id;  // 게시판 아이디
 
-    private Account origin;   // 작성자의 계정 식별
+    private Long origin;   // 작성자의 계정 식별
 
     private String userId;  // 유저 아이디
 
-    private Community community;  // 커뮤니티
+    private String community;  // 커뮤니티
 
     private String content;  // 내용
 

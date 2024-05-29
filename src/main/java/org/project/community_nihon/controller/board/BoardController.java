@@ -14,6 +14,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/boards")
 @RequiredArgsConstructor
+@CrossOrigin(origins = "*")
 public class BoardController {
 
     private final BoardServiceImpl boardService;
@@ -37,7 +38,7 @@ public class BoardController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteBoard(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteBoarsatd(@PathVariable Long id) {
         boardService.deleteBoard(id);
         return ResponseEntity.noContent().build();
     }

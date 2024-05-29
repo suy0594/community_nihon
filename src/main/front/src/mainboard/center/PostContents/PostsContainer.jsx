@@ -8,8 +8,9 @@ const PostsContainer = ({userID}) => {
     const [boards, setBoards] = useState([]);
 
     useEffect(() => {
-        axios.get('/api/boards')
+        axios.get('http://localhost:8080/api/boards')
             .then(response => {
+                console.log("success");
                 setBoards(response.data);
             })
             .catch(error => {
@@ -23,7 +24,7 @@ const PostsContainer = ({userID}) => {
                 <div className="tweet">
                     {boards.length > 0 ? (
                         boards.map(board => (
-                            <Post key={board.id} id={board.id} title={board.title} text={board.content} />
+                            <Post key={board.id} id={board.userId} text={board.content} />
                         ))
                     ) : (
                         <p>Loading...</p>

@@ -33,19 +33,25 @@ public class BoardServiceImpl implements BoardService {
         return modelMapper.map(board, BoardDTO.class);
     }
 
+    public BoardDTO convertToDTO(Board board) {
+        BoardDTO boardDTO = new BoardDTO();
+        boardDTO.setId(board.getId());
+        boardDTO.setOrigin(board.getOrigin().getId());
+        boardDTO.setContent(board.getContent());
+        boardDTO.setUserId(userRepository.getUserByAccount(board.getOrigin()));
+        // 필요한 다른 필드들도 여기에 설정하세요.
+        return boardDTO;
+    }
+
     @Override
     public List<BoardDTO> getAllBoards() {
         List<BoardDTO> boardDTOList = boardRepository.findAll().stream()
-                .map(board -> {
-                    BoardDTO boardDTO = modelMapper.map(board, BoardDTO.class);
-                    String userId = userRepository.getUserByAccount(board.getOrigin());
-                    boardDTO.setUserId(userId);
-                    return boardDTO;
-                })
+                .map(this::convertToDTO)
                 .collect(Collectors.toList());
 
         return boardDTOList;
     }
+
 
     @Override
     public BoardDTO createBoard(String userId,
@@ -63,8 +69,11 @@ public class BoardServiceImpl implements BoardService {
         Board result = boardRepository.save(board); // board 객체 저장
 
 
-        BoardDTO boardDTO1 = modelMapper.map(result, BoardDTO.class);
-        boardDTO1.setUserId(userId);
+        BoardDTO boardDTO1 = new BoardDTO();
+        boardDTO1.setUserId(userRepository.getUserByAccount(board.getOrigin()));
+        boardDTO1.setContent(board.getContent());
+        boardDTO1.setId(board.getId());
+        boardDTO1.setOrigin(board.getOrigin().getId());
 
         return boardDTO1;
     }
