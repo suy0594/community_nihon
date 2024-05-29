@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-const CreatePost = ({userId}) => {
+const CreatePost = () => {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [boardId, setBoardId] = useState(null);
@@ -19,10 +19,10 @@ const CreatePost = ({userId}) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('/api/boards', { title, content, userId });
+      const response = await axios.post('/api/boards', { title, content });
       setBoardId(response.data);
       setError(null);
-      console.log('生成された掲示板のID:', response.data);
+      console.log('生成されたGroupのID:', response.data);
     } catch (error) {
       setError('ボードの作成に失敗しました');
       console.error('エラー:', error);
@@ -31,11 +31,11 @@ const CreatePost = ({userId}) => {
 
   return (
     <div>
-      <h2>掲示板作成</h2>
+      <h2>Group作成</h2>
       {error && <div style={{ color: 'red' }}>{error}</div>}
       <form onSubmit={handleSubmit}>
         <div>
-          <label>題名:</label>
+          <label>Group名:</label>
           <input
             type="text"
             name="title"

@@ -2,7 +2,7 @@ import React from 'react';
 import './Profile.css';
 import Post from '../PostContents/Post';
 
-
+//need account info = username, userId, user introduction, number of posts, following, followers
 
 const Profile = () => {
   return (
