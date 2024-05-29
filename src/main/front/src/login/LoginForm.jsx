@@ -44,24 +44,24 @@ const LoginForm = ({ onLogin }) => {
   };
 
   const navigate = useNavigate();
-  const [username, setId] = useState('');
-  const [password, setPassword] = useState(''); 
-  const [error, setError] = useState(''); 
+  const [userId, setId] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
 
   const handleLogin = async (e) => {
-    e.preventDefault(); 
+    e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:8080/api/login?', { username, password });
-      if (response.data.success) {
+      const response = await axios.post('http://localhost:8080/api/login', { userId, password });
+      if (response.data === "success") {
         <Alert severity="success">Success for Login.</Alert>
-        onLogin(username); 
-        navigate('/'); 
+        onLogin(userId);
+        navigate('/');
       } else {
-        setError('Invalid ID or password'); 
+        setError('Invalid ID or password');
       }
     } catch (error) {
       console.error('Error:', error);
-      setError('An error occurred during login'); 
+      setError('An error occurred during login');
     }
   };
 
@@ -77,42 +77,42 @@ const LoginForm = ({ onLogin }) => {
   };
 
   return (
-    <div style={divstyle}>
-      <h2>Login</h2>
-      <hr></hr>
-      <form onSubmit={handleLogin}>
-        <div style={inputContainer}>
-          <div>
-            <label>ID : </label>
-            <input type="text" value={username} onChange={(e) => setId(e.target.value)} />
+      <div style={divstyle}>
+        <h2>Login</h2>
+        <hr></hr>
+        <form onSubmit={handleLogin}>
+          <div style={inputContainer}>
+            <div>
+              <label>ID : </label>
+              <input type="text" value={userId} onChange={(e) => setId(e.target.value)} />
+            </div>
+            <div>
+              <label>PW : </label>
+              <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+            </div>
           </div>
-          <div>
-            <label>PW : </label>
-            <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
-          </div>
-        </div>
 
-        <div style={btnContainer}>
-          <button
+          <div style={btnContainer}>
+            <button
+                style={btnStyle}
+                onMouseEnter={onBtnhover}
+                onMouseLeave={offBtnhover}
+                type="submit"
+            >
+              Login
+            </button>
+            {error && <Alert severity="error">{error}</Alert>}
+          </div>
+        </form>
+        <button
             style={btnStyle}
             onMouseEnter={onBtnhover}
             onMouseLeave={offBtnhover}
-            type="submit"
-          >
-            Login
-          </button>
-          {error && <Alert severity="error">{error}</Alert>}
-        </div>
-      </form>
-      <button
-        style={btnStyle}
-        onMouseEnter={onBtnhover}
-        onMouseLeave={offBtnhover}
-        onClick={handleMakeAcc}
-      >
-        Create Account
-      </button>
-    </div>
+            onClick={handleMakeAcc}
+        >
+          Create Account
+        </button>
+      </div>
   );
 };
 

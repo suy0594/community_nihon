@@ -1,11 +1,12 @@
 package org.project.community_nihon.config;
-
+/*
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.project.community_nihon.security.CustomUserDetailsService;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -19,6 +20,8 @@ import org.springframework.security.web.authentication.rememberme.PersistentToke
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import javax.sql.DataSource;
 import java.util.Arrays;
@@ -27,7 +30,7 @@ import java.util.Arrays;
 @Configuration
 @RequiredArgsConstructor
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-public class CustomSecurityConfig {
+public class CustomSecurityConfig implements WebMvcConfigurer {
 
     private final DataSource dataSource;
     private final CustomUserDetailsService userDetailsService;
@@ -53,8 +56,10 @@ public class CustomSecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.cors(Customizer.withDefaults());
         http.csrf().disable();
-        http.authorizeRequests(requests -> requests
+        http.authorizeHttpRequests(requests -> requests
                 .requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/api/login/**", "/api/join/**").permitAll()
+                .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll() // Preflight Request 허용
+                .requestMatchers("/api/**").hasAuthority("USER") // "/api/v1/**" 경로에 USER 권한 필요
                 .anyRequest().authenticated()
         );
         http.formLogin(form -> form
@@ -79,11 +84,19 @@ public class CustomSecurityConfig {
                 .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED);
 
         // 특정 경로에 대해 HTTPS로 강제 리디렉션
+        /*
         http.requiresChannel()
                 .requestMatchers("/api/login", "/api/join")
                 .requiresSecure();
+        */
 
-        return http.build();
+/*
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
+import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
+import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;return http.build();
     }
 
     @Bean
@@ -98,4 +111,13 @@ public class CustomSecurityConfig {
         repo.setDataSource(dataSource);
         return repo;
     }
+
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**")
+                .allowedOrigins("http://localhost:3000")
+                .allowedMethods("GET", "POST", "PUT", "DELETE", "HEAD", "OPTIONS");
+    }
 }
+
+ */

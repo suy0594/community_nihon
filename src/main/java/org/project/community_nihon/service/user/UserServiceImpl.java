@@ -1,5 +1,6 @@
 package org.project.community_nihon.service.user;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.modelmapper.ModelMapper;
@@ -18,6 +19,8 @@ import org.project.community_nihon.repository.utility.CertificationRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Log4j2
 @Service
 @RequiredArgsConstructor
@@ -29,11 +32,23 @@ public class UserServiceImpl implements UserService{
 
     private final AccountRepository accountRepository;
 
-    private final PasswordEncoder passwordEncoder;
 
     private final CommunityRepository communityRepository;
 
     private final CertificationRepository certificationRepository;
+
+    @Transactional
+    @Override
+    public String login(String userId, String password) {
+        Optional<UserVO> userVOOptional = userRepository.findById(userId);
+        if (userVOOptional.isPresent()) {
+            UserVO user = userVOOptional.get();
+            if (user.getPassword().equals(password)) {
+                return "success";
+            }
+        }
+        return "fail";
+    }
 
     @Override
     public void join(UserVODTO userVODTO) throws IdExistException {
@@ -50,7 +65,6 @@ public class UserServiceImpl implements UserService{
         Account result = accountRepository.save(account);
 
         UserVO userVO = modelMapper.map(userVODTO, UserVO.class);
-        userVO.changePassword(passwordEncoder.encode(userVODTO.getPassword()));
         userVO.addRole(UserRole.USER);
         userVO.addAccount(result);
 

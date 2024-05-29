@@ -19,4 +19,6 @@ public interface UserRepository extends JpaRepository<UserVO, String> {
     @Query("SELECT u.origin FROM UserVO u WHERE u.id = :id")
     Account findAccountByUserId(@Param("id") String id);
 
+    @Query("SELECT n.id from UserVO n where n.origin = :origin")
+    String getUserByAccount(Account origin);
 }

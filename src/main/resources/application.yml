@@ -20,4 +20,5 @@ logging:
       springframework: info
       project: debug
       springframework.security: trace
-
+server:
+  port: 8080

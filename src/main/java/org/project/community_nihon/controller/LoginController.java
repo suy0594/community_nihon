@@ -4,8 +4,10 @@ package org.project.community_nihon.controller;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.project.community_nihon.dto.user.UserVODTO;
+import org.project.community_nihon.security.dto.UserLogin;
 import org.project.community_nihon.security.dto.UserSecurityDTO;
 import org.project.community_nihon.service.user.UserService;
+import org.project.community_nihon.service.user.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,28 +27,18 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @CrossOrigin(origins = "*")
 public class LoginController {
 
-    private final UserService userService;
+    private final UserServiceImpl userService;
 
     private AuthenticationManager authenticationManager;
 
     @PostMapping("/login")
-    public ResponseEntity<?> authenticateUser(@RequestParam String username, @RequestParam String password) {
+    public ResponseEntity<?> authenticateUser(@RequestBody UserLogin userLogin) {
 
-        log.info("Login request received for ID: {}", username);
+        log.info(userLogin);
 
-        try {
-            Authentication authentication = authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(username, password)
-            );
+        String string = userService.login(userLogin.getUserId(), userLogin.getPassword());
 
-            SecurityContextHolder.getContext().setAuthentication(authentication);
-            log.info("User successfully authenticated");
-
-            return ResponseEntity.ok("User successfully authenticated");
-        } catch (AuthenticationException e) {
-            log.error("Authentication failed: {}", e.getMessage());
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Authentication failed: " + e.getMessage());
-        }
+        return ResponseEntity.ok(string);
     }
 
 

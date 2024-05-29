@@ -10,12 +10,18 @@ import org.project.community_nihon.domain.community.Community;
 @Data
 public class BoardDTO {
 
-    private Long id;
+    private Long id;  // 게시판 아이디
 
-    private Account origin;
+    private Account origin;   // 작성자의 계정 식별
 
-    private Community community;
+    private String userId;  // 유저 아이디
 
-    private String content;
+    private Community community;  // 커뮤니티
+
+    private String content;  // 내용
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
 
 }

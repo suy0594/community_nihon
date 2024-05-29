@@ -14,29 +14,29 @@ import './Mainboard.css';
 const Mainboard = ({ userId, onLogout }) => {
 
   return (
-    <>
-    <div style={{ display: 'flex' }}>
-      <div className="leftside">
-        <Leftsidemenu userId={userId} />
-      </div>
+      <>
+        <div style={{ display: 'flex' }}>
+          <div className="leftside">
+            <Leftsidemenu userId={userId} />
+          </div>
 
-      <div className='centerside'>
-        <Routes>
-          <Route path="home" element={<Posts userId={userId} />} />
-          <Route path="my" element={<MyAccount />} />
-          <Route path="search" element={<Search />} />
-          <Route path="setting" element={<Setting Logout={onLogout} />} />
-          <Route path='createPost' element={<CreatePost /> } />
-        </Routes>
-      </div>
+          <div className='centerside'>
+            <Routes>
+              <Route path="home" element={<Posts userId={userId} />} />
+              <Route path="my" element={<MyAccount />} />
+              <Route path="search" element={<Search />} />
+              <Route path="setting" element={<Setting Logout={onLogout} />} />
+              <Route path='createPost' element={<CreatePost /> } />
+            </Routes>
+          </div>
 
-      <div className='rightside'>
-        <Notification />
-        <BoardButton />
-      </div>
-    </div>
-    
-    </>
+          <div className='rightside'>
+            <Notification />
+            <BoardButton />
+          </div>
+        </div>
+
+      </>
   );
 };
 

@@ -5,7 +5,7 @@ const BoardButton = () => {
     const navigate = useNavigate();
     return (
         <>
-        <button onClick={() => {navigate('createPost');}}>Create Post</button>
+            <button onClick={() => {navigate('createPost');}}>Create Post</button>
         </>
     );
 };

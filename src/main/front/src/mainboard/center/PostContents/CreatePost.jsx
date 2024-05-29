@@ -36,30 +36,30 @@ class CreatePost extends React.Component {
     const { title, content, error } = this.state;
 
     return (
-      <div>
-        <h2>掲示板作成</h2>
-        {error && <div style={{ color: 'red' }}>{error}</div>}
-        <form onSubmit={this.handleSubmit}>
-          <div>
-            <label>題名:</label>
-            <input
-              type="text"
-              name="title"
-              value={title}
-              onChange={this.handleChange}
-            />
-          </div>
-          <div>
-            <label>内容:</label>
-            <textarea
-              name="content"
-              value={content}
-              onChange={this.handleChange}
-            />
-          </div>
-          <button type="submit">作成</button>
-        </form>
-      </div>
+        <div>
+          <h2>掲示板作成</h2>
+          {error && <div style={{ color: 'red' }}>{error}</div>}
+          <form onSubmit={this.handleSubmit}>
+            <div>
+              <label>題名:</label>
+              <input
+                  type="text"
+                  name="title"
+                  value={title}
+                  onChange={this.handleChange}
+              />
+            </div>
+            <div>
+              <label>内容:</label>
+              <textarea
+                  name="content"
+                  value={content}
+                  onChange={this.handleChange}
+              />
+            </div>
+            <button type="submit">作成</button>
+          </form>
+        </div>
     );
   }
 }

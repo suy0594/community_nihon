@@ -35,35 +35,51 @@ public class BoardServiceImpl implements BoardService {
 
     @Override
     public List<BoardDTO> getAllBoards() {
-        return boardRepository.findAll().stream()
-                .map(board -> modelMapper.map(board, BoardDTO.class))
+        List<BoardDTO> boardDTOList = boardRepository.findAll().stream()
+                .map(board -> {
+                    BoardDTO boardDTO = modelMapper.map(board, BoardDTO.class);
+                    String userId = userRepository.getUserByAccount(board.getOrigin());
+                    boardDTO.setUserId(userId);
+                    return boardDTO;
+                })
                 .collect(Collectors.toList());
+
+        return boardDTOList;
     }
 
     @Override
-    public Long createBoard(BoardDTO boardDTO, Long community) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        Optional<UserVO> userVO = userRepository.findById(authentication.getName());
+    public BoardDTO createBoard(String userId,
+                                String content,
+                                String title) {
+        Optional<UserVO> userVO = userRepository.findById(userId);
 
-        Optional<Community> group = communityRepository.findById(community);
+        Community group = communityRepository.getCommunityByTitle(title);
 
-        Board board = modelMapper.map(boardDTO, Board.class);
-        board.updateAccount(userVO.get().getOrigin()); // origin 값 설정
-        board.setCommunity(group.get());
+        Board board = Board.builder()
+                        .origin(userVO.get().getOrigin())
+                                .community(group)
+                                        .content(content)
+                                                .build();
+        Board result = boardRepository.save(board); // board 객체 저장
 
-        boardRepository.save(board); // board 객체 저장
-        return board.getId();
+
+        BoardDTO boardDTO1 = modelMapper.map(result, BoardDTO.class);
+        boardDTO1.setUserId(userId);
+
+        return boardDTO1;
     }
 
     @Override
-    public void modifyBoard(BoardDTO boardDTO) {
-        Optional<Board> board = boardRepository.findById(boardDTO.getId());
+    public String modifyBoard(Long BoardId,String content) {
+        Optional<Board> board = boardRepository.findById(BoardId);
         if(board.isPresent()) {
-            board.get().updateContent(boardDTO.getContent());
+            board.get().updateContent(content);
             boardRepository.save(board.get());
+            return "success";
         } else {
             throw new IllegalArgumentException("No board with the given id found");
         }
+
     }
 
     @Override

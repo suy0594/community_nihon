@@ -6,6 +6,7 @@ import lombok.Data;
 import org.project.community_nihon.domain.account.Account;
 
 @Data
+
 public class CommunityDTO {
 
     private Account origin_master;
