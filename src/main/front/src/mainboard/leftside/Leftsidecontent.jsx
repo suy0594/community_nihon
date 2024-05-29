@@ -3,6 +3,7 @@ import HomeIcon from '@mui/icons-material/Home';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import SearchIcon from '@mui/icons-material/Search';
 import SettingsIcon from '@mui/icons-material/Settings';
+import PeopleIcon from '@mui/icons-material/People';
 
 export const Leftsidecontent = [
     {
@@ -14,6 +15,11 @@ export const Leftsidecontent = [
         title : "MY ACCOUNT",
         icon : <AccountCircleIcon />,
         link : "/main/my",
+    },
+    {
+        title : "GROUPS",
+        icon : <PeopleIcon />,
+        link : "/main/groups",
     },
     {
         title : "SEARCH",
