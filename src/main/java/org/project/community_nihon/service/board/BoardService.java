@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface BoardService {
     BoardDTO createBoard(BoardDTO boardDTO);
-    BoardDTO getBoard(Long id);
+    List<BoardDTO> getBoardsByUserId(String userId);
     List<BoardDTO> getAllBoards();
     String modifyBoard(Long BoardId,String content);
     void deleteBoard(Long id);

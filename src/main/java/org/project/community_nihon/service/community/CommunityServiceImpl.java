@@ -3,9 +3,11 @@ package org.project.community_nihon.service.community;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.project.community_nihon.domain.account.Account;
+import org.project.community_nihon.domain.board.Board;
 import org.project.community_nihon.domain.community.Community;
 import org.project.community_nihon.domain.user.UserVO;
 import org.project.community_nihon.domain.utility.Certification;
+import org.project.community_nihon.dto.board.BoardDTO;
 import org.project.community_nihon.dto.community.CommunityDTO;
 import org.project.community_nihon.repository.board.BoardRepository;
 import org.project.community_nihon.repository.community.CommunityRepository;
@@ -71,6 +73,46 @@ public class CommunityServiceImpl implements CommunityService {
         return communityDTO1;
     }
 
+    @Transactional
+    @Override
+    public CommunityDTO getCommunity(Long id) {
+        Optional<Community> community = communityRepository.findById(id);
+        CommunityDTO communityDTO = new CommunityDTO();
+        communityDTO.setId(community.get().getCommunity());
+        communityDTO.setTitle(community.get().getTitle());
+        communityDTO.setDescription(community.get().getDescription());
+        communityDTO.setIs_group(community.get().getIs_group());
+
+        // Count members and posts for each community
+        Long numberOfMembers = communityRepository.countMembersByCommunityId(community.get().getCommunity());
+        int numberOfPosts = boardRepository.countPostsByCommunityId(community.get().getCommunity());
+
+        communityDTO.setNumber_of_member(numberOfMembers != null ? numberOfMembers.intValue() : 0);
+        communityDTO.setNumber_of_posts(numberOfPosts);
+
+        return communityDTO;
+    }
+
+    @Transactional
+    @Override
+    public List<BoardDTO> getBoardById(Long id) {
+        List<Board> boards = boardRepository.findByCommunityId(id);
+        return boards.stream()
+                .map(this::convertToDTO)
+                .collect(Collectors.toList());
+    }
+    public BoardDTO convertToDTO(Board board) {
+        BoardDTO boardDTO = new BoardDTO();
+        boardDTO.setId(board.getId());
+        boardDTO.setOrigin(board.getOrigin().getId());
+        boardDTO.setContent(board.getContent());
+        boardDTO.setUserId(userRepository.getUserByAccount(board.getOrigin()));
+        boardDTO.setCreated_time(board.getCreated_time());
+        return boardDTO;
+    }
+
+    @Transactional
+    @Override
     public List<CommunityDTO> getAllCommunities() {
         List<Community> communities = communityRepository.findAll();
         return communities.stream()

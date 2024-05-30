@@ -4,40 +4,33 @@ import './Profile.css';
 import Post from '../PostContents/Post';
 import axios from 'axios';
 
-const Profile = () => {
+const Profile = (userId) => {
     const [profileData, setProfileData] = useState(null);
+    const [posts, setPosts] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const { userId } = useParams();
-    console.log("out of if" + userId);
+    const { posterId } = useParams();
 
     useEffect(() => {
         const fetchProfileData = async () => {
-
             try {
-                console.log(userId);
-                const response = await axios.post(`http://localhost:8080/api/user/${userId}`);
-
-                setProfileData(response.data);
+                console.log("유저~~ : " + userId.userId);
+                console.log("포스터~~ : " + posterId);
+                const profileResponse = await axios.get(`http://localhost:8080/api/user/` + posterId);
+                setProfileData(profileResponse.data);
+                const postsResponse = await axios.get(`http://localhost:8080/api/user/` + userId.userId + `/profile/` + posterId);
+                console.log("게시판게시판: " + postsResponse.data);
+                setPosts(postsResponse.data);
             } catch (error) {
-                setError('Error fetching profile data');
-                console.error('Error fetching profile data:', error);
+                setError('Error fetching profile data or posts');
+                console.error('Error fetching profile data or posts:', error);
             } finally {
                 setLoading(false);
             }
         };
-      
-        fetchProfileData();
-      }, [userId]);
 
-    const handleLikeButton = async () => {
-        try {
-            const response = await axios.post('/api/user', { userId });
-            console.log('Bookmark created:', response.data);
-        } catch (error) {
-            console.error('Error creating bookmark:', error);
-        }
-    };
+        fetchProfileData();
+    }, [posterId]);
 
     if (loading) return <p>Loading...</p>;
     if (error) return <p>{error}</p>;
@@ -48,7 +41,7 @@ const Profile = () => {
                 <img src="/testaccountinfo/knu_emeblem.jpg" className='pict' alt='account picture' />
                 <div className="profile-info">
                     <h2 className="profile-name">{profileData.screen_name}</h2>
-                    <p className="profile-handle">@{userId}</p>
+                    <p className="profile-handle">@{posterId}</p>
                     <p className="profile-bio">{profileData.introduction}</p>
                     <div className="profile-stats">
                         <p>Posts: {profileData.number_of_posts}</p>
@@ -58,9 +51,20 @@ const Profile = () => {
                 </div>
             </div>
             <div className="tweet-list">
-                <div className="tweet">
-
-                </div>
+                {posts.length > 0 ? (
+                    posts.map(post => (
+                        <Post
+                            key={post.id}
+                            userId={posterId}
+                            posterId={post.userId}
+                            title={post.title}
+                            text={post.content}
+                            time={post.created_time}
+                        />
+                    ))
+                ) : (
+                    <p>No posts available</p>
+                )}
             </div>
         </div>
     );

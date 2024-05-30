@@ -1,49 +1,73 @@
 import React,{ useState, useEffect } from "react";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import Post from "../PostContents/Post";
 import axios from 'axios';
 
-//Group name, Group Id, Group picture, Group description, number of Posts, number of member, 
+const Group = ({userId}) => {
+    const navigate = useNavigate();
+    const {groupId } = useParams(); // パラメータを直接取得
+    const [group, setGroup] = useState([]);
+    const [posts, setPosts] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
-const Group = () => {
-  const navigate = useNavigate();
+    useEffect(() => {
+        console.log("in Group groupId get from url" + groupId);
+        console.log("in Group userId get from url " + userId);
+        const fetchGroupData = async () => {
+            try {
+                const groupResponse = await axios.get(`http://localhost:8080/api/communities/${groupId}`);
+                setGroup(groupResponse.data);
+                const postsResponse = await axios.get(`http://localhost:8080/api/communities/${groupId}/posts`); //check api
+                setPosts(postsResponse.data);
+            } catch (error) {
+                setError('Error fetching group data or posts');
+                console.error('Error:', error);
+            } finally {
+                setLoading(false);
+            }
+        };
 
-    const [group, setGroup] = useState([]); 
+        fetchGroupData();
+    }, [groupId]);
 
-  useEffect(() => {
-    axios.get('http://localhost:8080/api/communities/${id}') 
-      .then(response => {
-        setGroup(response.data); 
-      })
-      .catch(error => {
-        console.error('Error:', error); 
-      });
-  }, []); 
+    if (loading) return <p>Loading...</p>;
+    if (error) return <p>{error}</p>;
+
     return (
         <>
-        <div className="profile-container">
-        <div className="profile-header">
-        <img src="/testaccountinfo/knu_emeblem.jpg" className='pict' alt='account picture'></img>
-            <div className="profile-info">
-            <h2 className="profile-name">{Group.title}</h2>
-            <p className="profile-handle">@{Group.id}</p>
-            <p className="profile-bio">{Group.description}</p>
-            <div className="profile-stats">
-                <p>Posts: {Group.number_of_posts}</p>
-                <p>Member: {Group.number_of_member}</p>
+            <div className="profile-container">
+                <div className="profile-header">
+                    <img src="/testaccountinfo/knu_emeblem.jpg" className='pict' alt='account picture'></img>
+                    <div className="profile-info">
+                        <h2 className="profile-name">{group.title}</h2>
+                        <p className="profile-handle">@{group.id}</p>
+                        <p className="profile-bio">{group.description}</p>
+                        <div className="profile-stats">
+                            <p>Posts: {group.number_of_posts}</p>
+                            <p>Member: {group.number_of_member}</p>
+                        </div>
+                    </div>
+                </div>
+                <button onClick={() => {navigate(`./createGroupPost`);}}>CREATE IN GROUP POST
+                </button>
+                <div className="tweet-list">
+                    {posts.length > 0 ? (
+                        posts.map(post => (
+                            <Post
+                                key={post.id}
+                                userId={userId}
+                                posterId={post.userId}
+                                title={post.title}
+                                text={post.content}
+                                time={post.created_time}
+                            />
+                        ))
+                    ) : (
+                        <p>No posts available</p>
+                    )}
+                </div>
             </div>
-            </div>
-        </div>
-        <button onClick={() => {navigate('${id}/createGroupPost');}}>CREATE IN GROUP POST</button>
-        <div className="tweet-list">
-            <div className="tweet">
-            <Post />
-            </div>
-            <div className="tweet">
-            <Post />
-            </div>
-        </div>
-        </div>
         </>
     );
 };
