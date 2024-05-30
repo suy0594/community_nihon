@@ -54,17 +54,15 @@ public class BoardServiceImpl implements BoardService {
 
 
     @Override
-    public BoardDTO createBoard(String userId,
-                                String content,
-                                String title) {
-        Optional<UserVO> userVO = userRepository.findById(userId);
+    public BoardDTO createBoard(BoardDTO boardDTO) {
+        Optional<UserVO> userVO = userRepository.findById(boardDTO.getUserId());
 
-        Community group = communityRepository.getCommunityByTitle(title);
+        Community group = communityRepository.getCommunityByTitle(boardDTO.getCommunity());
 
         Board board = Board.builder()
                         .origin(userVO.get().getOrigin())
                                 .community(group)
-                                        .content(content)
+                                        .content(boardDTO.getContent())
                                                 .build();
         Board result = boardRepository.save(board); // board 객체 저장
 

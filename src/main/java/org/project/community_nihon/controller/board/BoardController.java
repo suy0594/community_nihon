@@ -20,12 +20,9 @@ public class BoardController {
     private final BoardServiceImpl boardService;
 
     // 생성
-    @PostMapping
-    public ResponseEntity<BoardDTO> createBoard(String userId,
-                                             String content,
-                                              String title)
-                                            {
-        BoardDTO boardDTO = boardService.createBoard(userId, content, title);
+    @PostMapping("/create")
+    public ResponseEntity<BoardDTO> createBoard(@RequestBody BoardDTO boardDTO) {
+        BoardDTO boardDTO1 = boardService.createBoard(boardDTO);
 
         return ResponseEntity.ok(boardDTO);
 
