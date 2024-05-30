@@ -3,12 +3,12 @@ import axios from 'axios';
 import SearchingBox from './SearchingBox';
 
 const Search = () => {
-  
+
 
   return (
-    <>
-    <SearchingBox />
-    </>
+      <>
+        <SearchingBox />
+      </>
   );
 };
 

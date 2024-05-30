@@ -12,19 +12,19 @@ const Login = ({ onLogin }) => {
     right:  '0',                  /* 位置指定 */
     margin:  'auto',               /* 中央寄せ */
     width:  'auto',               /* 幅指定 */
-                /* 高さ指定 */
+    /* 高さ指定 */
   };
   const [isShowMakeAcc, setShowMakeAcc] = useState(false);
   const handleShowMakeAcc = () => {
     setShowMakeAcc(!isShowMakeAcc);
   };
   return (
-    <>
-    <div style={loginContainer}>
-      {isShowMakeAcc ? <MakeAccount /> : 
-      <LoginForm onLogin={onLogin} /> }
-    </div>
-    </>
+      <>
+        <div style={loginContainer}>
+          {isShowMakeAcc ? <MakeAccount /> :
+              <LoginForm onLogin={onLogin} /> }
+        </div>
+      </>
   );
 };
 
