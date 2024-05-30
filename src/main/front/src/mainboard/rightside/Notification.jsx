@@ -25,10 +25,6 @@ const Notification = () => {
                 <Notifi />
                 <Notifi />
                 <Notifi />
-                <Notifi />
-                <Notifi />
-                <Notifi />
-                <Notifi />
             </List>
             </div>  
         </div>

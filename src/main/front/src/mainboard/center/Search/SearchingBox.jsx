@@ -13,7 +13,7 @@ export default function CustomizedInputBase() {
 
   const handleSearch = async () => {
     try {
-      const response = await axios.post('/api/search', { id });
+      const response = await axios.post('http://localhost:8080/api/search', { id });
       console.log(response.data);
     } catch (error) {
       console.error('Error:', error);
