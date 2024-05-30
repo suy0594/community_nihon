@@ -13,9 +13,11 @@ import org.project.community_nihon.dto.community.CommunityDTO;
 import org.project.community_nihon.dto.user.UserVODTO;
 import org.project.community_nihon.dto.utility.FollowDTO;
 import org.project.community_nihon.repository.account.AccountRepository;
+import org.project.community_nihon.repository.board.BoardRepository;
 import org.project.community_nihon.repository.community.CommunityRepository;
 import org.project.community_nihon.repository.user.UserRepository;
 import org.project.community_nihon.repository.utility.CertificationRepository;
+import org.project.community_nihon.repository.utility.FollowRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -32,10 +34,34 @@ public class UserServiceImpl implements UserService{
 
     private final AccountRepository accountRepository;
 
+    private final BoardRepository boardRepository;
 
     private final CommunityRepository communityRepository;
 
     private final CertificationRepository certificationRepository;
+
+    private final FollowRepository followRepository;
+
+    @Transactional
+    @Override
+    public UserVODTO registerUser(String id) {
+        Optional<UserVO> userVO = userRepository.findById(id);
+
+        UserVODTO userVODTO = new UserVODTO();
+        userVODTO.setId(id);
+        userVODTO.setPhone(userVO.get().getPhone());
+        userVODTO.setEmail(userVO.get().getEmail());
+        userVODTO.setScreen_name(userVO.get().getScreen_name());
+        userVODTO.setFollowing_count(followRepository.countFollowsByOrigin(userVO.get().getOrigin()) +
+                followRepository.countFriendOriginsByFollow(userVO.get().getOrigin()));
+        userVODTO.setFollower_count(followRepository.countOriginsByFollow(userVO.get().getOrigin()) +
+                followRepository.countFriendFollowsByOrigin(userVO.get().getOrigin()));
+
+        userVODTO.setNumber_of_posts(boardRepository.countPostsByAccountId(userVO.get().getOrigin().getId()));
+
+        return userVODTO;
+    }
+
 
     @Transactional
     @Override

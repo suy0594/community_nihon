@@ -4,13 +4,14 @@ import axios from 'axios';
 import './PostsContainer.css';
 import Post from '../PostContents/Post';
 
-const PostsContainer = ({userID}) => {
+const PostsContainer = ({userId}) => {
     const [boards, setBoards] = useState([]);
 
   useEffect(() => {
     axios.get('http://localhost:8080/api/boards')
       .then(response => {
         setBoards(response.data); 
+        console.log(userId);
       })
       .catch(error => {
         console.error('Error:', error); 
@@ -22,7 +23,7 @@ const PostsContainer = ({userID}) => {
         <div className="tweet">
         {boards.length > 0 ? (
         boards.map(boards => (
-          <Post key={boards.id} posterId={boards.userId} title={boards.title} text={boards.content} time={boards.created_time} />
+          <Post key={boards.id} userId={userId} posterId={boards.userId} title={boards.title} text={boards.content} time={boards.created_time} />
         ))
       ) : (
         <p>Loading...</p> 

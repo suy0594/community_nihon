@@ -15,7 +15,7 @@ const Leftsidecontent = ({ userId }) => [
   {
     title: "MY ACCOUNT",
     icon: <AccountCircleIcon />,
-    link: `/${userId}/my`,
+    link: `/${userId}/profile/${userId}`,
   },
   {
     title: "GROUPS",
