@@ -31,8 +31,9 @@ const Mainboard = ({ userId, onLogout }) => {
           <Route path="groups" element={<GroupsContainer /> } />
           <Route path="search" element={<Search />} />
           <Route path="setting" element={<Setting Logout={onLogout} />} />
-          <Route path='createPost' element={<CreatePost /> } />
+          <Route path='createPost' element={<CreatePost userId={userId} title={userId} /> } />
           <Route path='createGroup' element={<CreateGroup /> } />
+
         </Routes>
       </div>
 

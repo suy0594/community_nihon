@@ -8,7 +8,7 @@ const PostsContainer = ({userID}) => {
   const [boards, setBoards] = useState([]); 
 
   useEffect(() => {
-    axios.get('/api/boards') 
+    axios.get('http://localhost:8080/api/boards') 
       .then(response => {
         setBoards(response.data); 
       })

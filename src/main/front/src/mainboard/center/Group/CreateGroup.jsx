@@ -23,7 +23,7 @@ const CreateGroup = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('/api/boards', { title, content });
+      const response = await axios.post('http://localhost:8080/api/boards', { title, content });
       setBoardId(response.data);
       setError(null);
       console.log('生成されたGroupのID:', response.data);
@@ -47,7 +47,7 @@ const CreateGroup = () => {
             className='CPTextarea'
           />
         <div>
-          <label>内容:</label>
+          <label>説明:</label>
           <textarea
             name="content"
             value={content}

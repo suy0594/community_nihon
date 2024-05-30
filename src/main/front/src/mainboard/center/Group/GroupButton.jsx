@@ -1,11 +1,11 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const GroupButton = () => {
+const GroupButton = ({id}) => {
     const navigate = useNavigate();
     return (
         <>
-        <button onClick={() => {navigate('group');}}>Go to the Group</button>
+        <button onClick={() => {navigate('${id}');}}>Go to the Group</button>
         </>
     );
 };
