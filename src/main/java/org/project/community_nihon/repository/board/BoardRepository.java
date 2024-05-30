@@ -9,4 +9,7 @@ public interface BoardRepository extends JpaRepository<Board, Long> {
     @Query("SELECT COUNT(b) FROM Board b WHERE b.community.community = :communityId")
     int countPostsByCommunityId(Long communityId);
 
+    @Query("SELECT COUNT(b) FROM Board b WHERE b.origin.id = :id")
+    int countPostsByAccountId(Long id);
+
 }
