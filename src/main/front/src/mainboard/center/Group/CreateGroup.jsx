@@ -1,7 +1,11 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import "./CreateGroup.css";
 
-const CreatePost = () => {
+//need Group info =>
+//Group name, Group Id, Group picture, Group description, number of Posts, number of member,
+
+const CreateGroup = () => {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [boardId, setBoardId] = useState(null);
@@ -30,31 +34,33 @@ const CreatePost = () => {
   };
 
   return (
-    <div>
-      <h2>Group作成</h2>
+    <div className='CreatePost'>
+      <h2 className='Title'>Group作成</h2>
       {error && <div style={{ color: 'red' }}>{error}</div>}
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Group名:</label>
+      <form onSubmit={handleSubmit} className='createPostForm'>
+      <label>Group名:</label>
           <input
             type="text"
             name="title"
             value={title}
             onChange={handleChange}
+            className='CPTextarea'
           />
-        </div>
         <div>
           <label>内容:</label>
           <textarea
             name="content"
             value={content}
             onChange={handleChange}
+            className='CPTextarea'
           />
         </div>
-        <button type="submit">作成</button>
+        <button type="submit" className='CPButton'>作成</button>
       </form>
-    </div>
+      </div>
   );
 };
 
-export default CreatePost;
+export default CreateGroup;
+
+

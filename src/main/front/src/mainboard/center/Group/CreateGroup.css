@@ -1,0 +1,65 @@
+
+  /* Container */
+  .CreatePost {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  
+  .Title {
+    color: #1da1f2;
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  /* Form Styles */
+  .createPostForm {
+    background: #ffffff;
+    border: 1px solid #e1e8ed;
+    border-radius: 8px;
+    padding: 20px;
+    width: 100%;
+    max-width: 600px;
+    min-width: 100%;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  }
+  
+  .CPtextarea {
+    width: 100%;
+    height: 500px;
+    padding: 10px;
+    border: 1px solid #e1e8ed;
+    border-radius: 4px;
+    resize: none;
+    font-size: 14px;
+    color: #14171a;
+  }
+  
+  .CPtextarea:focus {
+    outline: none;
+    border-color: #1da1f2;
+  }
+  
+  /* Button Styles */
+  .CPButton {
+    background-color: #1da1f2;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    font-size: 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .CPButton:hover {
+    background-color: #0d95e8;
+  }
+  
+  .CPButton:focus {
+    outline: none;
+  }
+  
+  

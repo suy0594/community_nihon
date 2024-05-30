@@ -12,6 +12,7 @@ import Search from './center/Search/Search';
 import Setting from './center/Setting/Setting';
 import CreatePost from './center/PostContents/CreatePost';
 import CreateGroup from './center/Group/CreateGroup';
+import RightSideMemu from './rightside/RightSideMenu';
 import './Mainboard.css';
 
 const Mainboard = ({ userId, onLogout }) => {
@@ -36,11 +37,7 @@ const Mainboard = ({ userId, onLogout }) => {
       </div>
 
       <div className='rightside'>
-        <Notification />
-        <div className='Buttons' style={{display : "flex"}}>
-          <BoardButton />
-          <CreateGroupButton />
-        </div>
+        <RightSideMemu />
       </div>
     </div>
     
