@@ -13,6 +13,7 @@ import org.modelmapper.ModelMapper;
 import org.project.community_nihon.repository.community.CommunityRepository;
 import org.project.community_nihon.repository.user.UserRepository;
 import org.project.community_nihon.repository.utility.FollowRepository;
+import org.project.community_nihon.repository.utility.LikeYouRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -34,6 +35,7 @@ public class BoardServiceImpl implements BoardService {
     private final ModelMapper modelMapper;
     private final CommunityRepository communityRepository;
     private final FollowRepository followRepository;
+    private final LikeYouRepository likeYouRepository;
 
     @Override
     public List<BoardDTO> getBoardsByUserId(String userId) {
@@ -65,6 +67,7 @@ public class BoardServiceImpl implements BoardService {
                 boardDTO.setContent(board.getContent());
                 boardDTO.setUserId(userRepository.getUserByAccount(board.getOrigin()));
                 boardDTO.setCreated_time(board.getCreated_time());
+                boardDTO.setLike(likeYouRepository.countlike_youByBoardId(board.getId()));
                 boardDTOList.add(boardDTO);
             }
         }
@@ -76,6 +79,7 @@ public class BoardServiceImpl implements BoardService {
             boardDTO.setContent(board.getContent());
             boardDTO.setUserId(userRepository.getUserByAccount(board.getOrigin()));
             boardDTO.setCreated_time(board.getCreated_time());
+            boardDTO.setLike(likeYouRepository.countlike_youByBoardId(board.getId()));
             boardDTOList.add(boardDTO);
         }
         List<BoardDTO> sortedBoardDTOs = boardDTOList.stream()
@@ -109,12 +113,12 @@ public class BoardServiceImpl implements BoardService {
     public BoardDTO createBoard(BoardDTO boardDTO) {
         Optional<UserVO> userVO = userRepository.findById(boardDTO.getUserId());
 
-        Optional<Community> group = communityRepository.findById(boardDTO.getId());
+        Community group = communityRepository.getCommunityByTitle(boardDTO.getTitle());
         log.info(group);
 
         Board board = Board.builder()
                         .origin(userVO.get().getOrigin())
-                                .community(group.get())
+                                .community(group)
                                         .content(boardDTO.getContent())
                                                 .build();
         Board result = boardRepository.save(board); // board 객체 저장
@@ -125,7 +129,8 @@ public class BoardServiceImpl implements BoardService {
         boardDTO1.setContent(board.getContent());
         boardDTO1.setId(result.getId());
         boardDTO1.setOrigin(board.getOrigin().getId());
-
+        boardDTO1.setCreated_time(board.getCreated_time());
+        boardDTO1.setLike(0);
         return boardDTO1;
     }
 
