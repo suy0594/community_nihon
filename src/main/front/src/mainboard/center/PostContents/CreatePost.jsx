@@ -8,14 +8,20 @@ const CreatePost = ({userId, title}) => {
   const [error, setError] = useState(null);
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-      setContent(value);
+    console.log(e.target.value);
+      setContent(e.target.value);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log(content+"from submit"); console.log(userId+"from submit");console.log(title+"from submit");
     try {
-      const response = await axios.post('/api/boards', { title, content, userId });
+      const data = {
+        userId : userId,
+        content: content,
+        title: title
+      }
+      const response = await axios.post('http://localhost:8080/api/boards/create', data);
       setBoardId(response.data);
       setError(null);
       console.log('生成された掲示板のID:', response.data);

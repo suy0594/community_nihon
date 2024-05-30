@@ -7,7 +7,7 @@ import org.project.community_nihon.dto.board.BoardDTO;
 import java.util.List;
 
 public interface BoardService {
-    BoardDTO createBoard(String userId, String content, String title);
+    BoardDTO createBoard(BoardDTO boardDTO);
     BoardDTO getBoard(Long id);
     List<BoardDTO> getAllBoards();
     String modifyBoard(Long BoardId,String content);
