@@ -22,9 +22,6 @@ const GroupsContainer = () => {
 
     return (
         <>
-        <PreGroup />
-        <PreGroup />
-        <Group />
         <div className="tweet-list">
         <div className="tweet">
         {groups.length > 0 ? (

@@ -28,7 +28,8 @@ const CreateGroup = ({userId}) => {
         description: description,
         title: title
       }
-      const response = await axios.post('http://localhost:8080/api/communities/create', data);
+      console.log(data.userId + " " + data.description + " " + data.title);
+      const response = await axios.post('http://localhost:8080/api/communities/create' , data  );
       setBoardId(response.data);
       setError(null);
       console.log('生成されたGroupのID:', response.data);

@@ -1,32 +1,18 @@
 import React from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import './post.css';
 
-const Post = ({id, title, text, time}) => {
+const Post = ({posterId, title, text, time}) => {
+    const navigate = useNavigate();
     const handleLikeButton = async() => {
-        try {
-            const response = await axios.post('/api/like_yous', {
-                userId: id,
-                content: text
-            });
-            console.log('Bookmark created:', response.data);
-        } catch (error) {
-            console.error('Error creating bookmark:', error);
-        }
+        
     };
     const handleReplyButton = () => {
 
     };
     const handleBookmarkButton = async() => {
-        try {
-            const response = await axios.post('/api/bookmarks', {
-                userId: id,
-                content: text
-            });
-            console.log('Bookmark created:', response.data);
-        } catch (error) {
-            console.error('Error creating bookmark:', error);
-        }
+       
     };
     const handleModifyButton = () => {
 
@@ -34,15 +20,19 @@ const Post = ({id, title, text, time}) => {
     const handleDeleteButton = () => {
 
     };
+    const handleToProfile = () => {
+        console.log("clicked");
+            navigate(`/profile?userId=${posterId}`); 
+    };
     
     return(
         <>
             <div className="tweet">
-                <div className="tweet-header">
+                <div className="tweet-header"  onClick={handleToProfile}>
                     <img src="/testaccountinfo/knu_emeblem.jpg" className='pict' alt='account picture'></img>
                     <div className="user-info">
-                        <span className="username">@{id}</span>
-                        <span className="handle">{title}</span>
+                        <span className="username">@{posterId}</span>
+                        <span className="handle" >{title}</span>
                     </div>
                 </div>
                 <hr></hr>
