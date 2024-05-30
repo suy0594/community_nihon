@@ -1,6 +1,7 @@
 package org.project.community_nihon.service.board;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.project.community_nihon.domain.board.Board;
 import org.project.community_nihon.domain.community.Community;
 import org.project.community_nihon.domain.user.UserVO;
@@ -19,6 +20,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
+@Log4j2
 @RequiredArgsConstructor
 public class BoardServiceImpl implements BoardService {
 
@@ -39,7 +41,7 @@ public class BoardServiceImpl implements BoardService {
         boardDTO.setOrigin(board.getOrigin().getId());
         boardDTO.setContent(board.getContent());
         boardDTO.setUserId(userRepository.getUserByAccount(board.getOrigin()));
-        // 필요한 다른 필드들도 여기에 설정하세요.
+        boardDTO.setCreated_time(board.getCreated_time());
         return boardDTO;
     }
 
@@ -57,7 +59,8 @@ public class BoardServiceImpl implements BoardService {
     public BoardDTO createBoard(BoardDTO boardDTO) {
         Optional<UserVO> userVO = userRepository.findById(boardDTO.getUserId());
 
-        Community group = communityRepository.getCommunityByTitle(boardDTO.getCommunity());
+        Community group = communityRepository.getCommunityByTitle(boardDTO.getTitle());
+        log.info(group);
 
         Board board = Board.builder()
                         .origin(userVO.get().getOrigin())

@@ -6,6 +6,7 @@ public interface UserService {
 
     static class IdExistException extends Exception {}
 
+    UserVODTO registerUser(String id);
     String login(String userId, String password);
 
     void join(UserVODTO userVODTO) throws IdExistException;

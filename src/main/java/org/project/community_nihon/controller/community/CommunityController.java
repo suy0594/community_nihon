@@ -1,4 +1,4 @@
-package org.project.community_nihon.controller;
+package org.project.community_nihon.controller.community;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -15,6 +15,7 @@ import java.util.List;
 @RequestMapping("/api/communities")
 @RequiredArgsConstructor
 @Log4j2
+@CrossOrigin(origins = "*")
 public class CommunityController {
 
     private final CommunityServiceImpl communityService;

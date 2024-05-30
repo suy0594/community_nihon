@@ -7,6 +7,8 @@ import lombok.Data;
 import org.project.community_nihon.domain.account.Account;
 import org.project.community_nihon.domain.community.Community;
 
+import java.time.LocalDateTime;
+
 @Data
 public class BoardDTO {
 
@@ -16,9 +18,11 @@ public class BoardDTO {
 
     private String userId;  // 유저 아이디
 
-    private String community;  // 커뮤니티
+    private String title;  // 커뮤니티
 
     private String content;  // 내용
+
+    private LocalDateTime created_time;
 
     public void setUserId(String userId) {
         this.userId = userId;

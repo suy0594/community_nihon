@@ -12,4 +12,13 @@ public class ReplyBoardDTO {
 
     private String id;
 
+    private Long BoardId;
+
+    private Long origin;
+
+    private String content;
+
+    private String userId;
+
+
 }

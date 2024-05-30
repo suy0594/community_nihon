@@ -13,6 +13,7 @@ const Profile = ({ userId }) => {
             try {
                 console.log(userId);
                 const response = await axios.post(`http://localhost:8080/api/user/${userId}`);
+
                 setProfileData(response.data);
             } catch (error) {
                 setError('Error fetching profile data');
@@ -54,10 +55,7 @@ const Profile = ({ userId }) => {
             </div>
             <div className="tweet-list">
                 <div className="tweet">
-                    <Post />
-                </div>
-                <div className="tweet">
-                    <Post />
+
                 </div>
             </div>
         </div>
