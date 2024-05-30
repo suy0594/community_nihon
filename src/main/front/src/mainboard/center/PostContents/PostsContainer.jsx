@@ -8,11 +8,7 @@ const PostsContainer = ({userID}) => {
     const [boards, setBoards] = useState([]);
 
   useEffect(() => {
-<<<<<<< HEAD
     axios.get('http://localhost:8080/api/boards')
-=======
-    axios.get('http://localhost:8080/api/boards') 
->>>>>>> a444d1e7cec8938358c33ba238f7d8cc45ee970c
       .then(response => {
         setBoards(response.data); 
       })
