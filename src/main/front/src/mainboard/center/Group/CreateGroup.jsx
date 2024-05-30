@@ -5,9 +5,9 @@ import "./CreateGroup.css";
 //need Group info =>
 //Group name, Group Id, Group picture, Group description, number of Posts, number of member,
 
-const CreateGroup = () => {
+const CreateGroup = ({userId}) => {
   const [title, setTitle] = useState('');
-  const [content, setContent] = useState('');
+  const [description, setContent] = useState('');
   const [boardId, setBoardId] = useState(null);
   const [error, setError] = useState(null);
 
@@ -15,7 +15,7 @@ const CreateGroup = () => {
     const { name, value } = e.target;
     if (name === 'title') {
       setTitle(value);
-    } else if (name === 'content') {
+    } else if (name === 'description') {
       setContent(value);
     }
   };
@@ -23,7 +23,12 @@ const CreateGroup = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:8080/api/boards', { title, content });
+      const data = {
+        userId : userId,
+        description: description,
+        title: title
+      }
+      const response = await axios.post('http://localhost:8080/api/communities/create', data);
       setBoardId(response.data);
       setError(null);
       console.log('生成されたGroupのID:', response.data);
@@ -49,8 +54,8 @@ const CreateGroup = () => {
         <div>
           <label>説明:</label>
           <textarea
-            name="content"
-            value={content}
+            name="description"
+            value={description}
             onChange={handleChange}
             className='CPTextarea'
           />

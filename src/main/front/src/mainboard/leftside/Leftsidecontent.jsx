@@ -9,26 +9,26 @@ export const Leftsidecontent = [
     {
         title : "HOME",
         icon : <HomeIcon />,
-        link : "/main/home",
+        link : "/${userId}/home",
     },
     {
         title : "MY ACCOUNT",
         icon : <AccountCircleIcon />,
-        link : "/main/my",
+        link : "/${userId}/my",
     },
     {
         title : "GROUPS",
         icon : <PeopleIcon />,
-        link : "/main/groups",
+        link : "/${userId}/groups",
     },
     {
         title : "SEARCH",
         icon : <SearchIcon />,
-        link : "/main/search",
+        link : "/${userId}/search",
     },
     {
         title : "SETTING",
         icon : <SettingsIcon />,
-        link : "/main/setting",
+        link : "/${userId}/setting",
     }
 ];

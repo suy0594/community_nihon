@@ -2,6 +2,7 @@ import React,{ useState, useEffect } from "react";
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import axios from 'axios';
 import PreGroup from "./PreGroup";
+import Group from "./Group";
 
 //need Group info =>
 //Group name, Group Id, Group picture, Group description, number of Posts, number of member,
@@ -23,6 +24,7 @@ const GroupsContainer = () => {
         <>
         <PreGroup />
         <PreGroup />
+        <Group />
         <div className="tweet-list">
         <div className="tweet">
         {groups.length > 0 ? (
