@@ -22,13 +22,25 @@ public interface FollowRepository extends JpaRepository<Follow, Long> {
     @Query("SELECT count(f) FROM Follow f WHERE f.origin = :account")
     int countFollowsByOrigin(Account account);
 
+    @Query("SELECT f FROM Follow f WHERE f.origin = :account")   // 맞팔 안하는 사람 중 내가 팔로워일 떄
+    List<Follow> FollowsByOrigin(Account account);
+
     @Query("SELECT count(f) FROM Follow f WHERE f.follow = :account")
     int countOriginsByFollow(Account account);
+
+    @Query("SELECT f FROM Follow f WHERE f.follow = :account")   // 맞팔 안하는 사람 중 내가 팔로잉일 때
+    List<Follow> OriginsByFollow(Account account);
 
     @Query("SELECT count(f) FROM Follow f WHERE f.follow = :account AND f.friend = true")
     int countFriendOriginsByFollow(Account account);
 
+    @Query("SELECT f FROM Follow f WHERE f.follow = :account AND f.friend = true")
+    List<Follow> FriendOriginsByFollow(Account account);        // 맞팔 하는 사람 중 내가 팔로잉일 때
+
     @Query("SELECT count(f) FROM Follow f WHERE f.origin = :account AND f.friend = true")
     int countFriendFollowsByOrigin(Account account);
+
+    @Query("SELECT f FROM Follow f WHERE f.origin = :account AND f.friend = true")
+    List<Follow> FriendFollowsByOrigin(Account account);        // 맞팔 하는 사람 중 내가 팔로워일 때
 
 }

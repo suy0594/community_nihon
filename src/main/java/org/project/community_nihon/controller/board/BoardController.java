@@ -51,9 +51,10 @@ public class BoardController {
         return ResponseEntity.ok(boards);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/{id}")    // 팔로우중인 사람 게시글
     public ResponseEntity<List<BoardDTO>> getBoardById(@PathVariable String id) {
         List<BoardDTO> board = boardService.getBoardsByUserId(id);
+        log.info(board);
         return ResponseEntity.ok(board);
     }
 }
