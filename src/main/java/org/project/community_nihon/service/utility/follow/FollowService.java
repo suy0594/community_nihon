@@ -8,7 +8,7 @@ import java.util.Optional;
 
 public interface FollowService {
 
-    public FollowDTO createFollow(FollowDTO followDTO);
+    public FollowDTO createFollow(String id, FollowDTO followDTO);
 
     public List<FollowDTO> getAllFollows();
 

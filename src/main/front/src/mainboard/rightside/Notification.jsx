@@ -20,18 +20,17 @@ const Notification = () => {
                 </div>
             </div>
             <div className='notifi'>
-            <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
-                <Notifi />
-                <Notifi />
-                <Notifi />
-                <Notifi />
-                <Notifi />
-                <Notifi />
-                <Notifi />
-                <Notifi />
-            </List>
-            </div>  
-        </div>
+                <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
+                    <Notifi />
+                    <Notifi />
+                    <Notifi />
+                    <Notifi />
+                    <Notifi />
+                    <Notifi />
+                    <Notifi />
+                    <Notifi />
+                </List>
+            </div>
         </>
     );
 };

@@ -8,7 +8,9 @@ import java.util.List;
 
 public interface CommunityService {
 
-    Community createCommunity(CommunityDTO communityDTO);
+    CommunityDTO createCommunity(CommunityDTO communityDTO);
+
+    List<CommunityDTO> getAllCommunities();
 
 
 }

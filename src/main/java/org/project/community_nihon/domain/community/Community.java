@@ -22,6 +22,8 @@ public class Community extends BaseEntity_Created_Time {
 
     private String title;
 
+    private String description;
+
     private Boolean is_group;
 
     public void setTitle(String title) {

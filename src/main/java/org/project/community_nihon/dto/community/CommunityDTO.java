@@ -9,12 +9,21 @@ import org.project.community_nihon.domain.account.Account;
 
 public class CommunityDTO {
 
-    private Account origin_master;
+    private Long id;
 
-    private Account origin_member;
+    private String userId;
+
+    private int origin_member;
 
     private String title;
 
+    private String description;
+
     private Boolean is_group;
+
+    private int number_of_member;
+
+    private int number_of_posts;
+
 
 }

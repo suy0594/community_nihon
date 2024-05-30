@@ -16,11 +16,11 @@ public class FollowController {
 
     private final FollowServiceImpl followService;
 
-    @PostMapping
-    public ResponseEntity<FollowDTO> createFollow(@RequestBody FollowDTO followDTO) {
+    @PostMapping("/{id}/follow")
+    public ResponseEntity<FollowDTO> createFollow(@PathVariable String id, @RequestBody FollowDTO followDTO) {
         log.info("post: " + followDTO);
 
-        FollowDTO createdFollow = followService.createFollow(followDTO);
+        FollowDTO createdFollow = followService.createFollow(id, followDTO);
         log.info(createdFollow);
         return ResponseEntity.ok(createdFollow);
     }
