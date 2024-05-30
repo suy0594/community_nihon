@@ -11,7 +11,8 @@ const Profile = ({ userId }) => {
     useEffect(() => {
         const fetchProfileData = async () => {
             try {
-                const response = await axios.post('http://localhost:8080/api/user/${userId}');
+
+                const response = await axios.post(`http://localhost:8080/api/user/${userId}`);
 
                 setProfileData(response.data);
             } catch (error) {

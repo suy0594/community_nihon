@@ -41,7 +41,7 @@ public class BoardServiceImpl implements BoardService {
         boardDTO.setOrigin(board.getOrigin().getId());
         boardDTO.setContent(board.getContent());
         boardDTO.setUserId(userRepository.getUserByAccount(board.getOrigin()));
-        // 필요한 다른 필드들도 여기에 설정하세요.
+        boardDTO.setCreated_time(board.getCreated_time());
         return boardDTO;
     }
 
