@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import '../PostContents/CreatePost.css';
 
@@ -7,17 +8,20 @@ const CreateInGroupPost = ({userId}) => {
   const [title, setTitle] = useState('');
   const [boardId, setBoardId] = useState(null);
   const [error, setError] = useState(null);
+  const { id } = useParams();
 
+  /*
   useEffect(() => {
     // URLからパス部分を取得
     const path = window.location.pathname;
     // パスをスラッシュ('/')で分割し、最後の要素を取得
     const parts = path.split('/');
     const lastPart = parts[parts.length - 1];
+    console.log("lastttttttttttttt  " + lastPart);
     // groupIdとして設定
     setTitle(lastPart);
   }, []);
-
+  */
   const handleChange = (e) => {
     console.log(e.target.value);
       setContent(e.target.value);
@@ -28,10 +32,12 @@ const CreateInGroupPost = ({userId}) => {
     console.log(content+" from submit"); console.log(userId+" from submit");console.log(title+" from submit");
     try {
       const data = {
+        id : id,
         userId : userId,
         content: content,
         title: title
       }
+      console.log("-------sd-adasdasdasdasd:   " + userId);
       const response = await axios.post('http://localhost:8080/api/boards/create', data);
       setBoardId(response.data);
       setError(null);

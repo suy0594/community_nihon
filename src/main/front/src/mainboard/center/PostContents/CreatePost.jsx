@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './CreatePost.css';
 
-const CreatePost = ({userId, title}) => {
+const CreatePost = ({userId, title = userId}) => {
   const [content, setContent] = useState('');
   const [boardId, setBoardId] = useState(null);
   const [error, setError] = useState(null);

@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.project.community_nihon.dto.board.BoardDTO;
 import org.project.community_nihon.service.board.BoardService;
+import org.project.community_nihon.service.board.BoardServiceImpl;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,7 +19,7 @@ import java.util.List;
 @RequestMapping("/api")
 public class HomeController {
 
-    private final BoardService boardService;
+    private final BoardServiceImpl boardService;
 
 
     // 홈 화면 (내가 팔로우 중인거)  return할 때, 게시글 id 포함하기

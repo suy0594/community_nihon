@@ -47,7 +47,7 @@ const Group = () => {
                         </div>
                     </div>
                 </div>
-                <button onClick={() => {navigate('${id}/createGroupPost');}}>CREATE IN GROUP POST
+                <button onClick={() => {navigate(`./createGroupPost`);}}>CREATE IN GROUP POST
                 </button>
                 <div className="tweet-list">
                     {posts.length > 0 ? (

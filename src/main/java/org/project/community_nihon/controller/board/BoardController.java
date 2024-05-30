@@ -1,6 +1,7 @@
 package org.project.community_nihon.controller.board;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.project.community_nihon.domain.board.Board;
 import org.project.community_nihon.domain.community.Community;
 import org.project.community_nihon.dto.board.BoardDTO;
@@ -15,6 +16,7 @@ import java.util.List;
 @RequestMapping("/api/boards")
 @RequiredArgsConstructor
 @CrossOrigin(origins = "*")
+@Log4j2
 public class BoardController {
 
     private final BoardServiceImpl boardService;
@@ -22,6 +24,9 @@ public class BoardController {
     // 생성
     @PostMapping("/create")
     public ResponseEntity<BoardDTO> createBoard(@RequestBody BoardDTO boardDTO) {
+
+        log.info(boardDTO);
+
         BoardDTO boardDTO1 = boardService.createBoard(boardDTO);
 
         return ResponseEntity.ok(boardDTO);
