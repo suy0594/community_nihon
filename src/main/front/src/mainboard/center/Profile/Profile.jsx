@@ -1,15 +1,19 @@
 import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import './Profile.css';
 import Post from '../PostContents/Post';
 import axios from 'axios';
 
-const Profile = ({ userId }) => {
+const Profile = () => {
     const [profileData, setProfileData] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const { userId } = useParams();
+    console.log("out of if" + userId);
 
     useEffect(() => {
         const fetchProfileData = async () => {
+
             try {
                 console.log(userId);
                 const response = await axios.post(`http://localhost:8080/api/user/${userId}`);
@@ -22,9 +26,9 @@ const Profile = ({ userId }) => {
                 setLoading(false);
             }
         };
-
+      
         fetchProfileData();
-    }, [userId]);
+      }, [userId]);
 
     const handleLikeButton = async () => {
         try {

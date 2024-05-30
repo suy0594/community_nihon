@@ -18,7 +18,6 @@ import Profile from './center/Profile/Profile';
 import './Mainboard.css';
 
 const Mainboard = ({ userId, onLogout }) => {
-
   return (
       <>
         <div style={{ display: 'flex' }}>
@@ -27,16 +26,16 @@ const Mainboard = ({ userId, onLogout }) => {
           </div>
 
       <div className='centerside'>
+        
         <Routes>
           <Route path="home" element={<Posts userId={userId} />} />
-          <Route path="my" element={<MyAccount userId={userId}/>} />
           <Route path="groups" element={<GroupsContainer /> } />
           <Route path="search" element={<Search />} />
           <Route path="setting" element={<Setting Logout={onLogout} />} />
           <Route path='createPost' element={<CreatePost userId={userId} title={userId} /> } />
           <Route path='createGroup' element={<CreateGroup userId={userId}/> } />
-          <Route path='groups/${id}/createGroupPost' element={<CreateInGroupPost userId={userId} /> } />  
-          <Route path="/profile" element={<Profile />} />
+          <Route path='groups/:id/createGroupPost' element={<CreateInGroupPost userId={userId} /> } />  
+          <Route path="/profile/:userId" element={<Profile />} />
         </Routes>
       </div>
 

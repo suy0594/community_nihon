@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import './post.css';
 
-const Post = ({posterId, title, text, time}) => {
+const Post = ({userId, posterId, title, text, time}) => {
     const navigate = useNavigate();
     const handleLikeButton = async() => {
         
@@ -22,7 +22,8 @@ const Post = ({posterId, title, text, time}) => {
     };
     const handleToProfile = () => {
         console.log(posterId);
-        navigate(`/profile?userId=${ posterId }`); 
+        console.log(userId);
+        navigate(`/${ userId }/profile/${ posterId }`); 
     };
     
     return(
