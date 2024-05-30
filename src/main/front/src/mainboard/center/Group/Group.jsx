@@ -3,20 +3,23 @@ import { useNavigate, useParams } from 'react-router-dom';
 import Post from "../PostContents/Post";
 import axios from 'axios';
 
-const Group = () => {
+
+const Group = ({userId}) => {
     const navigate = useNavigate();
-    const { id } = useParams();
+    const {groupId } = useParams(); // パラメータを直接取得
     const [group, setGroup] = useState([]);
     const [posts, setPosts] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
     useEffect(() => {
+        console.log("in Group groupId get from url" + groupId);
+        console.log("in Group userId get from url " + userId);
         const fetchGroupData = async () => {
             try {
-                const groupResponse = await axios.get(`http://localhost:8080/api/communities/${id}`);
+                const groupResponse = await axios.get(`http://localhost:8080/api/communities/${groupId}`);
                 setGroup(groupResponse.data);
-                const postsResponse = await axios.get(`http://localhost:8080/api/communities/${id}/posts`);
+                const postsResponse = await axios.get(`http://localhost:8080/api/communities/${groupId}/posts`); //check api
                 setPosts(postsResponse.data);
             } catch (error) {
                 setError('Error fetching group data or posts');
@@ -27,7 +30,7 @@ const Group = () => {
         };
 
         fetchGroupData();
-    }, [id]);
+    }, [groupId]);
 
     if (loading) return <p>Loading...</p>;
     if (error) return <p>{error}</p>;
@@ -54,7 +57,7 @@ const Group = () => {
                         posts.map(post => (
                             <Post
                                 key={post.id}
-                                userId={id}
+                                userId={userId}
                                 posterId={post.userId}
                                 title={post.title}
                                 text={post.content}
