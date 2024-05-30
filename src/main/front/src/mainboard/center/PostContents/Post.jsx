@@ -62,7 +62,6 @@ const Post = ({id, title, text, time}) => {
                     <button className="Delete-button" onClick={handleDeleteButton}>Delete</button>
                 </div>
             </div>
-        </div>
         </>
     );
 };

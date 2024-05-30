@@ -11,7 +11,7 @@ import Login from './login/Login';
 import Mainboard from './mainboard/Mainboard';
 
 const App = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(true); // Must change it to false later;
+  const [isLoggedIn, setIsLoggedIn] = useState(false); // Must change it to false later;
   const [userId, setUserId] = useState('');
 
   const handleLogin = (id) => {
@@ -25,22 +25,22 @@ const App = () => {
   };
 
   return (
-    <Router>
-      <Routes>
-        <Route
-          path="/"
-          element={isLoggedIn ? <Navigate to="/main/home" /> : <Login onLogin={handleLogin} />}
-        />
-        <Route path="/makeAccount" element={<MakeAccount />} />
-        {isLoggedIn && (
+      <Router>
+        <Routes>
           <Route
-            path="/main/*"
-            element={<Mainboard userId={userId} onLogout={handleLogout} />}
+              path="/"
+              element={isLoggedIn ? <Navigate to="/main/home" /> : <Login onLogin={handleLogin} />}
           />
-        )}
-        {!isLoggedIn && <Route path="/logout" element={<Navigate to="/" />} />}
-      </Routes>
-    </Router>
+          <Route path="/makeAccount" element={<MakeAccount />} />
+          {isLoggedIn && (
+              <Route
+                  path="/main/*"
+                  element={<Mainboard userId={userId} onLogout={handleLogout} />}
+              />
+          )}
+          {!isLoggedIn && <Route path="/logout" element={<Navigate to="/" />} />}
+        </Routes>
+      </Router>
   );
 };
 

@@ -5,7 +5,7 @@ import './PostsContainer.css';
 import Post from '../PostContents/Post';
 
 const PostsContainer = ({userID}) => {
-  const [boards, setBoards] = useState([]); 
+    const [boards, setBoards] = useState([]);
 
   useEffect(() => {
     axios.get('http://localhost:8080/api/boards') 
