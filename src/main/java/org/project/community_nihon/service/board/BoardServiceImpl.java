@@ -40,6 +40,7 @@ public class BoardServiceImpl implements BoardService {
     @Override
     public List<BoardDTO> getBoardsByUserId(String userId) {
         UserVO user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
+
         List<Follow> follows1 = followRepository.FollowsByOrigin(user.getOrigin());   // 맞팔x 내가 팔로워
         List<Follow> follows2 = followRepository.FriendOriginsByFollow(user.getOrigin()); // 맞팔o 내가 팔로잉
         List<Follow> follows3 = followRepository.FriendFollowsByOrigin(user.getOrigin()); // 맞팔o 내가 팔로워
