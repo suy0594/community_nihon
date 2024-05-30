@@ -4,7 +4,7 @@ import './post.css';
 
 //need => id, title, text, + post time, userId
 
-const Post = ({id, title, text}) => {
+const Post = ({id, title, text, time}) => {
     const handleLikeButton = async() => {
         try {
             const response = await axios.post('/api/like_yous', {
@@ -38,29 +38,28 @@ const Post = ({id, title, text}) => {
     };
     return(
         <>
-            <div className="tweet">
-                <div className="tweet-header">
-                    <img src="/testaccountinfo/knu_emeblem.jpg" className='pict' alt='account picture'></img>
-                    <div className="user-info">
-                        <span className="username">{title}</span>
-                        <span className="handle">@{id}</span>
-                    </div>
+        <div className="tweet">
+            <div className="tweet-header">
+                <img src="/testaccountinfo/knu_emeblem.jpg" className='pict' alt='account picture'></img>
+                <div className="user-info">
+                    <span className="username">@{id}</span>
+                    <span className="handle">{title}</span>
                 </div>
-                <hr></hr>
-                <div className="tweet-content">
-                    <p>
-                        {text}
-                    </p>
-                </div>
-                <div className="tweet-footer">
-                    <span className="timestamp">2024:05:24:20:00</span>
-                    <div className="actions">
-                        <button className="like-button" onClick={handleLikeButton}>Like</button>
-                        <button className="reply-button" onClick={handleReplyButton}>Reply</button>
-                        <button className="BookMark-button" onClick={handleBookmarkButton}>BookMark</button>
-                        <button className="Modify-button" onClick={handleModifyButton}>Modify</button>
-                        <button className="Delete-button" onClick={handleDeleteButton}>Delete</button>
-                    </div>
+            </div>
+            <hr></hr>
+            <div className="tweet-content">
+                <p>
+                    {text}
+                </p>
+            </div>
+            <div className="tweet-footer">
+                <span className="timestamp">{time}</span>
+                <div className="actions">
+                    <button className="like-button" onClick={handleLikeButton}>Like</button>
+                    <button className="reply-button" onClick={handleReplyButton}>Reply</button>
+                    <button className="BookMark-button" onClick={handleBookmarkButton}>BookMark</button>
+                    <button className="Modify-button" onClick={handleModifyButton}>Modify</button>
+                    <button className="Delete-button" onClick={handleDeleteButton}>Delete</button>
                 </div>
             </div>
         </>

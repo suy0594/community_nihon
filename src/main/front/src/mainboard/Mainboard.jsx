@@ -37,8 +37,10 @@ const Mainboard = ({ userId, onLogout }) => {
 
       <div className='rightside'>
         <Notification />
-        <BoardButton />
-        <CreateGroupButton />
+        <div className='Buttons' style={{display : "flex"}}>
+          <BoardButton />
+          <CreateGroupButton />
+        </div>
       </div>
     </div>
     

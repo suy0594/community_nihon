@@ -7,32 +7,29 @@ import Post from '../PostContents/Post';
 const PostsContainer = ({userID}) => {
     const [boards, setBoards] = useState([]);
 
-    useEffect(() => {
-        axios.get('http://localhost:8080/api/boards')
-            .then(response => {
-                console.log("success");
-                setBoards(response.data);
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
-    }, []);
-    return (
-        <div className="profile-container">
-
-            <div className="tweet-list">
-                <div className="tweet">
-                    {boards.length > 0 ? (
-                        boards.map(board => (
-                            <Post key={board.id} id={board.userId} text={board.content} />
-                        ))
-                    ) : (
-                        <p>Loading...</p>
-                    )}
-                </div>
-            </div>
+  useEffect(() => {
+    axios.get('/api/boards') 
+      .then(response => {
+        setBoards(response.data); 
+      })
+      .catch(error => {
+        console.error('Error:', error); 
+      });
+  }, []); 
+  return (
+    
+      <div className="tweet-list">
+        <div className="tweet">
+        {boards.length > 0 ? (
+        boards.map(board => (
+          <Post key={board.id} id={board.userId} title={board.title} text={board.content} time={board.created_time} />
+        ))
+      ) : (
+        <p>Loading...</p> 
+      )}
         </div>
-    );
+      </div>
+  );
 };
 
 export default PostsContainer;
