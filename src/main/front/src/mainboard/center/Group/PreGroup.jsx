@@ -20,7 +20,7 @@ const PreGroup = ({id, title, desc_text, num_member, num_posts}) => {
                 </div>
             </div>
         </div>
-        <button onClick={() => {navigate('${id}');}}>Go to the Group</button>
+        <button onClick={() => {navigate(`${id}`);}}>Go to the Group</button>
         </>
     );
 };

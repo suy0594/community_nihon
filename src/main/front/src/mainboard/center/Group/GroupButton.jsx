@@ -5,7 +5,7 @@ const GroupButton = ({id}) => {
     const navigate = useNavigate();
     return (
         <>
-        <button onClick={() => {navigate('${id}');}}>Go to the Group</button>
+        <button onClick={() => {navigate(`/${id}`);}}>Go to the Group</button>
         </>
     );
 };

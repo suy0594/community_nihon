@@ -12,7 +12,7 @@ const RightSideMenu = ({ userId }) => {
       <div className='Sidebar'>
         <ul className='SidebarList'>
           {RightSideContent({ userId }).map((value, key) => {
-            console.log(userId);
+
             return (
               <li
                 key={key}

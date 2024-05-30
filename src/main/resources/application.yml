@@ -4,8 +4,8 @@ spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/webdb
-    username: newuser1
-    password: 1111
+    username: webuser
+    password: webuser
   jpa:
     hibernate:
       ddl-auto: update

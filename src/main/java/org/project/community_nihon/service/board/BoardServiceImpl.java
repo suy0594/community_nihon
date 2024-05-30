@@ -30,9 +30,12 @@ public class BoardServiceImpl implements BoardService {
     private final CommunityRepository communityRepository;
 
     @Override
-    public BoardDTO getBoard(Long id) {
-        Board board = boardRepository.findById(id).orElseThrow(() -> new RuntimeException("Board not found"));
-        return modelMapper.map(board, BoardDTO.class);
+    public List<BoardDTO> getBoardsByUserId(String userId) {
+        UserVO user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
+        List<Board> boards = boardRepository.findByOrigin(user.getOrigin());
+        return boards.stream()
+                .map(this::convertToDTO)
+                .collect(Collectors.toList());
     }
 
     public BoardDTO convertToDTO(Board board) {

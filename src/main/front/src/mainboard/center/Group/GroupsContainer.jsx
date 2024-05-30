@@ -11,28 +11,28 @@ const GroupsContainer = () => {
     const [groups, setGroups] = useState([]); 
 
   useEffect(() => {
-    axios.get('http://localhost:8080/api/communities') 
+    axios.get(`http://localhost:8080/api/communities`)
       .then(response => {
         setGroups(response.data); 
       })
       .catch(error => {
         console.error('Error:', error); 
       });
-  }, []); 
+  }, []);
 
     return (
         <>
-        <div className="tweet-list">
-        <div className="tweet">
-        {groups.length > 0 ? (
-        groups.map(groups => (
-          <PreGroup key={groups.id} id={groups.id} title={groups.title} desc_text={groups.description} num_member={groups.number_of_member} num_posts={groups.number_of_posts} />
-        ))
-      ) : (
-        <p>Loading...</p> 
-      )}
-        </div>
-      </div>
+            <div className="tweet-list">
+                <div className="tweet">
+                    {groups.length > 0 ? (
+                        groups.filter(group => group.is_group).map(group => (
+                            <PreGroup key={group.id} id={group.id} title={group.title} desc_text={group.description} num_member={group.number_of_member} num_posts={group.number_of_posts} />
+                        ))
+                    ) : (
+                        <p>Loading...</p>
+                    )}
+                </div>
+            </div>
         </>
     );
 };

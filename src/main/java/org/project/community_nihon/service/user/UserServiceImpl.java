@@ -5,10 +5,12 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.modelmapper.ModelMapper;
 import org.project.community_nihon.domain.account.Account;
+import org.project.community_nihon.domain.board.Board;
 import org.project.community_nihon.domain.community.Community;
 import org.project.community_nihon.domain.user.UserRole;
 import org.project.community_nihon.domain.user.UserVO;
 import org.project.community_nihon.domain.utility.Certification;
+import org.project.community_nihon.dto.board.BoardDTO;
 import org.project.community_nihon.dto.community.CommunityDTO;
 import org.project.community_nihon.dto.user.UserVODTO;
 import org.project.community_nihon.dto.utility.FollowDTO;
@@ -21,7 +23,9 @@ import org.project.community_nihon.repository.utility.FollowRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Log4j2
 @Service
@@ -45,6 +49,7 @@ public class UserServiceImpl implements UserService{
     @Transactional
     @Override
     public UserVODTO registerUser(String id) {
+
         Optional<UserVO> userVO = userRepository.findById(id);
 
         UserVODTO userVODTO = new UserVODTO();
@@ -62,6 +67,25 @@ public class UserServiceImpl implements UserService{
         return userVODTO;
     }
 
+    @Transactional
+    @Override
+    public List<BoardDTO> registerUser2(String id) {
+        UserVO user = userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
+        List<Board> boards = boardRepository.findByOrigin(user.getOrigin());
+        return boards.stream()
+                .map(this::convertToDTO)
+                .collect(Collectors.toList());
+    }
+
+    public BoardDTO convertToDTO(Board board) {
+        BoardDTO boardDTO = new BoardDTO();
+        boardDTO.setId(board.getId());
+        boardDTO.setOrigin(board.getOrigin().getId());
+        boardDTO.setContent(board.getContent());
+        boardDTO.setUserId(userRepository.getUserByAccount(board.getOrigin()));
+        boardDTO.setCreated_time(board.getCreated_time());
+        return boardDTO;
+    }
 
     @Transactional
     @Override

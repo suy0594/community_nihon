@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.project.community_nihon.domain.account.Account;
 import org.project.community_nihon.domain.community.Community;
+import org.project.community_nihon.dto.board.BoardDTO;
 import org.project.community_nihon.dto.community.CommunityDTO;
 import org.project.community_nihon.service.community.CommunityServiceImpl;
 import org.springframework.http.ResponseEntity;
@@ -27,6 +28,21 @@ public class CommunityController {
         return ResponseEntity.ok(communityDTOS);
     }
 
+    @GetMapping("{id}")
+    public ResponseEntity<CommunityDTO> getCommunity(@PathVariable Long id) {
+        CommunityDTO communityDTO = communityService.getCommunity(id);
+        log.info(communityDTO);
+        return ResponseEntity.ok(communityDTO);
+    }
+
+    @GetMapping("{id}/posts")
+    public ResponseEntity<List<BoardDTO>> getBoardByCommunity(@PathVariable Long id) {
+
+        List<BoardDTO> boardDTOList = communityService.getBoardById(id);
+        log.info(boardDTOList);
+        return ResponseEntity.ok(boardDTOList);
+
+    }
 
     @PostMapping("/create")
     public ResponseEntity<CommunityDTO> createCommunity(@RequestBody CommunityDTO communityDTO) {
