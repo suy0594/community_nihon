@@ -15,6 +15,9 @@ public class UserVODTO {
     private boolean del;
     private boolean social;
 
+    private int following_count;
+    private int follower_count;
+    private int number_of_posts;
 
 
 }

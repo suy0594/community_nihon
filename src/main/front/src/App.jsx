@@ -11,7 +11,7 @@ import Login from './login/Login';
 import Mainboard from './mainboard/Mainboard';
 
 const App = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(true); // Must change it to false later;
+  const [isLoggedIn, setIsLoggedIn] = useState(false); // Must change it to false later;
   const [userId, setUserId] = useState('');
 
   const handleLogin = (id) => {

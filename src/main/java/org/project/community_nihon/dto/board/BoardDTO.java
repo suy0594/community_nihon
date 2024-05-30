@@ -16,7 +16,7 @@ public class BoardDTO {
 
     private String userId;  // 유저 아이디
 
-    private String community;  // 커뮤니티
+    private String title;  // 커뮤니티
 
     private String content;  // 내용
 

@@ -24,6 +24,8 @@ public class ReplyBoard {
     @ManyToOne(fetch = FetchType.LAZY)
     private Account origin;
 
+    private String content;
+
 
 
 }
