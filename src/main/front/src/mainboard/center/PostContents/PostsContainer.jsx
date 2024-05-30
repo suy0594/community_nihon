@@ -21,8 +21,8 @@ const PostsContainer = ({userID}) => {
       <div className="tweet-list">
         <div className="tweet">
         {boards.length > 0 ? (
-        boards.map(board => (
-          <Post key={board.id} id={board.userId} title={board.title} text={board.content} time={board.created_time} />
+        boards.map(boards => (
+          <Post key={boards.id} posterId={boards.userId} title={boards.title} text={boards.content} time={boards.created_time} />
         ))
       ) : (
         <p>Loading...</p> 

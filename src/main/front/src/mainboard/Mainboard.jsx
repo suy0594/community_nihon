@@ -14,6 +14,7 @@ import CreatePost from './center/PostContents/CreatePost';
 import CreateGroup from './center/Group/CreateGroup';
 import RightSideMemu from './rightside/RightSideMenu';
 import CreateInGroupPost from './center/Group/CreateInGroupPost';
+import Profile from './center/Profile/Profile';
 import './Mainboard.css';
 
 const Mainboard = ({ userId, onLogout }) => {
@@ -33,13 +34,13 @@ const Mainboard = ({ userId, onLogout }) => {
           <Route path="search" element={<Search />} />
           <Route path="setting" element={<Setting Logout={onLogout} />} />
           <Route path='createPost' element={<CreatePost userId={userId} title={userId} /> } />
-          <Route path='createGroup' element={<CreateGroup /> } />
+          <Route path='createGroup' element={<CreateGroup userId={userId}/> } />
           <Route path='groups/${id}/createGroupPost' element={<CreateInGroupPost userId={userId} /> } />  
         </Routes>
       </div>
 
       <div className='rightside'>
-        <RightSideMemu />
+        <RightSideMemu userId={userId}/>
       </div>
     </div>
     
