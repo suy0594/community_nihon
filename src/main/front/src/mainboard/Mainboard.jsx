@@ -12,6 +12,7 @@ import Search from './center/Search/Search';
 import Setting from './center/Setting/Setting';
 import CreatePost from './center/PostContents/CreatePost';
 import CreateGroup from './center/Group/CreateGroup';
+import RightSideMemu from './rightside/RightSideMenu';
 import './Mainboard.css';
 
 const Mainboard = ({ userId, onLogout }) => {
@@ -30,17 +31,14 @@ const Mainboard = ({ userId, onLogout }) => {
           <Route path="groups" element={<GroupsContainer /> } />
           <Route path="search" element={<Search />} />
           <Route path="setting" element={<Setting Logout={onLogout} />} />
-          <Route path='createPost' element={<CreatePost /> } />
+          <Route path='createPost' element={<CreatePost userId={userId} title={userId} /> } />
           <Route path='createGroup' element={<CreateGroup /> } />
+
         </Routes>
       </div>
 
       <div className='rightside'>
-        <Notification />
-        <div className='Buttons' style={{display : "flex"}}>
-          <BoardButton />
-          <CreateGroupButton />
-        </div>
+        <RightSideMemu />
       </div>
     </div>
     

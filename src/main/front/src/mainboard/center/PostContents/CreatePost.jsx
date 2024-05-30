@@ -2,19 +2,14 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import './CreatePost.css';
 
-const CreatePost = ({userId}) => {
-  const [title, setTitle] = useState('');
+const CreatePost = ({userId, title}) => {
   const [content, setContent] = useState('');
   const [boardId, setBoardId] = useState(null);
   const [error, setError] = useState(null);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    if (name === 'title') {
-      setTitle(value);
-    } else if (name === 'content') {
       setContent(value);
-    }
   };
 
   const handleSubmit = async (e) => {
