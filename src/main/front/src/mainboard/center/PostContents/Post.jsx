@@ -21,8 +21,8 @@ const Post = ({posterId, title, text, time}) => {
 
     };
     const handleToProfile = () => {
-        console.log("clicked");
-            navigate(`/profile?userId=${posterId}`); 
+        console.log(posterId);
+        navigate(`/profile?userId=${ posterId }`); 
     };
     
     return(
