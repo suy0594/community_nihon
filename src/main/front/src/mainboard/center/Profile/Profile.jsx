@@ -13,15 +13,7 @@ const Profile = () => {
 
     useEffect(() => {
         const fetchProfileData = async () => {
-<<<<<<< HEAD
-          try {
-            const response = await axios.post(`http://localhost:8080/api/users/` + `${userId}`);
-            setProfileData(response.data);
-            console.log("complite fetch" + userId);
-          } catch (error) {
-            console.error('Error fetching profile data:', error);
-          }
-=======
+
             try {
                 console.log(userId);
                 const response = await axios.post(`http://localhost:8080/api/user/${userId}`);
@@ -33,7 +25,6 @@ const Profile = () => {
             } finally {
                 setLoading(false);
             }
->>>>>>> 3e6266e4ad95e147000b9e16c5069af48cdc76be
         };
       
         fetchProfileData();
