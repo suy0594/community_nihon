@@ -1,17 +1,28 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import './CreatePost.css';
+import '../PostContents/CreatePost.css';
 
-const CreatePost = ({userId, title}) => {
+const CreateInGroupPost = ({userId}) => {
   const [content, setContent] = useState('');
+  const [title, setTitle] = useState('');
   const [boardId, setBoardId] = useState(null);
   const [error, setError] = useState(null);
-  const [groupId, setGroupId] = useState('');
+
+  useEffect(() => {
+    // URLからパス部分を取得
+    const path = window.location.pathname;
+    // パスをスラッシュ('/')で分割し、最後の要素を取得
+    const parts = path.split('/');
+    const lastPart = parts[parts.length - 1];
+    // groupIdとして設定
+    setTitle(lastPart);
+  }, []);
 
   const handleChange = (e) => {
     console.log(e.target.value);
       setContent(e.target.value);
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log(content+" from submit"); console.log(userId+" from submit");console.log(title+" from submit");
@@ -33,7 +44,7 @@ const CreatePost = ({userId, title}) => {
 
   return (
     <div className='CreatePost'>
-      <h2 className='Title'>掲示板作成</h2>
+      <h2 className='Title'>Group掲示板作成</h2>
       {error && <div style={{ color: 'red' }}>{error}</div>}
       <form onSubmit={handleSubmit} className='createPostForm'>
         <div>
@@ -50,4 +61,4 @@ const CreatePost = ({userId, title}) => {
   );
 };
 
-export default CreatePost;
+export default CreateInGroupPost;

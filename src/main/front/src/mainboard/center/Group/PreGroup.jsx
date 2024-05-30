@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from 'react-router-dom';
-import GroupButton from "./GroupButton";
+import Group from "./Group";
 
 const PreGroup = ({id, title, desc_text, num_member, num_posts}) => {
     const navigate = useNavigate();

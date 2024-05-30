@@ -13,6 +13,7 @@ import Setting from './center/Setting/Setting';
 import CreatePost from './center/PostContents/CreatePost';
 import CreateGroup from './center/Group/CreateGroup';
 import RightSideMemu from './rightside/RightSideMenu';
+import CreateInGroupPost from './center/Group/CreateInGroupPost';
 import './Mainboard.css';
 
 const Mainboard = ({ userId, onLogout }) => {
@@ -27,13 +28,13 @@ const Mainboard = ({ userId, onLogout }) => {
       <div className='centerside'>
         <Routes>
           <Route path="home" element={<Posts userId={userId} />} />
-          <Route path="my" element={<MyAccount />} />
+          <Route path="my" element={<MyAccount userId={userId}/>} />
           <Route path="groups" element={<GroupsContainer /> } />
           <Route path="search" element={<Search />} />
           <Route path="setting" element={<Setting Logout={onLogout} />} />
           <Route path='createPost' element={<CreatePost userId={userId} title={userId} /> } />
           <Route path='createGroup' element={<CreateGroup /> } />
-
+          <Route path='groups/${id}/createGroupPost' element={<CreateInGroupPost userId={userId} /> } />  
         </Routes>
       </div>
 

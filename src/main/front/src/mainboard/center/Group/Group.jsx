@@ -1,9 +1,12 @@
 import React,{ useState, useEffect } from "react";
+import { useNavigate } from 'react-router-dom';
+import Post from "../PostContents/Post";
 import axios from 'axios';
 
 //Group name, Group Id, Group picture, Group description, number of Posts, number of member, 
 
 const Group = () => {
+  const navigate = useNavigate();
 
     const [group, setGroup] = useState([]); 
 
@@ -31,6 +34,7 @@ const Group = () => {
             </div>
             </div>
         </div>
+        <button onClick={() => {navigate('${id}/createGroupPost');}}>CREATE IN GROUP POST</button>
         <div className="tweet-list">
             <div className="tweet">
             <Post />

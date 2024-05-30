@@ -34,6 +34,7 @@ const Post = ({id, title, text, time}) => {
     const handleDeleteButton = () => {
 
     };
+    
     return(
         <>
             <div className="tweet">

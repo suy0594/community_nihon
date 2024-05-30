@@ -4,13 +4,13 @@ import GroupAddIcon from '@mui/icons-material/GroupAdd';
 
 export const RightSideContent = [
     {
-        title : "CREATE POST",
+        title : "CREATE PRIVATE POST",
         icon : <PostAddIcon />,
-        link : "/main/createPost",
+        link : "/${userId}/createPost",
     },
     {
         title : "CREATE GROUP",
         icon : <GroupAddIcon />,
-        link : "/main/createGroup",
+        link : "/${userId}/createGroup",
     },
 ];
