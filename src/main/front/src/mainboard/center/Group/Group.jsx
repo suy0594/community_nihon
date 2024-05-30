@@ -3,6 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import Post from "../PostContents/Post";
 import axios from 'axios';
 
+
 const Group = ({userId}) => {
     const navigate = useNavigate();
     const {groupId } = useParams(); // パラメータを直接取得

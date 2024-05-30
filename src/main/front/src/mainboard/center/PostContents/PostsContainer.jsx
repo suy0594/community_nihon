@@ -7,7 +7,7 @@ const PostsContainer = ({ userId }) => {
     const [boards, setBoards] = useState([]);
 
     useEffect(() => {
-        axios.get('http://localhost:8080/api/boards')
+        axios.get(`http://localhost:8080/api/boards/${userId}`)
             .then(response => {
                 setBoards(response.data);
                 console.log("유저 아이디: " + userId);
