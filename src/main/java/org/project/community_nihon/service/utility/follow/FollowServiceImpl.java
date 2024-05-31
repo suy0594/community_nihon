@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 @Service
 @Log4j2
 @RequiredArgsConstructor
-public class FollowServiceImpl {
+public class FollowServiceImpl implements FollowService{
 
     private final FollowRepository followRepository;
     private final AccountRepository accountRepository;
@@ -64,6 +64,16 @@ public class FollowServiceImpl {
 
     }
 
+    @Override
+    public List<FollowDTO> getAllFollows() {
+        return null;
+    }
+
+    @Override
+    public Optional<FollowDTO> getFollowById(Long id) {
+        return Optional.empty();
+    }
+
     @Transactional
     public FollowDTO getFollow(Long id) {
         Follow follow = followRepository.findById(id)
@@ -91,7 +101,38 @@ public class FollowServiceImpl {
     }
 
     @Transactional
-    public void deleteFollow(Long id) {
-        followRepository.deleteById(id);
+    @Override
+    public void deleteFollow(String userId, String posterId) {
+
+        Follow follow;
+
+        if ((follow = followRepository.followingByAccount(userRepository.findAccountByUserId(userId),
+                                                userRepository.findAccountByUserId(posterId))) != null) {
+            if (follow.isFriend()) {
+                Account temp = follow.getOrigin();
+                follow.setOrigin(follow.getFollow());
+                follow.setFollow(temp);
+                follow.setFriend(false);
+                followRepository.save(follow);
+            }
+            else {
+                followRepository.delete(follow);
+            }
+        }
+        else {
+            follow = followRepository.followerByAccount(userRepository.findAccountByUserId(userId),
+                                                        userRepository.findAccountByUserId(posterId));
+            if (follow.isFriend()) {
+                follow.setFriend(false);
+                followRepository.save(follow);
+            }
+            else {
+                ;
+            }
+
+        }
+        return;
+
+
     }
 }

@@ -37,9 +37,10 @@ public class FollowController {
         return ResponseEntity.ok(updatedFollow);
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteFollow(@PathVariable Long id) {
-        followService.deleteFollow(id);
+    @DeleteMapping("/{posterId}/follow")
+    public ResponseEntity<Void> deleteFollow(@RequestParam String userId,
+                                             @PathVariable String posterId) {
+        followService.deleteFollow(userId, posterId);
         return ResponseEntity.noContent().build();
     }
 }

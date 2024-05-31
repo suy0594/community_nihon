@@ -43,4 +43,10 @@ public interface FollowRepository extends JpaRepository<Follow, Long> {
     @Query("SELECT f FROM Follow f WHERE f.origin = :account AND f.friend = true")
     List<Follow> FriendFollowsByOrigin(Account account);        // 맞팔 하는 사람 중 내가 팔로워일 때
 
+    @Query("SELECT f FROM Follow f WHERE f.origin = :userId AND f.follow = :posterId")  // 맞팔 아닐 때
+    Follow followingByAccount(Account userId, Account posterId);
+
+    @Query("SELECT f FROM Follow f WHERE f.follow = :userId AND f.origin = :posterId")
+    Follow followerByAccount(Account userId, Account posterId);
+
 }
