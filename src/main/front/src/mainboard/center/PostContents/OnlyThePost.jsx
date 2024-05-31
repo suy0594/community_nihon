@@ -55,26 +55,34 @@ const OnlyThePost = ({ userId }) => {
                 userId : userId,
                 postId : postId,
                 content: content
-              }
+            }
             const response = await axios.post('http://localhost:8080/api/replies/create', data);
-            setBoard(response.data);
+            console.log(response.data);
             setError(null);
             console.log('生成されたreplyのID:', response.data);
-          } catch (error) {
+
+            // 게시글 데이터 다시 불러오기
+            const boardResponse = await axios.get(`http://localhost:8080/api/boards/${userId}/${postId}`);
+            
+
+            // 답글 목록 다시 불러오기
+            const repliesResponse = await axios.get(`http://localhost:8080/api/replies/${postId}`);
+            setReplies(repliesResponse.data);
+        } catch (error) {
             setError('ボードの作成に失敗しました');
             console.error('エラー:', error);
-          }
+        }
     };
 
     useEffect(() => {
-        axios.get(`localhost:8080/api/replies/${postId}`)
+        axios.get(`http://localhost:8080/api/replies/${postId}`)
             .then(response => {
                 setReplies(response.data);
             })
             .catch(error => {
                 console.error('Error:', error);
             });
-    }, [userId, board]);
+    }, [userId, postId]);
 
     if (!board) {
         return <div>Loading...</div>;
@@ -110,8 +118,8 @@ const OnlyThePost = ({ userId }) => {
             {showReplyInput && <ReplyInput onSubmit={handleReplySubmit} />}
             <div className="tweet">
                 {replies.length > 0 ? (
-                    replies.map(replie => (
-                        <Post key={replie.id} postId={replie.id} userId={userId} posterId={replie.userId} title={replie.title} text={replie.content} time={replie.created_time} />
+                    replies.map(reply => (
+                        <Post key={reply.id} postId={reply.id} userId={userId} posterId={reply.userId} title={reply.title} text={reply.content} time={reply.created_time} />
 
                     ))
                 ) : (

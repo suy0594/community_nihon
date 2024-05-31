@@ -21,6 +21,7 @@ public class ReplyController {
 
     @PostMapping("/create")
     public ResponseEntity<ReplyBoardDTO> createReply(@RequestBody ReplyBoardDTO replyBoardDTO) {
+        log.info("replyyyyyyyyyyyyy : " + replyBoardDTO);
         ReplyBoardDTO replyBoardDTO1 = replyService.createReply(replyBoardDTO);
         return ResponseEntity.ok(replyBoardDTO1);
     }
@@ -28,7 +29,7 @@ public class ReplyController {
     @GetMapping("{postId}")
     public ResponseEntity<List<ReplyBoardDTO>> getReplyList(@PathVariable Long postId) {
         List<ReplyBoardDTO> replyBoardDTO = replyService.getReplyByBoardId(postId);
-        log.info(replyBoardDTO);
+        log.info("adashdiuahsciosahcoasnisdas :     " + replyBoardDTO);
         return ResponseEntity.ok(replyBoardDTO);
     }
 
