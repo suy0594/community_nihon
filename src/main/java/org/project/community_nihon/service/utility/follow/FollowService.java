@@ -8,7 +8,8 @@ import java.util.Optional;
 
 public interface FollowService {
 
-    FollowDTO createFollow(String id, FollowDTO followDTO);
+    Boolean is_following(String userId, String posterId);
+    FollowDTO createFollow(String userId, String posterId);
 
     public List<FollowDTO> getAllFollows();
 

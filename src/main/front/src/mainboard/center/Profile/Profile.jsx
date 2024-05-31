@@ -9,17 +9,18 @@ const Profile = (userId) => {
     const [posts, setPosts] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const { posterId } = useParams();
-
     const [isFollowing, setIsFollowing] = useState(false);
+    const { posterId } = useParams();
 
     useEffect(() => {
         const fetchProfileData = async () => {
             try {
-                const profileResponse = await axios.get(`http://localhost:8080/api/user/` + posterId);
+                const profileResponse = await axios.get(`http://localhost:8080/api/user/` + `${posterId}`);
                 setProfileData(profileResponse.data);
-                const postsResponse = await axios.get(`http://localhost:8080/api/user/` + userId.userId + `/profile/` + posterId);
+                const postsResponse = await axios.get(`http://localhost:8080/api/user/` + `${userId.userId}` + `/profile/` + `${posterId}`);
                 setPosts(postsResponse.data);
+                const isFollowResponse = await axios.get(`http://localhost:8080/api/follows/` + `${userId.userId}` + `/profile/` + `${posterId}`);
+                setIsFollowing(isFollowResponse.data);
             } catch (error) {
                 setError('Error fetching profile data or posts');
                 console.error('Error fetching profile data or posts:', error);
@@ -30,22 +31,22 @@ const Profile = (userId) => {
         };
 
         fetchProfileData();
-    }, [posterId]);
+    }, [posterId, userId.userId]);
     if (loading) return <p>Loading...</p>;
     if (error) return <p>{error}</p>;
 
     const handleFollowClick = async () => {
         try {
-          if (isFollowing) {
-            await axios.delete(`http://localhost:8080/api/follows/${posterId}/follow`, userId.userId);
-          } else {
-            await axios.post(`http://localhost:8080/api/follows/${posterId}/follow`, userId.userId);
-          }
-          setIsFollowing(!isFollowing);
+            if (isFollowing) {
+                await axios.delete(`http://localhost:8080/api/follows/${posterId}/follow/` + `${userId.userId}`);
+            } else {
+                await axios.post(`http://localhost:8080/api/follows/${posterId}/follow/` +  `${userId.userId}`);
+            }
+            setIsFollowing(!isFollowing);
         } catch (error) {
-          console.error('Failed to follow/unfollow user:', error);
+            console.error('Failed to follow/unfollow user:', error);
         }
-      };
+    };
 
     return (
         <div className="profile-container">

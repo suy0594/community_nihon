@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import Post from '../PostContents/Post';
 import { useParams } from 'react-router-dom';
 import ReplyInput from './ReplyInput';
 

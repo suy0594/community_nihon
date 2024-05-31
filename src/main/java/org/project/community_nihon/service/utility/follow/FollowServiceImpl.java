@@ -29,13 +29,12 @@ public class FollowServiceImpl implements FollowService{
     private final ModelMapper modelMapper;
 
     @Transactional
-    public FollowDTO createFollow(String id, FollowDTO followDTO) {
+    public FollowDTO createFollow(String userId, String posterId) {
 
-        log.info("service: " + followDTO);
 
-        UserVO userVO = userRepository.findById(id)  // 2
+        UserVO userVO = userRepository.findById(userId)  // 2
                 .orElseThrow(() -> new RuntimeException("Origin account not found"));
-        UserVO userVO1 = userRepository.findById(followDTO.getFollow())  // 1
+        UserVO userVO1 = userRepository.findById(posterId)  // 1
                 .orElseThrow(() -> new RuntimeException("Follow account not found"));
 
           // 1이 팔로우 중인 사람
@@ -63,6 +62,34 @@ public class FollowServiceImpl implements FollowService{
         return followDTO1;
 
     }
+
+    public Boolean is_following(String userId, String posterId) {
+
+        Follow follow;
+
+        if ((follow = followRepository.followingByAccount(userRepository.findAccountByUserId(userId),
+                userRepository.findAccountByUserId(posterId))) != null) {
+            return true;
+        }
+        else {
+            follow = followRepository.followerByAccount(userRepository.findAccountByUserId(userId),
+                    userRepository.findAccountByUserId(posterId));
+            if (follow != null) {
+                if (follow.isFriend() == true) {
+                    return true;
+                }
+                else {
+                    return false;
+                }
+            }
+            else {
+                return false;
+            }
+
+        }
+
+    }
+
 
     @Override
     public List<FollowDTO> getAllFollows() {

@@ -12,15 +12,21 @@ import org.springframework.web.bind.annotation.*;
 @Log4j2
 @RequestMapping("/api/follows")
 @RequiredArgsConstructor
+@CrossOrigin(origins = "*")
 public class FollowController {
 
     private final FollowServiceImpl followService;
 
-    @PostMapping("/{id}/follow")
-    public ResponseEntity<FollowDTO> createFollow(@PathVariable String id, @RequestBody FollowDTO followDTO) {
-        log.info("post: " + followDTO);
+    @GetMapping("{userId}/profile/{posterId}")
+    public ResponseEntity<Boolean> is_following(@PathVariable String userId,
+                                                @PathVariable String posterId) {
+        return ResponseEntity.ok(followService.is_following(userId, posterId));
+    }
 
-        FollowDTO createdFollow = followService.createFollow(id, followDTO);
+    @PostMapping("/{posterId}/follow/{userId}")
+    public ResponseEntity<FollowDTO> createFollow(@PathVariable String userId, @PathVariable String posterId) {
+
+        FollowDTO createdFollow = followService.createFollow(userId, posterId);
         log.info(createdFollow);
         return ResponseEntity.ok(createdFollow);
     }
@@ -37,8 +43,8 @@ public class FollowController {
         return ResponseEntity.ok(updatedFollow);
     }
 
-    @DeleteMapping("/{posterId}/follow")
-    public ResponseEntity<Void> deleteFollow(@RequestParam String userId,
+    @DeleteMapping("/{posterId}/follow/{userId}")
+    public ResponseEntity<Void> deleteFollow(@PathVariable String userId,
                                              @PathVariable String posterId) {
         followService.deleteFollow(userId, posterId);
         return ResponseEntity.noContent().build();
