@@ -24,6 +24,7 @@ const Profile = (userId) => {
                 setError('Error fetching profile data or posts');
                 console.error('Error fetching profile data or posts:', error);
             } finally {
+                console.log("posterID: " + posterId); console.log("userId : " + userId.userId);
                 setLoading(false);
             }
         };
@@ -69,7 +70,8 @@ const Profile = (userId) => {
                     posts.map(post => (
                         <Post
                             key={post.id}
-                            userId={posterId}
+                            postId={post.id}
+                            userId={userId.userId}
                             posterId={post.userId}
                             title={post.title}
                             text={post.content}

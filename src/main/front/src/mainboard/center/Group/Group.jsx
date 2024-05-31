@@ -2,6 +2,7 @@ import React,{ useState, useEffect } from "react";
 import { useNavigate, useParams } from 'react-router-dom';
 import Post from "../PostContents/Post";
 import axios from 'axios';
+import './Group.css';
 
 
 const Group = ({userId}) => {

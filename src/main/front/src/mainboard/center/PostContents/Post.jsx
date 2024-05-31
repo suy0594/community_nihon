@@ -26,6 +26,7 @@ const Post = ({postId, userId, posterId, title, text, time}) => {
         navigate(`/${ userId }/profile/${ posterId }`); 
     };
     const handleToOnlyThePost = () => {
+        console.log("userId " + userId + " postId " + postId);
         navigate(`/${ userId }/${ postId }`);
     };
     
@@ -45,10 +46,11 @@ const Post = ({postId, userId, posterId, title, text, time}) => {
                         {text}
                     </p>
                 </div>
+                <hr></hr>
                 <div className="tweet-footer" onClick={handleToOnlyThePost}>
                     <span className="timestamp">{time}</span>
                     <div className="actions">
-                        <button className="like-button" onClick={handleLikeButton}>Like: <label>{like}</label></button>
+                        <button className="like-button" onClick={handleLikeButton}>Like: </button>
                         <button className="reply-button" onClick={handleReplyButton}>Reply</button>
                         <button className="BookMark-button" onClick={handleBookmarkButton}>BookMark</button>
                         {userId === posterId && (
