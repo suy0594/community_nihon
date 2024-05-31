@@ -17,6 +17,7 @@ const handleImgError = () => {
     setImgError(true);
   };
 
+
     useEffect(() => {
         const fetchProfileData = async () => {
             try {

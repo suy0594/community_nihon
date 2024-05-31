@@ -60,16 +60,24 @@ const handleImgError = () => {
                 userId : userId,
                 postId : postId,
                 content: content
-              }
+            }
             const response = await axios.post('http://localhost:8080/api/replies/create', data);
             console.log(response.data);
-            setBoard(response.data);
+
             setError(null);
             console.log('生成されたreplyのID:', response.data);
-          } catch (error) {
+
+            // 게시글 데이터 다시 불러오기
+            const boardResponse = await axios.get(`http://localhost:8080/api/boards/${userId}/${postId}`);
+            
+
+            // 답글 목록 다시 불러오기
+            const repliesResponse = await axios.get(`http://localhost:8080/api/replies/${postId}`);
+            setReplies(repliesResponse.data);
+        } catch (error) {
             setError('ボードの作成に失敗しました');
             console.error('エラー:', error);
-          }
+        }
     };
 
     useEffect(() => {
@@ -80,7 +88,7 @@ const handleImgError = () => {
             .catch(error => {
                 console.error('Error:', error);
             });
-    }, [userId, board]);
+    }, [userId, postId]);
 
     if (!board) {
         return <div>Loading...</div>;

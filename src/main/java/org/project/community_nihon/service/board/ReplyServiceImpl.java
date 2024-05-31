@@ -29,6 +29,7 @@ public class ReplyServiceImpl implements ReplyService {
     private final AccountRepository accountRepository;
 
     @Override
+    @Transactional
     public ReplyBoardDTO createReply(ReplyBoardDTO replyBoardDTO) {
         ReplyBoard replyBoard = ReplyBoard.builder()
                 .board(boardRepository.findById(replyBoardDTO.getPostId()).get())
