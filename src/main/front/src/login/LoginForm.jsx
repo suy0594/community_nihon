@@ -32,14 +32,14 @@ const LoginForm = ({ onLogin }) => {
     padding: '0.5rem 0.5rem',
     fontWeight: 'bold',
     borderRadius: '10px',
-    color: '#27acd9',
+    color: 'white',
     border: '1px solid #27acd9',
     boxShadow: '3px 1px #27acd9',
     transition: '0.3s ease-in-out',
   };
   const hoverOnstyle = {
     boxShadow: 'none',
-    transform: 'translate(5px, 5px)',
+    transform: 'translate(1px, 1px)',
     color: '#27acd9',
   };
 

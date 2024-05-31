@@ -1,10 +1,16 @@
-import React from 'react';
+
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import React,{ useState, useEffect } from "react";
 import './post.css';
 
 const Post = ({postId, userId, posterId, title, text, time, onDelete}) => {
     const navigate = useNavigate();
+    const [imgError, setImgError] = useState(false);
+
+const handleImgError = () => {
+    setImgError(true);
+  };
     const handleLikeButton = async() => {
 
     };
@@ -41,7 +47,12 @@ const Post = ({postId, userId, posterId, title, text, time, onDelete}) => {
         <>
             <div className="tweet">
                 <div className="tweet-header"  onClick={handleToProfile}>
-                    <img src="/testaccountinfo/knu_emeblem.jpg" className='pict' alt='account picture'></img>
+                <img
+            src={imgError ? "/images/errorImage.jpg" : "/images/testaccountinfo/knu_emeblem.jpg"}
+            className='pict'
+            alt='account picture'
+            onError={handleImgError}
+          />
                     <div className="user-info">
                         <span className="username">@{posterId}</span>
                         <span className="handle" >{title}</span>

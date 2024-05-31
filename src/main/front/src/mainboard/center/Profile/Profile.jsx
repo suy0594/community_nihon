@@ -11,6 +11,12 @@ const Profile = (userId) => {
     const [error, setError] = useState(null);
     const [isFollowing, setIsFollowing] = useState(false);
     const { posterId } = useParams();
+    const [imgError, setImgError] = useState(false);
+
+const handleImgError = () => {
+    setImgError(true);
+  };
+
 
     useEffect(() => {
         const fetchProfileData = async () => {
@@ -51,7 +57,12 @@ const Profile = (userId) => {
     return (
         <div className="profile-container">
             <div className="profile-header">
-                <img src="/testaccountinfo/knu_emeblem.jpg" className='pict' alt='account picture' />
+            <img
+            src={imgError ? "/images/errorImage.jpg" : "/images/testaccountinfo/knu_emeblem.jpg"}
+            className='pict'
+            alt='account picture'
+            onError={handleImgError}
+          />
                 <div className="profile-info">
                     <h2 className="profile-name">{profileData.screen_name}</h2>
                     <p className="profile-handle">@{posterId}</p>

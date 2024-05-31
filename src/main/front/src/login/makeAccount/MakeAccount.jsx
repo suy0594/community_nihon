@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import AddPictureContainer from './AddPictureContainer';
 
 const MakeAccount = () => {
 
@@ -110,6 +111,7 @@ const MakeAccount = () => {
           <br />
           <button type="submit" style={buttonstyle} onMouseEnter={onBtnhover} onMouseLeave={offBtnhover}>Register</button>
         </form>
+        <AddPictureContainer />
       </div>
   );
 };

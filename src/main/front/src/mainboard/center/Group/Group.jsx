@@ -12,6 +12,7 @@ const Group = ({userId}) => {
     const [posts, setPosts] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [imgError, setImgError] = useState(false);
 
     useEffect(() => {
         console.log("in Group groupId get from url" + groupId);
@@ -36,11 +37,19 @@ const Group = ({userId}) => {
     if (loading) return <p>Loading...</p>;
     if (error) return <p>{error}</p>;
 
+    const handleImgError = () => {
+        setImgError(true);
+      };
     return (
         <>
             <div className="profile-container">
                 <div className="profile-header">
-                    <img src="/testaccountinfo/knu_emeblem.jpg" className='pict' alt='account picture'></img>
+                <img
+            src={imgError ? "/images/errorImage.jpg" : "/images/testaccountinfo/knu_emeblem.jpg"}
+            className='pict'
+            alt='account picture'
+            onError={handleImgError}
+          />
                     <div className="profile-info">
                         <h2 className="profile-name">{group.title}</h2>
                         <p className="profile-handle">@{group.id}</p>

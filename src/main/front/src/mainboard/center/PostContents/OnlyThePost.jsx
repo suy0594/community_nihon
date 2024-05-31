@@ -12,6 +12,11 @@ const OnlyThePost = ({ userId }) => {
     const [showReplyInput, setShowReplyInput] = useState(false);
     const [error, setError] = useState(null);
     const { postId } = useParams();
+    const [imgError, setImgError] = useState(false);
+
+const handleImgError = () => {
+    setImgError(true);
+  };
 
     useEffect(() => {
 
@@ -58,6 +63,7 @@ const OnlyThePost = ({ userId }) => {
             }
             const response = await axios.post('http://localhost:8080/api/replies/create', data);
             console.log(response.data);
+
             setError(null);
             console.log('生成されたreplyのID:', response.data);
 
@@ -92,7 +98,12 @@ const OnlyThePost = ({ userId }) => {
         <>
             <div className="tweet">
                 <div className="tweet-header" onClick={handleToProfile}>
-                    <img src="/testaccountinfo/knu_emeblem.jpg" className='pict' alt='account picture'></img>
+                <img
+            src={imgError ? "/images/errorImage.jpg" : "/images/testaccountinfo/knu_emeblem.jpg"}
+            className='pict'
+            alt='account picture'
+            onError={handleImgError}
+          />
                     <div className="user-info">
                         <span className="username">@{board.posterId}</span>
                         <span className="handle">{board.title}</span>
