@@ -109,6 +109,7 @@ public class CommunityServiceImpl implements CommunityService {
         boardDTO.setOrigin(board.getOrigin().getId());
         boardDTO.setContent(board.getContent());
         boardDTO.setUserId(userRepository.getUserByAccount(board.getOrigin()));
+        boardDTO.setPosterId(userRepository.getUserByAccount(board.getOrigin()));
         boardDTO.setCreated_time(board.getCreated_time().format(formatter));
         return boardDTO;
     }

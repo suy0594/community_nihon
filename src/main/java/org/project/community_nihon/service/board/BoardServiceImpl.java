@@ -70,6 +70,7 @@ public class BoardServiceImpl implements BoardService {
                 boardDTO.setId(board.getId());
                 boardDTO.setOrigin(board.getOrigin().getId());
                 boardDTO.setContent(board.getContent());
+                boardDTO.setPosterId(userRepository.getUserByAccount(board.getOrigin()));
                 boardDTO.setUserId(userRepository.getUserByAccount(board.getOrigin()));
                 boardDTO.setCreated_time(board.getCreated_time().format(formatter));
                 boardDTO.setLikes(likeYouRepository.countlike_youByBoardId(board.getId()));
@@ -83,6 +84,7 @@ public class BoardServiceImpl implements BoardService {
             boardDTO.setOrigin(board.getOrigin().getId());
             boardDTO.setContent(board.getContent());
             boardDTO.setUserId(userRepository.getUserByAccount(board.getOrigin()));
+            boardDTO.setPosterId(userRepository.getUserByAccount(board.getOrigin()));
             boardDTO.setCreated_time(board.getCreated_time().format(formatter));
             boardDTO.setLikes(likeYouRepository.countlike_youByBoardId(board.getId()));
             boardDTOList.add(boardDTO);
@@ -101,6 +103,7 @@ public class BoardServiceImpl implements BoardService {
         boardDTO.setId(board.getId());
         boardDTO.setOrigin(board.getOrigin().getId());
         boardDTO.setContent(board.getContent());
+        boardDTO.setPosterId(userRepository.getUserByAccount(board.getOrigin()));
         boardDTO.setUserId(userRepository.getUserByAccount(board.getOrigin()));
         boardDTO.setCreated_time(board.getCreated_time().format(formatter));
         return boardDTO;
@@ -142,6 +145,7 @@ public class BoardServiceImpl implements BoardService {
         boardDTO1.setUserId(userRepository.getUserByAccount(board.getOrigin()));
         boardDTO1.setContent(board.getContent());
         boardDTO1.setId(result.getId());
+        boardDTO1.setPosterId(userRepository.getUserByAccount(board.getOrigin()));
         boardDTO1.setOrigin(board.getOrigin().getId());
         boardDTO1.setCreated_time(board.getCreated_time().format(formatter));
         boardDTO1.setLikes(0);
@@ -158,6 +162,7 @@ public class BoardServiceImpl implements BoardService {
             Board result = boardRepository.save(board.get());
             BoardDTO boardDTO = new BoardDTO();
             boardDTO.setUserId(userRepository.getUserByAccount(board.get().getOrigin()));
+            boardDTO.setPosterId(userRepository.getUserByAccount(board.get().getOrigin()));
             boardDTO.setContent(board.get().getContent());
             boardDTO.setId(result.getId());
             boardDTO.setOrigin(board.get().getOrigin().getId());
