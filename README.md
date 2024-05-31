@@ -41,6 +41,25 @@ npm install axios<br>
 gradle 빌드
 </p>
 <hr>
+<pre>
+application.yml은 다음과 같이 설정하였음.
+<pre>
+spring:
+application:
+name: community_nihon
+datasource:
+driver-class-name: com.mysql.cj.jdbc.Driver
+url: jdbc:mysql://localhost:3306/webdb
+username: webuser
+password: webuser  본인의 DB에 맞게 설정 바람
+
+server:
+port: 8080  로컬에서 실행됨.
+</pre>
+</pre>
+
+
+
 로컬에서 진행 <br>
 CommunityNihonApplication(서버)<br>
 ~/Community_nihon/src/main/front에서 npm start
