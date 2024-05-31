@@ -154,11 +154,11 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
-    public BoardDTO modifyBoard(Long boardId, String content) {
+    public BoardDTO modifyBoard(BoardDTO boardDTO11) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd | HH:mm");
-        Optional<Board> board = boardRepository.findById(boardId);
+        Optional<Board> board = boardRepository.findById(boardDTO11.getId());
         if(board.isPresent()) {
-            board.get().updateContent(content);
+            board.get().updateContent(boardDTO11.getContent());
             Board result = boardRepository.save(board.get());
             BoardDTO boardDTO = new BoardDTO();
             boardDTO.setUserId(userRepository.getUserByAccount(board.get().getOrigin()));

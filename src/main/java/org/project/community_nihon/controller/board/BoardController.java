@@ -34,9 +34,9 @@ public class BoardController {
     }
 
     @PutMapping
-    public ResponseEntity<BoardDTO> modifyBoard(Long boardId, String content) {
-        BoardDTO boardDTO = boardService.modifyBoard(boardId, content);
-        return ResponseEntity.ok(boardDTO);
+    public ResponseEntity<BoardDTO> modifyBoard(@RequestBody BoardDTO boardDTO) {
+        BoardDTO boardDTO1 = boardService.modifyBoard(boardDTO);
+        return ResponseEntity.ok(boardDTO1);
     }
 
     @DeleteMapping("/{postId}")
