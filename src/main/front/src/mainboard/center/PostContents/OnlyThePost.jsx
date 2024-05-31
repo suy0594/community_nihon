@@ -7,6 +7,7 @@ import ReplyInput from './ReplyInput';
 const OnlyThePost = ({ userId }) => {
     const navigate = useNavigate();
     const [board, setBoard] = useState();
+    const [replies, setReplies] = useState([]);
     const [showReplyInput, setShowReplyInput] = useState(false);
     const [error, setError] = useState(null);
     const { postId } = useParams();
@@ -64,6 +65,16 @@ const OnlyThePost = ({ userId }) => {
           }
     };
 
+    useEffect(() => {
+        axios.get(`localhost:8080/api/replies/${postId}`)
+            .then(response => {
+                setReplies(response.data);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    }, [userId, board]);
+
     if (!board) {
         return <div>Loading...</div>;
     }
@@ -96,6 +107,16 @@ const OnlyThePost = ({ userId }) => {
                 </div>
             </div>
             {showReplyInput && <ReplyInput onSubmit={handleReplySubmit} />}
+            <div className="tweet">
+                {replies.length > 0 ? (
+                    replies.map(replie => (
+                        <Post key={replie.id} postId={replie.id} userId={userId} posterId={replie.userId} title={replie.title} text={replie.content} time={replie.created_time} />
+
+                    ))
+                ) : (
+                    <p>Loading...</p>
+                )}
+            </div>
         </>
     );
 };
