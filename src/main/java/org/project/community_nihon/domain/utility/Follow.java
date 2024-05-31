@@ -22,6 +22,10 @@ public class Follow {
     @ManyToOne(fetch = FetchType.LAZY)
     private Account follow;
 
+    public boolean isFriend() {
+        return friend;
+    }
+
     private boolean friend;
 
 

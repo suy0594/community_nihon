@@ -48,7 +48,7 @@ const Post = ({postId, userId, posterId, title, text, time}) => {
                 <div className="tweet-footer" onClick={handleToOnlyThePost}>
                     <span className="timestamp">{time}</span>
                     <div className="actions">
-                        <button className="like-button" onClick={handleLikeButton}>Like: <label>{like}</label></button>
+                        <button className="like-button" onClick={handleLikeButton}>Like<label></label></button>
                         <button className="reply-button" onClick={handleReplyButton}>Reply</button>
                         <button className="BookMark-button" onClick={handleBookmarkButton}>BookMark</button>
                         {userId === posterId && (
