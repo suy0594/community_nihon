@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   BrowserRouter as Router,
   Routes,
   Route,
-  Navigate
+  Navigate,
 } from 'react-router-dom';
 import LoginForm from './login/LoginForm';
 import MakeAccount from './login/makeAccount/MakeAccount';
@@ -11,10 +11,15 @@ import Login from './login/Login';
 import Mainboard from './mainboard/Mainboard';
 
 const App = () => {
-
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-
   const [userId, setUserId] = useState('');
+  const [isLoggedOut, setIsLoggedOut] = useState(false);
+
+  useEffect(() => {
+    console.log("isLoggedIn:", isLoggedIn);
+    console.log("userId:", userId);
+    console.log("isLoggedOut:", isLoggedOut);
+  }, [isLoggedIn, userId, isLoggedOut]);
 
   const handleLogin = (id) => {
     setIsLoggedIn(true);
@@ -24,6 +29,7 @@ const App = () => {
   const handleLogout = () => {
     setIsLoggedIn(false);
     setUserId('');
+    setIsLoggedOut(true);
   };
 
   return (
@@ -32,7 +38,9 @@ const App = () => {
         <Route
           path="/"
           element={
-            isLoggedIn ? (
+            isLoggedOut ? (
+              <Login onLogin={handleLogin} /> // ログアウト状態ではLoginページを表示
+            ) : isLoggedIn ? (
               <Navigate to={`/${userId}/home`} />
             ) : (
               <Login onLogin={handleLogin} />
@@ -46,7 +54,6 @@ const App = () => {
             element={<Mainboard userId={userId} onLogout={handleLogout} />}
           />
         )}
-        {!isLoggedIn && <Route path="/logout" element={<Navigate to="/" />} />}
       </Routes>
     </Router>
   );

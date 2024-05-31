@@ -14,6 +14,7 @@ import CreateGroup from './center/Group/CreateGroup';
 import RightSideMenu from './rightside/RightSideMenu';
 import CreateInGroupPost from './center/Group/CreateInGroupPost';
 import Profile from './center/Profile/Profile';
+import OnlyThePost from './center/PostContents/OnlyThePost';
 import './Mainboard.css';
 import Group from "./center/Group/Group";
 
@@ -35,7 +36,7 @@ const Mainboard = ({ userId, onLogout }) => {
                         <Route path='groups/:id/createGroupPost' element={<CreateInGroupPost userId={userId} />} />
                         <Route path="profile/:posterId" element={<Profile userId={userId} />} />
                         <Route path="groups/:groupId" element={<Group userId={userId}/>} />
-
+                        <Route path=':postId' element={<OnlyThePost userId={userId}/>} />
                     </Routes>
                 </div>
                 <div className='rightside'>

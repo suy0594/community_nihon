@@ -5,7 +5,6 @@ import '../PostContents/CreatePost.css';
 
 const CreateInGroupPost = ({userId}) => {
   const [content, setContent] = useState('');
-  const [title, setTitle] = useState('');
   const [boardId, setBoardId] = useState(null);
   const [error, setError] = useState(null);
   const { id } = useParams();
@@ -23,19 +22,17 @@ const CreateInGroupPost = ({userId}) => {
   }, []);
   */
   const handleChange = (e) => {
-    console.log(e.target.value);
+    console.log("in handleChange target.value : " + e.target.value);
       setContent(e.target.value);
   };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(content+" from submit"); console.log(userId+" from submit");console.log(title+" from submit");
+    console.log(content+" from submit"); console.log(userId+" from submit");console.log(id+" from submit");
     try {
       const data = {
         id : id,
         userId : userId,
-        content: content,
-        title: title
+        content: content
       }
       console.log("-------sd-adasdasdasdasd:   " + userId);
       const response = await axios.post('http://localhost:8080/api/boards/create', data);

@@ -115,6 +115,7 @@ public class BoardServiceImpl implements BoardService {
     public BoardDTO createBoard(BoardDTO boardDTO) {
         Optional<UserVO> userVO = userRepository.findById(boardDTO.getUserId());
 
+
         Community group;
         if ((boardDTO.getTitle()) != null) {
             group = communityRepository.getCommunityByTitle(boardDTO.getUserId());
@@ -123,6 +124,7 @@ public class BoardServiceImpl implements BoardService {
             group = communityRepository.findById(boardDTO.getId()).get();
         }
         log.info("SDASDSAASDADSSDADSADSA: " + group);
+
         Board board = Board.builder()
                         .origin(userVO.get().getOrigin())
                                 .community(group)
