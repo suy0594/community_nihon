@@ -13,9 +13,11 @@ import org.modelmapper.ModelMapper;
 import org.project.community_nihon.repository.community.CommunityRepository;
 import org.project.community_nihon.repository.user.UserRepository;
 import org.project.community_nihon.repository.utility.FollowRepository;
+import org.project.community_nihon.repository.utility.LikeYouRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.transaction.annotation.Transactional;
 
 
 import java.util.ArrayList;
@@ -34,6 +36,7 @@ public class BoardServiceImpl implements BoardService {
     private final ModelMapper modelMapper;
     private final CommunityRepository communityRepository;
     private final FollowRepository followRepository;
+    private final LikeYouRepository likeYouRepository;
 
     @Override
     public List<BoardDTO> getBoardsByUserId(String userId) {
@@ -66,6 +69,7 @@ public class BoardServiceImpl implements BoardService {
                 boardDTO.setContent(board.getContent());
                 boardDTO.setUserId(userRepository.getUserByAccount(board.getOrigin()));
                 boardDTO.setCreated_time(board.getCreated_time());
+                boardDTO.setLike(likeYouRepository.countlike_youByBoardId(board.getId()));
                 boardDTOList.add(boardDTO);
             }
         }
@@ -77,6 +81,7 @@ public class BoardServiceImpl implements BoardService {
             boardDTO.setContent(board.getContent());
             boardDTO.setUserId(userRepository.getUserByAccount(board.getOrigin()));
             boardDTO.setCreated_time(board.getCreated_time());
+            boardDTO.setLike(likeYouRepository.countlike_youByBoardId(board.getId()));
             boardDTOList.add(boardDTO);
         }
         List<BoardDTO> sortedBoardDTOs = boardDTOList.stream()
@@ -149,6 +154,21 @@ public class BoardServiceImpl implements BoardService {
         } else {
             throw new IllegalArgumentException("No board with the given id found");
         }
+
+    }
+
+    @Transactional
+    @Override
+    public BoardDTO getBoardInfo(Long id) {   // userId, boardId
+
+        Optional<Board> board = boardRepository.findById(id);
+        BoardDTO boardDTO = new BoardDTO();
+        boardDTO.setTitle(board.get().getCommunity().getTitle());
+        boardDTO.setPosterId(userRepository.getUserByAccount(board.get().getOrigin()));
+        boardDTO.setContent(board.get().getContent());
+        boardDTO.setCreated_time(board.get().getCreated_time());
+
+        return boardDTO;
 
     }
 

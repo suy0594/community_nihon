@@ -22,6 +22,7 @@ const PostsContainer = ({ userId }) => {
                 {boards.length > 0 ? (
                     boards.map(board => (
                         <Post key={board.id} postId={board.id} userId={userId} posterId={board.userId} title={board.title} text={board.content} time={board.created_time} />
+
                     ))
                 ) : (
                     <p>Loading...</p>

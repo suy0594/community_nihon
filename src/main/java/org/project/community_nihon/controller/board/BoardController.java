@@ -52,10 +52,17 @@ public class BoardController {
     }
 
 
-    @GetMapping("/{id}")    // 팔로우중인 사람 게시글
+    @GetMapping("/{id}")    // 팔로우중인 사람 게시글   // userId
     public ResponseEntity<List<BoardDTO>> getBoardById(@PathVariable String id) {
         List<BoardDTO> board = boardService.getBoardsByUserId(id);
         log.info(board);
         return ResponseEntity.ok(board);
+    }
+
+    @GetMapping("/{id1}/{id2}")
+    public ResponseEntity<BoardDTO> getBoardInfo(@PathVariable String id1,
+                                                 @PathVariable Long id2) {
+        BoardDTO boardDTO = boardService.getBoardInfo(id2);
+        return ResponseEntity.ok(boardDTO);
     }
 }

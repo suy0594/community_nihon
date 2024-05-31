@@ -12,4 +12,5 @@ public interface BoardService {
     List<BoardDTO> getAllBoards();
     String modifyBoard(Long BoardId,String content);
     void deleteBoard(Long id);
+    BoardDTO getBoardInfo(Long id);
 }

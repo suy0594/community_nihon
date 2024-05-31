@@ -3,7 +3,9 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import './post.css';
 
+
 const Post = ({postId, userId, posterId, title, text, time}) => {
+
     const navigate = useNavigate();
     const handleLikeButton = async() => {
         
@@ -46,11 +48,15 @@ const Post = ({postId, userId, posterId, title, text, time}) => {
                 <div className="tweet-footer" onClick={handleToOnlyThePost}>
                     <span className="timestamp">{time}</span>
                     <div className="actions">
-                        <button className="like-button" onClick={handleLikeButton}>Like</button>
+                        <button className="like-button" onClick={handleLikeButton}>Like: <label>{like}</label></button>
                         <button className="reply-button" onClick={handleReplyButton}>Reply</button>
                         <button className="BookMark-button" onClick={handleBookmarkButton}>BookMark</button>
-                        <button className="Modify-button" onClick={handleModifyButton}>Modify</button>
-                        <button className="Delete-button" onClick={handleDeleteButton}>Delete</button>
+                        {userId === posterId && (
+                            <>
+                                <button className="Modify-button" onClick={handleModifyButton}>Modify</button>
+                                <button className="Delete-button" onClick={handleDeleteButton}>Delete</button>
+                            </>
+                        )}
                     </div>
                 </div>
             </div>
