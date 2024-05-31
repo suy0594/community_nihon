@@ -10,7 +10,7 @@ import org.project.community_nihon.domain.board.Board;
 @Data
 public class ReplyBoardDTO {
 
-    private String id;
+    private Long id;
 
     private Long BoardId;
 
@@ -20,5 +20,6 @@ public class ReplyBoardDTO {
 
     private String userId;
 
+    private Long postId;
 
 }

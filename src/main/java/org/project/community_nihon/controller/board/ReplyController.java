@@ -6,10 +6,9 @@ import lombok.extern.log4j.Log4j2;
 import org.project.community_nihon.dto.board.ReplyBoardDTO;
 import org.project.community_nihon.service.board.ReplyServiceImpl;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/replies")
@@ -21,9 +20,16 @@ public class ReplyController {
     private final ReplyServiceImpl replyService;
 
     @PostMapping("/create")
-    public ResponseEntity<ReplyBoardDTO> createReply(ReplyBoardDTO replyBoardDTO) {
+    public ResponseEntity<ReplyBoardDTO> createReply(@RequestBody ReplyBoardDTO replyBoardDTO) {
         ReplyBoardDTO replyBoardDTO1 = replyService.createReply(replyBoardDTO);
         return ResponseEntity.ok(replyBoardDTO1);
+    }
+
+    @GetMapping("{postId}")
+    public ResponseEntity<List<ReplyBoardDTO>> getReplyList(@PathVariable Long postId) {
+        List<ReplyBoardDTO> replyBoardDTO = replyService.getReplyByBoardId(postId);
+        log.info(replyBoardDTO);
+        return ResponseEntity.ok(replyBoardDTO);
     }
 
 
