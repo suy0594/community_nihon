@@ -16,12 +16,9 @@ const Profile = (userId) => {
     useEffect(() => {
         const fetchProfileData = async () => {
             try {
-                console.log("유저~~ : " + userId.userId);
-                console.log("포스터~~ : " + posterId);
                 const profileResponse = await axios.get(`http://localhost:8080/api/user/` + posterId);
                 setProfileData(profileResponse.data);
                 const postsResponse = await axios.get(`http://localhost:8080/api/user/` + userId.userId + `/profile/` + posterId);
-                console.log("게시판게시판: " + postsResponse.data);
                 setPosts(postsResponse.data);
             } catch (error) {
                 setError('Error fetching profile data or posts');
@@ -39,9 +36,9 @@ const Profile = (userId) => {
     const handleFollowClick = async () => {
         try {
           if (isFollowing) {
-            await axios.delete(`http://localhost:8080/api/follows/${userId}/follow`);
+            await axios.delete(`http://localhost:8080/api/follows/${posterId}/follow`, userId.userId);
           } else {
-            await axios.post(`http://localhost:8080/api/follows/${userId}/follow`);
+            await axios.post(`http://localhost:8080/api/follows/${posterId}/follow`, userId.userId);
           }
           setIsFollowing(!isFollowing);
         } catch (error) {

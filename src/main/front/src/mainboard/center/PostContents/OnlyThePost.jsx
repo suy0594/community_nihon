@@ -9,7 +9,7 @@ const OnlyThePost = ({userId}) => {
     const { postId } = useParams();
 
     useEffect(() => {
-        axios.get(`http://localhost:8080/api/boards/${postId}`)
+        axios.get(`http://localhost:8080/api/boards/userId/${postId}`)
             .then(response => {
                 setBoard(response.data);
             })

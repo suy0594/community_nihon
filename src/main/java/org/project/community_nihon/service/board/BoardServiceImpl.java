@@ -110,14 +110,21 @@ public class BoardServiceImpl implements BoardService {
     public BoardDTO createBoard(BoardDTO boardDTO) {
         Optional<UserVO> userVO = userRepository.findById(boardDTO.getUserId());
 
-        Community group = communityRepository.getCommunityByTitle(boardDTO.getTitle());
-        log.info(group);
+
+        Community group;
+        if ((boardDTO.getTitle()) != null) {
+            group = communityRepository.getCommunityByTitle(boardDTO.getUserId());
+        }
+        else {
+            group = communityRepository.findById(boardDTO.getId()).get();
+        }
+        log.info("SDASDSAASDADSSDADSADSA: " + group);
 
         Board board = Board.builder()
-                        .origin(userVO.get().getOrigin())
-                                .community(group)
-                                        .content(boardDTO.getContent())
-                                                .build();
+                .origin(userVO.get().getOrigin())
+                .community(group)
+                .content(boardDTO.getContent())
+                .build();
         Board result = boardRepository.save(board); // board 객체 저장
 
 
@@ -126,7 +133,9 @@ public class BoardServiceImpl implements BoardService {
         boardDTO1.setContent(board.getContent());
         boardDTO1.setId(result.getId());
         boardDTO1.setOrigin(board.getOrigin().getId());
-
+        boardDTO1.setCreated_time(board.getCreated_time());
+        boardDTO1.setLike(0);
+        boardDTO1.setTitle(group.getTitle());
         return boardDTO1;
     }
 

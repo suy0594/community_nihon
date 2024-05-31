@@ -29,7 +29,7 @@ public class BoardController {
 
         BoardDTO boardDTO1 = boardService.createBoard(boardDTO);
 
-        return ResponseEntity.ok(boardDTO);
+        return ResponseEntity.ok(boardDTO1);
 
     }
 
