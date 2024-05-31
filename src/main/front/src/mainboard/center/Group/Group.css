@@ -1,0 +1,80 @@
+
+  /* コンテナ全体のスタイル */
+  .profile-container {
+    max-width: 600px;
+    margin: 0 auto;
+    background-color: #fff;
+    border: 1px solid #e1e8ed;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  
+  /* ヘッダ部分のスタイル */
+  .profile-header {
+    display: flex;
+    padding: 16px;
+    border-bottom: 1px solid #e1e8ed;
+    background-color: #f5f8fa;
+  }
+  
+  .pict {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    margin-right: 16px;
+  }
+  
+  .profile-info {
+    flex-grow: 1;
+  }
+  
+  .profile-name {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 4px;
+  }
+  
+  .profile-handle {
+    font-size: 14px;
+    color: #657786;
+    margin-bottom: 8px;
+  }
+  
+  .profile-bio {
+    font-size: 16px;
+    margin-bottom: 12px;
+  }
+  
+  .profile-stats {
+    display: flex;
+    gap: 16px;
+  }
+  
+  .profile-stats p {
+    font-size: 14px;
+    color: #657786;
+  }
+  
+  /* ボタンのスタイル */
+  button {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    margin: 16px 0;
+    border: none;
+    border-radius: 24px;
+    background-color: #1da1f2;
+    color: #fff;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  button:hover {
+    background-color: #0a84d1;
+  }
+  
+
+
+  
