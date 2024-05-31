@@ -26,6 +26,8 @@ public class BoardDTO {
 
     private int like;
 
+    private String posterId;
+
     public void setUserId(String userId) {
         this.userId = userId;
     }

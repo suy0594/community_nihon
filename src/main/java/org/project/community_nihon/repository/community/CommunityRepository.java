@@ -13,4 +13,6 @@ public interface CommunityRepository extends JpaRepository<Community, Long> {
     @Query("SELECT COUNT(a) FROM Community c JOIN c.origin_member a WHERE c.community = :communityId")
     Long countMembersByCommunityId(@Param("communityId") Long communityId);
 
+
+
 }

@@ -17,6 +17,7 @@ import org.project.community_nihon.repository.utility.LikeYouRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.transaction.annotation.Transactional;
 
 
 import java.util.ArrayList;
@@ -114,9 +115,14 @@ public class BoardServiceImpl implements BoardService {
     public BoardDTO createBoard(BoardDTO boardDTO) {
         Optional<UserVO> userVO = userRepository.findById(boardDTO.getUserId());
 
-        Community group = communityRepository.getCommunityByTitle(boardDTO.getTitle());
-        log.info(group);
-
+        Community group;
+        if ((boardDTO.getTitle()) != null) {
+            group = communityRepository.getCommunityByTitle(boardDTO.getUserId());
+        }
+        else {
+            group = communityRepository.findById(boardDTO.getId()).get();
+        }
+        log.info("SDASDSAASDADSSDADSADSA: " + group);
         Board board = Board.builder()
                         .origin(userVO.get().getOrigin())
                                 .community(group)
@@ -132,6 +138,7 @@ public class BoardServiceImpl implements BoardService {
         boardDTO1.setOrigin(board.getOrigin().getId());
         boardDTO1.setCreated_time(board.getCreated_time());
         boardDTO1.setLike(0);
+        boardDTO1.setTitle(group.getTitle());
         return boardDTO1;
     }
 
@@ -145,6 +152,21 @@ public class BoardServiceImpl implements BoardService {
         } else {
             throw new IllegalArgumentException("No board with the given id found");
         }
+
+    }
+
+    @Transactional
+    @Override
+    public BoardDTO getBoardInfo(Long id) {   // userId, boardId
+
+        Optional<Board> board = boardRepository.findById(id);
+        BoardDTO boardDTO = new BoardDTO();
+        boardDTO.setTitle(board.get().getCommunity().getTitle());
+        boardDTO.setPosterId(userRepository.getUserByAccount(board.get().getOrigin()));
+        boardDTO.setContent(board.get().getContent());
+        boardDTO.setCreated_time(board.get().getCreated_time());
+
+        return boardDTO;
 
     }
 
