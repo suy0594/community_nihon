@@ -110,12 +110,12 @@ public class BoardServiceImpl implements BoardService {
     public BoardDTO createBoard(BoardDTO boardDTO) {
         Optional<UserVO> userVO = userRepository.findById(boardDTO.getUserId());
 
-        Optional<Community> group = communityRepository.findById(boardDTO.getId());
+        Community group = communityRepository.getCommunityByTitle(boardDTO.getTitle());
         log.info(group);
 
         Board board = Board.builder()
                         .origin(userVO.get().getOrigin())
-                                .community(group.get())
+                                .community(group)
                                         .content(boardDTO.getContent())
                                                 .build();
         Board result = boardRepository.save(board); // board 객체 저장

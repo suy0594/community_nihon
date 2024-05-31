@@ -10,19 +10,18 @@ const PostsContainer = ({ userId }) => {
         axios.get(`http://localhost:8080/api/boards/${userId}`)
             .then(response => {
                 setBoards(response.data);
-                console.log("유저 아이디: " + userId);
             })
             .catch(error => {
                 console.error('Error:', error);
             });
     }, [userId]);
-
+    
     return (
         <div className="tweet-list">
             <div className="tweet">
                 {boards.length > 0 ? (
                     boards.map(board => (
-                        <Post key={board.id} userId={userId} posterId={board.userId} title={board.title} text={board.content} time={board.created_time} />
+                        <Post key={board.id} postId={board.id} userId={userId} posterId={board.userId} title={board.title} text={board.content} time={board.created_time} />
                     ))
                 ) : (
                     <p>Loading...</p>

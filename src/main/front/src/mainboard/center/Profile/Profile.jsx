@@ -11,6 +11,8 @@ const Profile = (userId) => {
     const [error, setError] = useState(null);
     const { posterId } = useParams();
 
+    const [isFollowing, setIsFollowing] = useState(false);
+
     useEffect(() => {
         const fetchProfileData = async () => {
             try {
@@ -31,9 +33,21 @@ const Profile = (userId) => {
 
         fetchProfileData();
     }, [posterId]);
-
     if (loading) return <p>Loading...</p>;
     if (error) return <p>{error}</p>;
+
+    const handleFollowClick = async () => {
+        try {
+          if (isFollowing) {
+            await axios.delete(`http://localhost:8080/api/follows/${userId}/follow`);
+          } else {
+            await axios.post(`http://localhost:8080/api/follows/${userId}/follow`);
+          }
+          setIsFollowing(!isFollowing);
+        } catch (error) {
+          console.error('Failed to follow/unfollow user:', error);
+        }
+      };
 
     return (
         <div className="profile-container">
@@ -49,6 +63,9 @@ const Profile = (userId) => {
                         <p>Followers: {profileData.follower_count}</p>
                     </div>
                 </div>
+                <button onClick={handleFollowClick}>
+                    {isFollowing ? 'アンフォロー' : 'フォロー'}
+                </button>
             </div>
             <div className="tweet-list">
                 {posts.length > 0 ? (
