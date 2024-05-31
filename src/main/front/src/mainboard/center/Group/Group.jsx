@@ -67,6 +67,7 @@ const Group = ({userId}) => {
                         posts.map(post => (
                             <Post
                                 key={post.id}
+                                postId={post.id}
                                 userId={userId}
                                 posterId={post.userId}
                                 title={post.title}
