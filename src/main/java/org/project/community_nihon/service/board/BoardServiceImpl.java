@@ -20,6 +20,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.transaction.annotation.Transactional;
 
 
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -46,6 +47,8 @@ public class BoardServiceImpl implements BoardService {
         List<Follow> follows2 = followRepository.FriendOriginsByFollow(user.getOrigin()); // 맞팔o 내가 팔로잉
         List<Follow> follows3 = followRepository.FriendFollowsByOrigin(user.getOrigin()); // 맞팔o 내가 팔로워
 
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd | HH:mm");
+
         List<Account> followingAccounts = new ArrayList<>();
         for (Follow follow : follows1) {
             followingAccounts.add(follow.getFollow());
@@ -68,8 +71,8 @@ public class BoardServiceImpl implements BoardService {
                 boardDTO.setOrigin(board.getOrigin().getId());
                 boardDTO.setContent(board.getContent());
                 boardDTO.setUserId(userRepository.getUserByAccount(board.getOrigin()));
-                boardDTO.setCreated_time(board.getCreated_time());
-                boardDTO.setLike(likeYouRepository.countlike_youByBoardId(board.getId()));
+                boardDTO.setCreated_time(board.getCreated_time().format(formatter));
+                boardDTO.setLikes(likeYouRepository.countlike_youByBoardId(board.getId()));
                 boardDTOList.add(boardDTO);
             }
         }
@@ -80,24 +83,26 @@ public class BoardServiceImpl implements BoardService {
             boardDTO.setOrigin(board.getOrigin().getId());
             boardDTO.setContent(board.getContent());
             boardDTO.setUserId(userRepository.getUserByAccount(board.getOrigin()));
-            boardDTO.setCreated_time(board.getCreated_time());
-            boardDTO.setLike(likeYouRepository.countlike_youByBoardId(board.getId()));
+            boardDTO.setCreated_time(board.getCreated_time().format(formatter));
+            boardDTO.setLikes(likeYouRepository.countlike_youByBoardId(board.getId()));
             boardDTOList.add(boardDTO);
         }
         List<BoardDTO> sortedBoardDTOs = boardDTOList.stream()
                 .sorted(Comparator.comparing(BoardDTO::getCreated_time).reversed())
                 .collect(Collectors.toList());
+
         return sortedBoardDTOs;
 
     }
 
     public BoardDTO convertToDTO(Board board) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd | HH:mm");
         BoardDTO boardDTO = new BoardDTO();
         boardDTO.setId(board.getId());
         boardDTO.setOrigin(board.getOrigin().getId());
         boardDTO.setContent(board.getContent());
         boardDTO.setUserId(userRepository.getUserByAccount(board.getOrigin()));
-        boardDTO.setCreated_time(board.getCreated_time());
+        boardDTO.setCreated_time(board.getCreated_time().format(formatter));
         return boardDTO;
     }
 
@@ -114,7 +119,7 @@ public class BoardServiceImpl implements BoardService {
     @Override
     public BoardDTO createBoard(BoardDTO boardDTO) {
         Optional<UserVO> userVO = userRepository.findById(boardDTO.getUserId());
-
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd | HH:mm");
 
         Community group;
         if ((boardDTO.getTitle()) != null) {
@@ -138,19 +143,29 @@ public class BoardServiceImpl implements BoardService {
         boardDTO1.setContent(board.getContent());
         boardDTO1.setId(result.getId());
         boardDTO1.setOrigin(board.getOrigin().getId());
-        boardDTO1.setCreated_time(board.getCreated_time());
-        boardDTO1.setLike(0);
+        boardDTO1.setCreated_time(board.getCreated_time().format(formatter));
+        boardDTO1.setLikes(0);
         boardDTO1.setTitle(group.getTitle());
         return boardDTO1;
     }
 
     @Override
-    public String modifyBoard(Long BoardId,String content) {
-        Optional<Board> board = boardRepository.findById(BoardId);
+    public BoardDTO modifyBoard(Long boardId, String content) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd | HH:mm");
+        Optional<Board> board = boardRepository.findById(boardId);
         if(board.isPresent()) {
             board.get().updateContent(content);
-            boardRepository.save(board.get());
-            return "success";
+            Board result = boardRepository.save(board.get());
+            BoardDTO boardDTO = new BoardDTO();
+            boardDTO.setUserId(userRepository.getUserByAccount(board.get().getOrigin()));
+            boardDTO.setContent(board.get().getContent());
+            boardDTO.setId(result.getId());
+            boardDTO.setOrigin(board.get().getOrigin().getId());
+            boardDTO.setCreated_time(board.get().getCreated_time().format(formatter));
+            boardDTO.setLikes(boardDTO.getLikes());
+            boardDTO.setTitle(board.get().getCommunity().getTitle());
+
+            return boardDTO;
         } else {
             throw new IllegalArgumentException("No board with the given id found");
         }
@@ -161,12 +176,13 @@ public class BoardServiceImpl implements BoardService {
     @Override
     public BoardDTO getBoardInfo(Long id) {   // userId, boardId
 
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd | HH:mm");
         Optional<Board> board = boardRepository.findById(id);
         BoardDTO boardDTO = new BoardDTO();
         boardDTO.setTitle(board.get().getCommunity().getTitle());
         boardDTO.setPosterId(userRepository.getUserByAccount(board.get().getOrigin()));
         boardDTO.setContent(board.get().getContent());
-        boardDTO.setCreated_time(board.get().getCreated_time());
+        boardDTO.setCreated_time(board.get().getCreated_time().format(formatter));
 
         return boardDTO;
 
@@ -174,6 +190,8 @@ public class BoardServiceImpl implements BoardService {
 
     @Override
     public void deleteBoard(Long id) {
+        log.info("deleteeeeeeeeeeeee : " + id);
+
         Optional<Board> board = boardRepository.findById(id);
         if(board.isPresent()) {
             boardRepository.deleteById(id);

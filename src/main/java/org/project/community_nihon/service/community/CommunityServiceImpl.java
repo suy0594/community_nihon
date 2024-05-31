@@ -18,6 +18,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -102,12 +103,13 @@ public class CommunityServiceImpl implements CommunityService {
                 .collect(Collectors.toList());
     }
     public BoardDTO convertToDTO(Board board) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd | HH:mm");
         BoardDTO boardDTO = new BoardDTO();
         boardDTO.setId(board.getId());
         boardDTO.setOrigin(board.getOrigin().getId());
         boardDTO.setContent(board.getContent());
         boardDTO.setUserId(userRepository.getUserByAccount(board.getOrigin()));
-        boardDTO.setCreated_time(board.getCreated_time());
+        boardDTO.setCreated_time(board.getCreated_time().format(formatter));
         return boardDTO;
     }
 

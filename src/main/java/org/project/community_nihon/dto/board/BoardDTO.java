@@ -26,11 +26,9 @@ public class BoardDTO {
 
     private String posterId;
 
-    private LocalDateTime created_time;
+    private String created_time;
 
-    private int like;
-
-    private String posterId;
+    private int likes;
 
     public void setUserId(String userId) {
         this.userId = userId;

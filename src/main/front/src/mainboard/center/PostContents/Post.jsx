@@ -3,27 +3,34 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import './post.css';
 
-
-const Post = ({postId, userId, posterId, title, text, time}) => {
-
+const Post = ({postId, userId, posterId, title, text, time, onDelete}) => {
     const navigate = useNavigate();
     const handleLikeButton = async() => {
-        
+
     };
     const handleReplyButton = () => {
 
     };
     const handleBookmarkButton = async() => {
-       
+
     };
     const handleModifyButton = () => {
 
     };
-    const handleDeleteButton = () => {
-
+    const handleDeleteButton = async (event) => {
+        event.stopPropagation();
+        try {
+            console.log(`Attempting to delete post with ID: ${postId}`);
+            await axios.delete(`http://localhost:8080/api/boards/${postId}`);
+            console.log('Post deleted successfully');
+            onDelete(postId); // 게시글이 삭제되었음을 상위 컴포넌트에 알림
+            navigate(`/${userId}/home`);
+        } catch (error) {
+            console.error("Error deleting post", error);
+        }
     };
     const handleToProfile = () => {
-        navigate(`/${ userId }/profile/${ posterId }`); 
+        navigate(`/${ userId }/profile/${ posterId }`);
     };
     const handleToOnlyThePost = () => {
         navigate(`/${ userId }/${ postId }`);

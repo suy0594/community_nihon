@@ -46,7 +46,6 @@ public class ReplyServiceImpl implements ReplyService {
     public ReplyBoardDTO getReplyByBoardId(ReplyBoardDTO replyBoardDTO) {
         Optional<Board> board = boardRepository.findById(replyBoardDTO.getBoardId());
 
-
         ReplyBoardDTO replyBoardDTO1 = new ReplyBoardDTO();
         return replyBoardDTO1;
     }
