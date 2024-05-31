@@ -1,10 +1,8 @@
 package org.project.community_nihon.domain.user;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import org.project.community_nihon.domain.account.Account;
 import org.project.community_nihon.domain.BaseEntity_Modified_Time;
@@ -18,7 +16,8 @@ import org.project.community_nihon.domain.BaseEntity_Modified_Time;
 public class UserProfile extends BaseEntity_Modified_Time {
 
     @Id
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Account origin;
@@ -26,8 +25,13 @@ public class UserProfile extends BaseEntity_Modified_Time {
     @ManyToOne(fetch = FetchType.LAZY)
     private UserVO user;
 
-    private String background_photo;
-    private String photo;
-    private String introduce;
+    @NotNull
+    private long userIdx;
+    @NotNull
+    private String originalFileName;
+    @NotNull
+    private String storedFileName;
+
+    private long fileSize;
 
 }

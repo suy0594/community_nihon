@@ -34,14 +34,14 @@ public class BoardController {
     }
 
     @PutMapping
-    public ResponseEntity<String> modifyBoard(Long boardId, String content) {
-        String string = boardService.modifyBoard(boardId, content);
-        return ResponseEntity.ok(string);
+    public ResponseEntity<BoardDTO> modifyBoard(Long boardId, String content) {
+        BoardDTO boardDTO = boardService.modifyBoard(boardId, content);
+        return ResponseEntity.ok(boardDTO);
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteBoarsatd(@PathVariable Long id) {
-        boardService.deleteBoard(id);
+    @DeleteMapping("/{postId}")
+    public ResponseEntity<Void> deleteBoard(@PathVariable Long postId) {
+        boardService.deleteBoard(postId);
         return ResponseEntity.noContent().build();
     }
 

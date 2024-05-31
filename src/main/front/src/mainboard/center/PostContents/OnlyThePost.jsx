@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import Post from '../PostContents/Post';
 import { useParams } from 'react-router-dom';
 import ReplyInput from './ReplyInput';
 
@@ -11,6 +12,11 @@ const OnlyThePost = ({ userId }) => {
     const [showReplyInput, setShowReplyInput] = useState(false);
     const [error, setError] = useState(null);
     const { postId } = useParams();
+    const [imgError, setImgError] = useState(false);
+
+const handleImgError = () => {
+    setImgError(true);
+  };
 
     useEffect(() => {
 
@@ -56,6 +62,7 @@ const OnlyThePost = ({ userId }) => {
                 content: content
               }
             const response = await axios.post('http://localhost:8080/api/replies/create', data);
+            console.log(response.data);
             setBoard(response.data);
             setError(null);
             console.log('生成されたreplyのID:', response.data);
@@ -66,7 +73,7 @@ const OnlyThePost = ({ userId }) => {
     };
 
     useEffect(() => {
-        axios.get(`localhost:8080/api/replies/${postId}`)
+        axios.get(`http://localhost:8080/api/replies/${postId}`)
             .then(response => {
                 setReplies(response.data);
             })
@@ -83,7 +90,12 @@ const OnlyThePost = ({ userId }) => {
         <>
             <div className="tweet">
                 <div className="tweet-header" onClick={handleToProfile}>
-                    <img src="/testaccountinfo/knu_emeblem.jpg" className='pict' alt='account picture'></img>
+                <img
+            src={imgError ? "/images/errorImage.jpg" : "/images/testaccountinfo/knu_emeblem.jpg"}
+            className='pict'
+            alt='account picture'
+            onError={handleImgError}
+          />
                     <div className="user-info">
                         <span className="username">@{board.posterId}</span>
                         <span className="handle">{board.title}</span>
@@ -109,8 +121,8 @@ const OnlyThePost = ({ userId }) => {
             {showReplyInput && <ReplyInput onSubmit={handleReplySubmit} />}
             <div className="tweet">
                 {replies.length > 0 ? (
-                    replies.map(replie => (
-                        <Post key={replie.id} postId={replie.id} userId={userId} posterId={replie.userId} title={replie.title} text={replie.content} time={replie.created_time} />
+                    replies.map(reply => (
+                        <Post key={reply.id} postId={reply.id} userId={userId} posterId={reply.userId} title={reply.title} text={reply.content} time={reply.created_time} />
 
                     ))
                 ) : (

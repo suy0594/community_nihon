@@ -1,29 +1,42 @@
-import React from 'react';
+
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import React,{ useState, useEffect } from "react";
 import './post.css';
 
-
-const Post = ({postId, userId, posterId, title, text, time}) => {
-
+const Post = ({postId, userId, posterId, title, text, time, onDelete}) => {
     const navigate = useNavigate();
+    const [imgError, setImgError] = useState(false);
+
+const handleImgError = () => {
+    setImgError(true);
+  };
     const handleLikeButton = async() => {
-        
+
     };
     const handleReplyButton = () => {
 
     };
     const handleBookmarkButton = async() => {
-       
+
     };
     const handleModifyButton = () => {
 
     };
-    const handleDeleteButton = () => {
-
+    const handleDeleteButton = async (event) => {
+        event.stopPropagation();
+        try {
+            console.log(`Attempting to delete post with ID: ${postId}`);
+            await axios.delete(`http://localhost:8080/api/boards/${postId}`);
+            console.log('Post deleted successfully');
+            onDelete(postId); // 게시글이 삭제되었음을 상위 컴포넌트에 알림
+            navigate(`/${userId}/home`);
+        } catch (error) {
+            console.error("Error deleting post", error);
+        }
     };
     const handleToProfile = () => {
-        navigate(`/${ userId }/profile/${ posterId }`); 
+        navigate(`/${ userId }/profile/${ posterId }`);
     };
     const handleToOnlyThePost = () => {
         console.log("userId " + userId + " postId " + postId);
@@ -34,7 +47,12 @@ const Post = ({postId, userId, posterId, title, text, time}) => {
         <>
             <div className="tweet">
                 <div className="tweet-header"  onClick={handleToProfile}>
-                    <img src="/testaccountinfo/knu_emeblem.jpg" className='pict' alt='account picture'></img>
+                <img
+            src={imgError ? "/images/errorImage.jpg" : "/images/testaccountinfo/knu_emeblem.jpg"}
+            className='pict'
+            alt='account picture'
+            onError={handleImgError}
+          />
                     <div className="user-info">
                         <span className="username">@{posterId}</span>
                         <span className="handle" >{title}</span>

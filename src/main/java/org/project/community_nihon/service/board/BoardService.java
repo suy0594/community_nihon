@@ -10,7 +10,7 @@ public interface BoardService {
     BoardDTO createBoard(BoardDTO boardDTO);
     List<BoardDTO> getBoardsByUserId(String userId);
     List<BoardDTO> getAllBoards();
-    String modifyBoard(Long BoardId,String content);
+    BoardDTO modifyBoard(Long boardId, String content);
     void deleteBoard(Long id);
     BoardDTO getBoardInfo(Long id);
 }

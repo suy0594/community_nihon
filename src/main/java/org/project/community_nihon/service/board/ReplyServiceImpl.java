@@ -9,8 +9,12 @@ import org.project.community_nihon.repository.board.BoardRepository;
 import org.project.community_nihon.repository.board.ReplyBoardRepository;
 import org.project.community_nihon.repository.user.UserRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -22,10 +26,12 @@ public class ReplyServiceImpl implements ReplyService {
 
     private final UserRepository userRepository;
 
+    private final AccountRepository accountRepository;
+
     @Override
     public ReplyBoardDTO createReply(ReplyBoardDTO replyBoardDTO) {
         ReplyBoard replyBoard = ReplyBoard.builder()
-                .board(boardRepository.findById(replyBoardDTO.getBoardId()).get())
+                .board(boardRepository.findById(replyBoardDTO.getPostId()).get())
                 .content(replyBoardDTO.getContent())
                 .origin(userRepository.findAccountByUserId(replyBoardDTO.getUserId()))
                 .build();
@@ -35,6 +41,7 @@ public class ReplyServiceImpl implements ReplyService {
         replyBoardDTO1.setId(result.getId());
         replyBoardDTO1.setUserId(userRepository.getUserByAccount(result.getOrigin()));
         replyBoardDTO1.setBoardId(result.getBoard().getId());
+        replyBoardDTO1.setPostId(result.getBoard().getId());
         replyBoardDTO1.setContent(result.getContent());
 
         return replyBoardDTO1;
@@ -42,13 +49,26 @@ public class ReplyServiceImpl implements ReplyService {
     }
 
 
+    @Transactional
     @Override
-    public ReplyBoardDTO getReplyByBoardId(ReplyBoardDTO replyBoardDTO) {
-        Optional<Board> board = boardRepository.findById(replyBoardDTO.getBoardId());
+    public List<ReplyBoardDTO> getReplyByBoardId(Long postId) {
+        List<ReplyBoard> replyBoards = replyBoardRepository.getReplyBoardsByBoard_Id(postId);
 
+        List<ReplyBoardDTO> replyBoardDTOs = replyBoards.stream()
+                .map(replyBoard -> {
+                    ReplyBoardDTO dto = new ReplyBoardDTO();
+                    dto.setId(replyBoard.getId());
+                    dto.setContent(replyBoard.getContent());
+                    dto.setBoardId(replyBoard.getBoard().getId());
+                    dto.setOrigin(replyBoard.getOrigin().getId());
+                    dto.setUserId(userRepository.getUserByAccount(replyBoard.getOrigin()));
+                    dto.setPostId(replyBoard.getBoard().getId());
+                    return dto;
+                })
+                .collect(Collectors.toList());
 
-        ReplyBoardDTO replyBoardDTO1 = new ReplyBoardDTO();
-        return replyBoardDTO1;
+        return replyBoardDTOs;
+
     }
 
 
