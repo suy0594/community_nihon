@@ -22,6 +22,10 @@ public class BoardDTO {
 
     private String content;  // 내용
 
+    private int like;
+
+    private String posterId;
+
     private LocalDateTime created_time;
 
     private int like;

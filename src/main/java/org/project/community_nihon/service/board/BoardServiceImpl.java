@@ -126,10 +126,10 @@ public class BoardServiceImpl implements BoardService {
         log.info("SDASDSAASDADSSDADSADSA: " + group);
 
         Board board = Board.builder()
-                        .origin(userVO.get().getOrigin())
-                                .community(group)
-                                        .content(boardDTO.getContent())
-                                                .build();
+                .origin(userVO.get().getOrigin())
+                .community(group)
+                .content(boardDTO.getContent())
+                .build();
         Board result = boardRepository.save(board); // board 객체 저장
 
 
