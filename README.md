@@ -33,7 +33,7 @@ npm install axios : React 내에서 API 받기 위해
 <p>
 npm install react react-dom<br>
 npm install @mui/material @emotion/react @emotion/styled<br>
-npm install @mui/icons-materia<br>
+npm install @mui/icons-material<br>
 npm install react-router-dom<br>
 npm install http-proxy-middleware --save<br>
 npm install axios<br>
